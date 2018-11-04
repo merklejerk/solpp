@@ -1,0 +1,30 @@
+{
+	"name": "solpp",
+	"version": "0.1.0",
+	"description": "A solidity preprocessor and flattener CLI and library",
+	"repository": "https://github.com/merklejerk/solpp",
+	"author": "Lawrence Forman <me@merklejerk.com>",
+	"license": "Apache-2.0",
+	"private": false,
+	"main": "src/index.js",
+	"bin": {
+		"solpp": "src/solpp.js"
+	},
+	"scripts": {
+		"generate-parser": "./antlr/generate.sh",
+		"test": "mocha ./test/*.js",
+		"start": "node ./src/solpp"
+	},
+	"dependencies": {
+		"antlr4": "^4.7.1",
+		"axios": "^0.18.0",
+		"bn-str-256": "^1.8.0",
+		"commander": "^2.19.0",
+		"ethereumjs-util": "^6.0.0",
+		"lodash": "^4.17.11",
+		"mz": "^2.7.0"
+	},
+	"devDependencies": {
+		"mocha": "^5.2.0"
+	}
+}
