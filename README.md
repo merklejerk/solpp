@@ -115,7 +115,10 @@ contract MyContract {
 If your project scaffolding is node-based, you can install it as a
 development dependency inside your project directory.
 As a development dependency, you should be able to call
-`solpp` from within your project as if it were installed globally.
+`solpp` in a `"scripts"` entry in your project's `package.json` file.
+
+To run the tool manually, you can use `npx solpp` from within your project
+directory.
 
 ```bash
 # Install as a project development dependency with npm.
@@ -124,8 +127,8 @@ npm install -D solpp
 yarn add -D solpp
 ```
 
-If that doesn't work, or if you want `solpp` to be accessible from anywhere in
-your filesystem, you'll need to install it globally.
+If you want `solpp` to be accessible from anywhere in your filesystem, you'll
+need to install it globally.
 
 ```bash
 # Install globally with npm.
