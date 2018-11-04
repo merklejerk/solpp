@@ -54,7 +54,7 @@ both positive and negative integers or decimals.
 
 ## Example
 
-```solidity
+```js
 pragma solidity^0.4.24;
 
 // solpp will inline this file and any of its dependencies.
@@ -261,7 +261,8 @@ interchangeably. Line comment directives terminate at the end of the line,
 unless the line ends in a `\` character, which allows you to continue the
 directive on the next immediate line comment.
 
-```solidity
+**Example**
+```js
 // Single line comment directive.
 // #def LDEF All this text is the value of LDEF.
 
@@ -286,18 +287,30 @@ have to hold valid expressions, but only those that do can be evaluated.
 
 If you no longer need a symbol, you can undefine it with the `#undef` directive.
 
-**Example**
-```solidity
+**Input**
+```js
 // Define a symbol
 // #def MY_EXPR 1 + 1
 // Expand it.
-${MY_EXPR} // -> 1 + 1
+uint256 x = ${MY_EXPR};
 // Now evaluate it.
-$${MY_EXPR} // -> 2
+uint256 y = $${MY_EXPR};
 
 // Remove this symbol.
 // #undef MY_EXPR
 ```
+
+**Result**
+```js
+// Define a symbol
+// Expand it.
+uint256 x = 1 + 1;
+// Now evaluate it.
+uint256 y = 2;
+
+// Remove this symbol.
+```
+
 ### Macros
 Macros are similar to symbols except that they take some arguments, like a
 function. They can be defined externally in a (javascript) definitions file or
@@ -312,22 +325,37 @@ only those that do can be evaluated.
 
 If you no longer need a macro, you can undefine it with the `#undef` directive.
 
-**Example**
-```solidity
+**Input**
+```js
 // Define a macro
 // #macro MY_MACRO(x) (x / 2) + 1
 // Expand it.
-${MY_MACRO(10)} // -> (10/2) + 1
+uint256 x = ${MY_MACRO(10)};
 // Evaluate it.
-$${MY_MACRO(10)} // -> 6
+uint256 y = $${MY_MACRO(10)};
 
 // Define a new macro that calls the other macro.
 // #macro OTHER_MACRO(x) MY_MACRO(x * 10)
 // Evaluate it.
-$${OTHER_MACRO(8)} // -> 41
+uint256 z = $${OTHER_MACRO(8)};
 
 // Remove this macro.
 // #undef OTHER_MACRO
+```
+
+**Result**
+```js
+// Define a macro
+// Expand it.
+uint256 x = (10/2) + 1;
+// Evaluate it.
+uint256 y = 6;
+
+// Define a new macro that calls the other macro.
+// Evaluate it.
+uint256 z = 41;
+
+// Remove this macro.
 ```
 
 ### Expansion
@@ -339,15 +367,24 @@ contents of that symbol are simply put in the place of the expansion block.
 A similar result occurs when expanding a macro, except arguments will be
 substituted throughout the macro's contents.
 
-**Example**
-```solidity
+**Input**
+```js
 // Expanding a symbol.
 // #def SYM_1 foo / 2
-uint256 v = 1 + ${SYM_1}; // -> uint256 v = 1 + foo / 2;
+uint256 v = 1 + ${SYM_1};
 
 // Expanding a macro.
 // #def MACRO_1(x) x / 2
-uint256 v2 = 1 + ${MACRO_1(100)}; // -> uint256 v = 1 + 100 / 2;
+uint256 v2 = 1 + ${MACRO_1(100)};
+```
+
+**Result**
+```js
+// Expanding a symbol.
+uint256 v = 1 + foo / 2;
+
+// Expanding a macro.
+uint256 v = 1 + 100 / 2;
 ```
 
 ### Evaluation
@@ -365,21 +402,31 @@ If a macro or symbol does not contain a valid expression during an evaluation
 operation, an error will be raised. If a symbol is encountered that is
 undefined, it will take on the value of `0`.
 
-**Example**
-```solidity
+**Input**
+```js
 // Evaluating a symbol.
 // #def SYM_1 5 * 2
-uint256 v = 1 + $${SYM_1}; // -> uint256 v = 1 + 10;
+uint256 v = 1 + $${SYM_1};
 
 // Evaluating a macro.
 // #def MACRO_1(x) x * 2
-uint256 v2 = 1 + $${MACRO_1(2)}; // -> uint256 v2 = 1 + 4;
+uint256 v2 = 1 + $${MACRO_1(2)};
 
 // Macro calling another macro and referencing a symbol.
 // #def SYM_2 2 ** 3
 // #def MACRO_2(x) MACRO_1(x) + SYM_2
-uint256 v3 = $${MACRO_2(4)}; // -> uint256 v3 = 16;
+uint256 v3 = $${MACRO_2(4)};
+```
+**Result**
+```js
+// Evaluating a symbol.
+uint256 v = 1 + 10;
 
+// Evaluating a macro.
+uint256 v2 = 1 + 4;
+
+// Macro calling another macro and referencing a symbol.
+uint256 v3 = 16;
 ```
 
 #### Inline Evaluation
@@ -387,12 +434,20 @@ uint256 v3 = $${MACRO_2(4)}; // -> uint256 v3 = 16;
 You don't have to use symbols or macros in your evaluation blocks. You can put
 any valid expression inside of them as well.
 
-**Example**
-```solidity
+**Input**
+```js
 // Compute the sqrt of 2 as parts per million.
 // Here we use the builtin function 'int' to make the result an integer.
 uint256 sqrt2 = $${int(2**0.5 * 1e6)};
 ```
+
+**Result**
+```js
+// Compute the sqrt of 2 as parts per million.
+// Here we use the builtin function 'int' to make the result an integer.
+uint256 sqrt2 = 1414213;
+```
+
 
 ### If/Elif/Else Blocks
 
@@ -407,8 +462,8 @@ complex sequence of operations.
 
 Blocks may also be nested, with inner blocks depending on outer blocks.
 
-**Example**
-```solidity
+**Input**
+```js
 // #if true
 // This block will always render.
 uint256 x = 100;
@@ -431,6 +486,42 @@ uint256 foo = 2;
 uint256 foo = 3;
 // #endif
 ```
+
+**Result** (with `EXT_SYM_2='foobar'`)
+```js
+// This block will always render.
+uint256 x = 100;
+
+// This Block will only render if EXT_SYM_1 is falsey (or undefined)
+// AND EXT_SYM_1 is set to the string 'foobar'
+uint256 foo = 2;
+```
+
+### For Loops
+
+Another great use case for preprocessors is unrolling loops or generating
+constant values for an array. The `#for` directive can help you do all those
+things and more.
+
+**Input**
+```js
+// Calculate the summation of 0...4
+uint256 sum = 0;
+// #for I in range(1, 5)
+sum += $${I};
+// #done
+```
+
+**Result**
+```js
+// Calculate the summation of 0...9
+uint256 sum = 0;
+sum += 1;
+sum += 2;
+sum += 3;
+sum += 4;
+```
+
 ### Expressions
 
 Preprocessor expressions are similar to javascript expressions, with many of the
