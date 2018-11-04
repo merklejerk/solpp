@@ -12,16 +12,17 @@ math and builtin functions suitable for use with Solidity's primitives.
 - Flattens your source files for easy contract verification on
 [etherscan.io](https://etherscan.io) by merging all naked imports.
 - Will even include URL imports, along with their dependencies.
-- Simple, practical language that resembles C-sytle preprocessor directives,
-with a little python and javascript thrown in.
+- Simple, practical language inspired by C preprocessor directives,
+python, and javascript.
 - Easily declare symbols and macro functions in your source file with
 `#def` and `#macro` if directives.
 - `#if`/`#elif`/`#else` blocks for conditional code rendering.
+- `#for` blocks for repeating code.
 - Expand (substitute) with `${...}` or evaluate with `$${...}` symbols, macros,
 and expressions anywhere in your code.
 - All math is done in extremely high precision (120 digits) and can represent
 both positive and negative integers or decimals.
-- Complete expression syntax with useful builtin functions.
+- Robust expression syntax with many useful builtin functions.
 
 ## Topics
 - [Example](#example)
@@ -104,15 +105,8 @@ contract MyContract {
    }
 
    function bar(uint256 x) pure returns (uint256) {
-   // Repeat code with a a for loop.
-   // #for V in range(3):
-   x += $${V+1};
-   // #done
-   // ->
-   // x += 1;
-   // x += 2;
-   // x += 3;
-   return x;
+     // Repeat code with a a for loop.
+     return x /* #for V in range(1,4) */+ $${V+1}/* #done */; // -> return x + 1 + 2 + 3;
    }
 }
 ```
@@ -257,7 +251,25 @@ PROCESSED_CODE: String = solpp.processFile(
 
 ### Directive Syntax
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+All `solpp` directives are contained inside either line comments or block
+comments. This design is to maintain compatibility with existing Solidity
+editor highlighters. You can use line and block comment directives
+interchangeably. Line comment directives terminate at the end of the line,
+unless the line ends in a `\` character, which allows you to continue the
+directive on the next immediate line comment.
+
+```solidity
+// Single line comment directive.
+// #def LDEF All this text is the value of LDEF.
+
+// A line comment directive spread across two lines.
+// #def MULTILINE_LDEF If you start running out of room, you can continue \
+// on the next line like so.
+
+// Block comment directives are great in one-line #for loops or #if blocks.
+// This will render: uint256 fac5 = 1 * 2 * 3 * 4 * 5;
+uint256 fac5 = 1/* #for i in range(2, 6) */ * $${i}/* #done */;
+```
 
 ### Symbols
 Symbols can be declared externally on the command line or in a definitions
@@ -542,7 +554,8 @@ and can be called during [evaluation](#evaluation).
 |----------|-------------|
 | `islist(x)` | Check if `x` is a list |
 | `len(x)` | Get the length of list `x` |
-| `range(end, start=0, step=1)` | Create a list of numbers from `start` to `end` (exclusive) with step size `step` |
+| `range(end)` | Create a list of numbers from `0` to `end` (exclusive) with step size `1` |
+| `range(start, end, step=1)` | Create a list of numbers from `start` to `end` (exclusive) with step size `step` |
 | `join(a, sep='')` | Join list `a` into a string with separator `sep` |
 | `map(a, fn)` | Create a list where each item in `a` is run through the function/macro `fn`. If `fn` can take two arguments, the index of the item will be passed as the 2nd argument. |
 | `reduce(a, fn, initial=0)` | Run items in the list `a` through the function/macro `fn`, which takes 2-3 arguments (`total, value, [index]`) and returns the new total. |

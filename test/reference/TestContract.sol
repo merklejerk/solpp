@@ -394,6 +394,7 @@ contract TestContract {
 
 	// Block comment directives.
 	uint256 _sum = 0 + 100 + 200 + 300;
+	uint256 _sum2 = 0 + 100 + 200 + 300;
 
 	// Some function.
 	function foo(uint256 i) public view returns (uint256) {

@@ -276,12 +276,16 @@ function islist(x) {
 }
 
 function range(end, start, step) {
-	end = bn.int(end);
-	if (_.isNil(start))
+	if (_.isNil(start)) {
+		end = bn.int(end);
 		start = '0';
-	else
-		start = bn.int(start || '0');
-	step = bn.int(step || '0');
+	}
+	else {
+		const t = end;
+		end = bn.int(start || 0);
+		start = bn.int(t || 0);
+	}
+	step = bn.int(step || 0);
 	if (bn.eq(step, 0))
 		step = bn.gte(end, start) ? '1' : '-1';
 	const r = [start];

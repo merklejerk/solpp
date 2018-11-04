@@ -107,7 +107,8 @@ contract TestContract {
 	];
 
 	// Block comment directives.
-	uint256 _sum = 0/* #for i in range(3) */ + $${(i+1)*100}/* #done */;
+	uint256 _sum = 0/* #for I in range(3) */ + $${(I+1)*100}/* #done */;
+	uint256 _sum2 = 0/* #for I in range(1,4) */ + $${I*100}/* #done */;
 
 	// Some function.
 	function foo(uint256 i) public view returns (uint256) {
@@ -126,7 +127,8 @@ contract TestContract {
 
 	/* Another function */
 	function bar(uint256 x) internal {
-		// #def ALIAS2 (10**18 + 2)
+		// #def ALIAS2 \
+		// (10**18 + 2)
 		// #macro FUNC1(x) 10**x
 		// #macro FUNC2(x, y) x + y
 		// #macro FUNC3(x) round(176 / x)
