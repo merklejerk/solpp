@@ -26,5 +26,18 @@
 	},
 	"devDependencies": {
 		"mocha": "^5.2.0"
-	}
+	},
+	"keywords": [
+		"solidity",
+		"preprocessor",
+		"flattener",
+		"ethereum",
+		"blockchain",
+		"expressions",
+		"templates",
+		"cli",
+		"library",
+		"macro",
+		"macros"
+	]
 }
