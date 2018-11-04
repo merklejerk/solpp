@@ -55,8 +55,6 @@ both positive and negative integers or decimals.
 ## Example
 
 ```js
-pragma solidity^0.4.24;
-
 // solpp will inline this file and any of its dependencies.
 import './MyLibrary.sol';
 // solpp can also do the same with URLs!
