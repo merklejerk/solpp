@@ -18,7 +18,7 @@ class Oven {
 		this.cwd = opts.cwd || dirname(process.cwd());
 		this.name = opts.name || '';
 		this.resolver = opts.resolver || defaultResolver;
-		this.ctx = {defs: opts.defs || {}, stack: []};
+		this.ctx = opts.ctx || {defs: opts.defs || {}, stack: []};
 		this.cache = opts.cache || {};
 		this.depth = opts.depth || 0;
 		this.noFlatten = opts.noFlatten || false;
@@ -137,7 +137,6 @@ class Oven {
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
-			console.error(err);
 			throw new Error(`Failed to evaluate expression: "${content}" in ` +
 		 		loc + `: ${err.message}`, err);
 		}
@@ -160,7 +159,6 @@ class Oven {
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
-			console.error(err);
 			throw new Error(`Failed to expand expression: "${content}" in ` +
 		 		loc + `: ${err.message}`, err);
 		}

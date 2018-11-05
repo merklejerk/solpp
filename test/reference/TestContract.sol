@@ -317,7 +317,7 @@ library DependencyLibrary {
 
 contract OtherContract {
 	// Expect: uint256 _foo = 1024;
-	uint256 _foo = false;
+	uint256 _foo = 1024;
 	// Expect: uint256 _bar = 501;
 	uint256 _bar = 501;
 
@@ -343,6 +343,7 @@ contract TestContract {
 	bool _b;
 	bool _d;
 	bool _e;
+	bool _f = true;
 	// Expect: string _str0 = "9" + "256" + "booger";
 	string _str0 = "9" + "256" + "booger";
 	// Expect: string _str1 = "foo/bar";

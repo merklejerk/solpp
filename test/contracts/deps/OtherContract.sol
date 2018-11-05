@@ -12,3 +12,5 @@ contract OtherContract {
 		return _foo;
 	}
 }
+
+// #def OTHER_CONTRACT_SYM_1 true

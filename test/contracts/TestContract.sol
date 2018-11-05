@@ -52,13 +52,14 @@ contract TestContract {
 		// #if defined(DEF2)
 	bool _e;
 		// #endif
-		// #if !defined(BAD_DEF)
-		// #def DEF3 512
-		// #macro FUNC0(x) quote(log(x, 2))
-		// #def DEF4 booger
+	// #endif
+	bool _f = ${OTHER_CONTRACT_SYM_1};
+	// #if !defined(BAD_DEF)
+	// #def DEF3 512
+	// #macro FUNC0(x) quote(log(x, 2))
+	// #def DEF4 booger
 	// Expect: string _str0 = "9" + "256" + "booger";
 	string _str0 = $${FUNC0(0x200)} + $${quote(decimal(0x100))} + $${quote(peek(DEF4))};
-		// #endif
 	// Expect: string _str1 = "foo/bar";
 	string _str1 = $${quote(concat('foo', '/', 'bar'))};
 	// Expect: string _str2 = "1.414213562373095";
