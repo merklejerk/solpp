@@ -196,18 +196,18 @@ define symbols as functions, which can be called from
 If you `require('solpp')` into your nodejs project, you can use it
 programmatically. This allows `solpp` to be integrated into any pipeline.
 
-The library exposes 3 functions:
+The library exposes 3 functions, all of which return promises:
 
 ```js
 const solpp = require('solpp');
 
 // Preprocess code. Returns processed code.
-PROCESSED_CODE: String = solpp.processCode(
+PROCESSED_CODE: String = await solpp.processCode(
    // The raw code to process.
    code: String,
    // Options object. All fields are optional.
    opts={
-      // Dictionary of preprocessor symbols.
+      // Dictionary of preprocessor symbols and functions
       defs: {...},
       // Unique name for the source unit (like a full path).
       name: String,
@@ -222,7 +222,7 @@ PROCESSED_CODE: String = solpp.processCode(
 });
 
 // Preprocess code in a file. Returns processed code.
-PROCESSED_CODE: String = solpp.processFile(
+PROCESSED_CODE: String = await solpp.processFile(
    // The path of the raw code file.
    path: String,
    // Same as in processCode().
@@ -238,7 +238,7 @@ PROCESSED_CODE: String = solpp.processFile(
    name: String,
    // The parent directory (or URL path) of the file.
    cwd: String,
-} = solpp.resolver(
+} = await solpp.resolver(
       // The import path. May be a relative or absolute path, or even a URL.
       path: String,
       // The current working directory, or parent URL path if coming from a remote file.
