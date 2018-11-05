@@ -51,6 +51,8 @@ function createParseTree(LexerType, ParserType, startRule, text) {
 	const lexer = new LexerType(antlr.CharStreams.fromString(text));
 	const tokens = new antlr.CommonTokenStream(lexer);
 	const parser = new ParserType(tokens);
+	parser.removeErrorListeners();
+	lexer.removeErrorListeners();
 	parser.addErrorListener(errors);
 	lexer.addErrorListener(errors);
 	parser.buildParseTrees = true;
