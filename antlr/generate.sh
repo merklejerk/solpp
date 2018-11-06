@@ -3,7 +3,7 @@
 SCRIPT_DIR=$(dirname "$0")
 pushd "${SCRIPT_DIR}"
 ANTLR_JAR="./antlr4.jar"
-GRAMMARS=("./SolLexer.g4" "./SolParser.g4" "./ExprLexer.g4" "./ExprParser.g4")
+GRAMMARS=(*.g4)
 DST="../src/antlr"
 GENERATED_FILES=("${DST}/*.js" "${DST}/*.interp" "${DST}/*.tokens")
 

@@ -143,14 +143,14 @@ yarn global add solpp
 Usage: solpp [options] <source-file>
 
 Options:
-  -v --version                 output the version number
-  -o, --output <file>          write output to a file (instead of stdout)
-  --no-flatten                 do not flatten (include) naked imports
-  -D, --define <name>[=value]  define a preprocessor symbol (can be repeated)
-  --defs <file>                preprocessor definitions JS or JSON file
-  --tolerant                   ignore missing imports when flattening
-  -h, --help                   output usage information
-
+   -v --version                 output the version number
+   -o, --output <file>          write output to a file (instead of stdout)
+   --no-flatten                 do not flatten (include) naked imports
+   --no-pp                      disable the preprocessor (just flatten)
+   -D, --define <name>[=value]  define a preprocessor symbol (can be repeated)
+   --defs <file>                preprocessor definitions JS or JSON file
+   --tolerant                   ignore missing imports when flattening
+   -h, --help                   output usage information
 ```
 
 ### Instructions
@@ -220,7 +220,11 @@ PROCESSED_CODE: String = await solpp.processCode(
       // Whether or not to collapse 2 or more empty lines. Defaults to true.
       collapseEmptyLines: Boolean,
       // Whether to ignore unresolved imports. Defaults to false.
-      tolerant: Boolean
+      tolerant: Boolean,
+      // Don't flatten/inline imports. Defaults to false.
+      noFlatten: Boolean,
+      // Disable the preprocessor. Defaults to false.
+      noPreprocessor: Boolean
 });
 
 // Preprocess code in a file. Returns processed code.

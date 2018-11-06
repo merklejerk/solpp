@@ -139,8 +139,8 @@ contract TestContract {
 		_var4  = x *
 			// Expect: 1024 + (10**18 + 2) - 10 /
 			${EXT_SYMBOL_5} * ${ALIAS2} - $${log(EXT_SYMBOL_5, 2)} /
-			// Expect: 10**3 + 10 / 32 +
-			${FUNC1(3)} + $${FUNC2(1, 9)} / $${FUNC3(5.52)} +
+			// Expect: 10**3 + 10**(1+1) + 10 / 32 +
+			${FUNC1(3)} + ${FUNC1((1+1))} + $${FUNC2(1, 9)} / $${FUNC3(5.52)} +
 			// Expect: 9000000000000000018 + 128 + 21220;
 			$${FUNC4(2)} + $${sum(VALS)} + $${reduce(map(VALS, FUNC2), REDUCER)};
 		// #macro FUNC5(x, y, z) hex((x + y) * z**10, 20)

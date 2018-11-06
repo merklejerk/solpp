@@ -162,7 +162,10 @@ class MacroExpression {
 					let args = node.args;
 					let _args = [];
 					while (args) {
-						_args.push(this._exec(args.arg, ctx, expand));
+						if (expand)
+							_args.push(getNodeText(args.arg, true))
+						else
+							_args.push(this._exec(args.arg, ctx, expand));
 						args = args.rest;
 					}
 					if (expand)

@@ -46,9 +46,12 @@ class ErrorListener extends antlr.error.ErrorListener {
 	}
 }
 
-function createParseTree(LexerType, ParserType, startRule, text) {
+function createParseTree(LexerType, ParserType, startRule, text, mode=null) {
 	const errors = new ErrorListener();
 	const lexer = new LexerType(antlr.CharStreams.fromString(text));
+	// If mode was passed, jump straight into that mode.
+	if (_.isString(mode) && _.includes(lexer.modeNames, mode))
+		lexer.mode(_.indexOf(lexer.modeNames, mode));
 	const tokens = new antlr.CommonTokenStream(lexer);
 	const parser = new ParserType(tokens);
 	parser.removeErrorListeners();

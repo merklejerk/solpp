@@ -35,6 +35,7 @@ program
 	.arguments('<source-file>')
 	.option('-o, --output <file>', 'write output to a file (instead of stdout)', path.resolve)
 	.option('--no-flatten', 'do not flatten (include) naked imports')
+	.option('--no-pp', 'disable the preprocessor (just flatten)')
 	.option('-D, --define <name>[=value]', 'define a preprocessor symbol (can be repeated)',
 		defineDef)
 	.option('--defs <file>', 'preprocessor definitions JS or JSON file')
@@ -45,7 +46,8 @@ program
 		const opts = {
 			defs: defs,
 			tolerant: this.tolerant || false,
-			noFlatten: !this.flatten
+			noFlatten: !this.flatten,
+			noPreprocessor: !this.pp
 		};
 		const output = await lib.processFile(file, opts);
 		if (this.output)

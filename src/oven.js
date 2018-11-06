@@ -22,11 +22,13 @@ class Oven {
 		this.cache = opts.cache || {};
 		this.depth = opts.depth || 0;
 		this.noFlatten = opts.noFlatten || false;
+		this.noPreprocessor = opts.noPreprocessor || false;
 		this.tolerant = opts.tolerant || false;
 	}
 
 	async transform(code) {
-		const root = createParseTree(SolLexer, SolParser, 'sourceUnit', code);
+		const root = createParseTree(SolLexer, SolParser, 'sourceUnit', code,
+			this.noPreprocessor ? 'NO_PP' : null);
 		return this._transformNode(root);
 	}
 
@@ -159,6 +161,7 @@ class Oven {
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
+			console.error(err);
 			throw new Error(`Failed to expand expression: "${content}" in ` +
 		 		loc + `: ${err.message}`, err);
 		}

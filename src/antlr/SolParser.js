@@ -1,4 +1,4 @@
-// Generated from ./SolParser.g4 by ANTLR 4.7.1
+// Generated from SolParser.g4 by ANTLR 4.7.1
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var SolParserListener = require('./SolParserListener').SolParserListener;
