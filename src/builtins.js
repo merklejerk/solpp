@@ -30,7 +30,6 @@ const MIN_INT128_VALUE = bn.neg(bn.pow(2, 128-1));
 const MAX_INT256_VALUE = bn.sub(bn.pow(2, 256-1), 1);
 const MIN_INT256_VALUE = bn.neg(bn.pow(2, 256-1));
 
-const QUOTED_REGEX = /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/;
 const HEX_LITERAL_REGEX = /^0x[0-9a-f]$/i;
 
 function int(n) {
@@ -180,7 +179,7 @@ function quote(x) {
 
 function unquote(x) {
 	x = x.trim();
-	if (QUOTED_REGEX.test(x)) {
+	if (ops.isStringLiteral(x)) {
 		if (x[0] == '\'')
 			x = '"' + x.substr(1, x.length-2) + '"';
 		return JSON.parse(x);

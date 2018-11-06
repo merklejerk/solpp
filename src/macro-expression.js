@@ -10,7 +10,14 @@ const {
 } = require('./antlr-utils');
 const builtins = require('./builtins');
 const ops = require('./operations');
+const units = require('./units');
 const FunctionAdapter = require('./function-adapter');
+
+const EXPANDABLE_OPS = [
+	'CallOperation',
+	'ValueOperation',
+	'IndexOperation'
+];
 
 function contextLookup(ctx, name) {
 	const stack = ctx.stack || [];
@@ -27,10 +34,14 @@ function contextLookup(ctx, name) {
 }
 
 function evaluateCode(body, ctx={}) {
+	if (!_.isString(body))
+		return body;
 	return createExpression(body).evaluate(ctx);
 }
 
 function expandCode(body, ctx={}) {
+	if (!_.isString(body))
+		return body;
 	return createExpression(body).expand(ctx);
 }
 
@@ -59,10 +70,8 @@ class MacroExpression {
 
 	_exec(node, ctx={}, expand=false) {
 		const name = getNodeRuleName(node);
-		if (expand) {
-			if (name != 'CallOperation' && name != 'ValueOperation' && name != 'IndexOperation')
-				throw new Error(`Expression does not support expansion: "${this.body}"`);
-		}
+		if (expand && !_.includes(EXPANDABLE_OPS, name))
+			throw new Error(`Expression does not support expansion: "${this.body}"`);
 		switch (name) {
 			case 'LogicalOperation': {
 					const left = this._exec(node.left, ctx, expand);
@@ -116,15 +125,22 @@ class MacroExpression {
 					return this._exec(node.inner, ctx, true);
 				}
 			case 'IndexOperation': {
-					const list = this._exec(node.list, ctx, expand);
-					const idx = bn.toNumber(bn.int(this._exec(node.inner, ctx, expand)));
+					const list = this._exec(node.list, ctx, false);
+					const idx = bn.toNumber(bn.int(this._exec(node.inner, ctx, false)));
 					if (!_.isArrayLike(list))
 						throw new Error(`Can only index lists.`);
 					if (!_.inRange(idx, 0, list.length))
 						throw new Error(`Index ${idx} is outside of list [${list})].`);
 					if (expand)
-						return expandCode(list[idx], ctx, true);
+						return list[idx];
 					return evaluateCode(list[idx], ctx, true);
+				}
+			case 'PropertyOperation': {
+					const o = this._exec(node.obj, ctx, expand);
+					const k = this._exec(node.key, ctx, expand);
+					if (!o)
+						return false;
+					return o[k];
 				}
 			case 'ListOperation': {
 					let items = node.items;
@@ -134,6 +150,11 @@ class MacroExpression {
 						items = items.rest;
 					}
 					return _items;
+				}
+			case 'UnitsOperation': {
+					const n = this._exec(node.num, ctx, expand);
+					const u = getNodeText(node.units, true);
+					return ops.math.mul(n, units[u]);
 				}
 			case 'ValueOperation': {
 					const kind = getNodeRuleName(node.value.children[0]);
@@ -155,7 +176,7 @@ class MacroExpression {
 					return v;
 				}
 			case 'CallOperation': {
-					const callee = this._exec(node.callee, ctx, expand);
+					const callee = this._exec(node.callee, ctx, false);
 					if (!callee)
 						throw new Error(`"${getNodeText(node.callee, true)}" is not a macro or function`)
 					const fn = new FunctionAdapter(callee);

@@ -27,6 +27,7 @@ RPAREN: ')' ;
 LBRACKET: '[' ;
 RBRACKET: ']' ;
 COMMA: ',' ;
+DOT: '.' ;
 
 BOOLEAN_LITERAL
 	: 'true'
@@ -35,6 +36,18 @@ BOOLEAN_LITERAL
 DEFINED_KW: 'defined' ;
 
 PEEK_KW: 'peek' ;
+
+UNIT_KW
+	: 'seconds'
+	| 'minutes'
+	| 'hours'
+	| 'days'
+	| 'weeks'
+	| 'years'
+	| 'wei'
+	| 'finney'
+	| 'szabo'
+	| 'ether' ;
 
 IDENTIFIER: [_a-zA-Z] [_a-zA-Z0-9]* ;
 

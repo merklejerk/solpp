@@ -83,6 +83,15 @@ ExprParserListener.prototype.exitBitwiseOperation = function(ctx) {
 };
 
 
+// Enter a parse tree produced by ExprParser#unitsOperation.
+ExprParserListener.prototype.enterUnitsOperation = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#unitsOperation.
+ExprParserListener.prototype.exitUnitsOperation = function(ctx) {
+};
+
+
 // Enter a parse tree produced by ExprParser#logicalNotOperation.
 ExprParserListener.prototype.enterLogicalNotOperation = function(ctx) {
 };
@@ -116,6 +125,15 @@ ExprParserListener.prototype.enterArithmeticOperation = function(ctx) {
 
 // Exit a parse tree produced by ExprParser#arithmeticOperation.
 ExprParserListener.prototype.exitArithmeticOperation = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ExprParser#propertyOperation.
+ExprParserListener.prototype.enterPropertyOperation = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#propertyOperation.
+ExprParserListener.prototype.exitPropertyOperation = function(ctx) {
 };
 
 

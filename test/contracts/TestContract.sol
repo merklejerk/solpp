@@ -139,10 +139,12 @@ contract TestContract {
 		_var4  = x *
 			// Expect: 1024 + (10**18 + 2) - 10 /
 			${EXT_SYMBOL_5} * ${ALIAS2} - $${log(EXT_SYMBOL_5, 2)} /
-			// Expect: 10**3 + 10**(1+1) + 10 / 32 +
-			${FUNC1(3)} + ${FUNC1((1+1))} + $${FUNC2(1, 9)} / $${FUNC3(5.52)} +
-			// Expect: 9000000000000000018 + 128 + 21220;
-			$${FUNC4(2)} + $${sum(VALS)} + $${reduce(map(VALS, FUNC2), REDUCER)};
+			// Expect: 10**3 + 10**this.foo(2) + 10 / 32 +
+			${FUNC1(3)} + ${FUNC1(this.foo(2))} + $${FUNC2(1, 9)} / $${FUNC3(5.52)} +
+			// Expect: 9000000000000000018 + 128 + 21220 +
+			$${FUNC4(2)} + $${sum(VALS)} + $${reduce(map(VALS, FUNC2), REDUCER)} +
+			// Expect: 2500000000008 + (1 days + 2 hours);
+			$${FUNC2(2.5 finney, 8)} + (${FUNC2(1 days, 2 hours)});
 		// #macro FUNC5(x, y, z) hex((x + y) * z**10, 20)
 		// Expect: _var5 = 0x000000000000000000000000000003282b0d3000;
 		_var5 = $${FUNC5(8, 4, 14)};
@@ -157,6 +159,9 @@ contract TestContract {
 		_var7 = $${log(512, 2)} / $${int(log(10) * 1e7)};
 		// Expect: 0xffff21524117
 		_var1 = $${hex(~0x3 ^ 0xdeadbeef | 0x4 & 0xffffffffffff)};
+		// #def STRS ['x', '_var4']
+		// Expect: _var2 = x + _var4;
+		_var2 = ${STRS[0]} + $${peek(STRS[1])};
 	}
 
 	function bar2() pure internal returns (bool) {

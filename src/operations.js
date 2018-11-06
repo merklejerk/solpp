@@ -2,6 +2,8 @@ const _ = require('lodash');
 const bn = require('bn-str-256');
 const bitwise = require('./bitwise');
 
+const QUOTED_REGEX = /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/;
+
 function eq(a, b) {
 	if (_.isNil(a) && _.isNil(b))
 		return true;
@@ -26,6 +28,10 @@ function toBool(x) {
 	if (!x || bn.eq(x, 0))
 		return false;
 	return true;
+}
+
+function isStringLiteral(x) {
+	return QUOTED_REGEX.test(x);
 }
 
 module.exports = {
@@ -55,5 +61,6 @@ module.exports = {
 		or: (a, b) => bitwise.or(a, b),
 		shift: (a, b) => bitwise.shift(a, b),
 		invert: (x) => bitwise.invert(x)
-	}
+	},
+	isStringLiteral: isStringLiteral
 };

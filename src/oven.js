@@ -161,7 +161,6 @@ class Oven {
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
-			console.error(err);
 			throw new Error(`Failed to expand expression: "${content}" in ` +
 		 		loc + `: ${err.message}`, err);
 		}

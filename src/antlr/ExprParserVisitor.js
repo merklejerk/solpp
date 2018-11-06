@@ -60,6 +60,12 @@ ExprParserVisitor.prototype.visitBitwiseOperation = function(ctx) {
 };
 
 
+// Visit a parse tree produced by ExprParser#unitsOperation.
+ExprParserVisitor.prototype.visitUnitsOperation = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by ExprParser#logicalNotOperation.
 ExprParserVisitor.prototype.visitLogicalNotOperation = function(ctx) {
   return this.visitChildren(ctx);
@@ -80,6 +86,12 @@ ExprParserVisitor.prototype.visitPeekOperation = function(ctx) {
 
 // Visit a parse tree produced by ExprParser#arithmeticOperation.
 ExprParserVisitor.prototype.visitArithmeticOperation = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by ExprParser#propertyOperation.
+ExprParserVisitor.prototype.visitPropertyOperation = function(ctx) {
   return this.visitChildren(ctx);
 };
 

@@ -7,7 +7,9 @@ options {
 expressionRoot: expr=expression EOF ;
 
 expression
-	: value=expressionValue #valueOperation
+	: num=expression units=UNIT_KW #unitsOperation
+	| value=expressionValue #valueOperation
+	| obj=expression DOT key=IDENTIFIER #propertyOperation
 	| list=expression LBRACKET inner=expression RBRACKET #indexOperation
 	| LBRACKET items=listItems RBRACKET #listOperation
 	| LPAREN inner=expression RPAREN #groupOperation
