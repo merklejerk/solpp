@@ -375,7 +375,7 @@ substituted throughout the macro's contents.
 uint256 v = 1 + ${SYM_1};
 
 // Expanding a macro.
-// #def MACRO_1(x) x / 2
+// #macro MACRO_1(x) x / 2
 uint256 v2 = 1 + ${MACRO_1(100)};
 ```
 
@@ -410,12 +410,12 @@ undefined, it will take on the value of `0`.
 uint256 v = 1 + $${SYM_1};
 
 // Evaluating a macro.
-// #def MACRO_1(x) x * 2
+// #macro MACRO_1(x) x * 2
 uint256 v2 = 1 + $${MACRO_1(2)};
 
 // Macro calling another macro and referencing a symbol.
 // #def SYM_2 2 ** 3
-// #def MACRO_2(x) MACRO_1(x) + SYM_2
+// #macro MACRO_2(x) MACRO_1(x) + SYM_2
 uint256 v3 = $${MACRO_2(4)};
 ```
 **Result**
@@ -515,7 +515,7 @@ sum += $${I};
 
 **Result**
 ```js
-// Calculate the summation of 0...9
+// Calculate the summation of 0...4
 uint256 sum = 0;
 sum += 1;
 sum += 2;
