@@ -2,7 +2,8 @@
 [![npm package](https://badge.fury.io/js/solpp.svg)](https://www.npmjs.com/package/solpp)
 
 # **solpp**
-##### A preprocessor and flattener for Ethereum's [Solidity](https://solidity.readthedocs.io) source files.
+#### A [preprocessor](https://en.wikipedia.org/wiki/Preprocessor) and flattener for Ethereum's [Solidity](https://solidity.readthedocs.io) source files.
+
 `solpp` is designed *specifically* for Solidity, which means it
 actually understands some of Solidity's grammar and offers high-precision
 math and builtin functions suitable for use with Solidity's primitives.
@@ -20,8 +21,8 @@ python, and javascript.
 - `#for` blocks for repeating code.
 - Expand (substitute) with `${...}` or evaluate with `$${...}` symbols, macros,
 and expressions anywhere in your code.
-- All math is done in extremely high precision (120 digits) and can represent
-both positive and negative integers or decimals.
+- All math is done in extremely high precision (up to120 digits) and can
+represent integers AND decimals.
 - Robust expression syntax with many useful builtin functions.
 
 ## Topics
@@ -182,7 +183,8 @@ A JSON definitions file is just a plain object such as:
    "MY_SYMBOL_1": 100,
    "MY_SYMBOL_2": true,
    "MY_SYMBOL_3": "48192.418291248",
-   "MY_SYMBOL_4": "blah blah"
+   "MY_SYMBOL_4": "blah blah",
+	"MY_SYMBOL_5": ['symbols', 'can', 'hold', 'lists']
 }
 ```
 
@@ -268,16 +270,17 @@ directive on the next immediate line comment.
 // #def MULTILINE_LDEF If you start running out of room, you can continue \
 // on the next line like so.
 
-// Block comment directives are great in one-line #for loops or #if blocks.
+// Block comment directives are great in tight #for loops or #if blocks.
 // This will render: uint256 fac5 = 1 * 2 * 3 * 4 * 5;
 uint256 fac5 = 1/* #for i in range(2, 6) */ * $${i}/* #done */;
+bool maybe = /* #if SOME_SYMBOL */true/* #else */false;
 ```
 
 ### Symbols
 Symbols can be declared externally on the command line or in a definitions
 file, or from right within a source file with the `#def` directive.
 Symbols can take on arbitrary values: code snippets, expressions, strings,
-numbers (with or without decimals), and booleans.
+numbers (binary, hex, octal, decimals), booleans, and lists.
 
 Once defined, symbols (and macros) can be [expanded](#expansion) (`${...}`)
 or [evaluated](#evaluation) (`$${...}`) in your code. Symbols do not
@@ -519,6 +522,11 @@ sum += 2;
 sum += 3;
 sum += 4;
 ```
+
+While `#for` offers a lot of explicit control, when working with lists,
+(which the `range()` builtin returns), you might find a more concise solution
+by exploiting [list builtin functions](#list-functions), such as `map()`,
+`reduce()`, and `join()`.
 
 ### Expressions
 
