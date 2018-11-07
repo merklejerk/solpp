@@ -59,7 +59,7 @@ represent integers AND decimals.
 // solpp will inline this file and any of its dependencies.
 import './MyLibrary.sol';
 // solpp can also do the same with URLs!
-import 'https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-solidity/master/contracts/token/ERC20/IERC20.sol';
+import 'https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-solidity/release-v2.0.0/contracts/token/ERC20/ERC20.sol';
 
 contract MyContract {
    // Define and use a symbol.
