@@ -38,15 +38,6 @@ ExprParserListener.prototype.exitGroupOperation = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ExprParser#valueOperation.
-ExprParserListener.prototype.enterValueOperation = function(ctx) {
-};
-
-// Exit a parse tree produced by ExprParser#valueOperation.
-ExprParserListener.prototype.exitValueOperation = function(ctx) {
-};
-
-
 // Enter a parse tree produced by ExprParser#ternaryOperation.
 ExprParserListener.prototype.enterTernaryOperation = function(ctx) {
 };
@@ -164,6 +155,15 @@ ExprParserListener.prototype.exitLogicalOperation = function(ctx) {
 };
 
 
+// Enter a parse tree produced by ExprParser#literalOperation.
+ExprParserListener.prototype.enterLiteralOperation = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#literalOperation.
+ExprParserListener.prototype.exitLiteralOperation = function(ctx) {
+};
+
+
 // Enter a parse tree produced by ExprParser#listOperation.
 ExprParserListener.prototype.enterListOperation = function(ctx) {
 };
@@ -173,21 +173,21 @@ ExprParserListener.prototype.exitListOperation = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ExprParser#expressionValue.
-ExprParserListener.prototype.enterExpressionValue = function(ctx) {
+// Enter a parse tree produced by ExprParser#identifierOperation.
+ExprParserListener.prototype.enterIdentifierOperation = function(ctx) {
 };
 
-// Exit a parse tree produced by ExprParser#expressionValue.
-ExprParserListener.prototype.exitExpressionValue = function(ctx) {
+// Exit a parse tree produced by ExprParser#identifierOperation.
+ExprParserListener.prototype.exitIdentifierOperation = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ExprParser#identifier.
-ExprParserListener.prototype.enterIdentifier = function(ctx) {
+// Enter a parse tree produced by ExprParser#literal.
+ExprParserListener.prototype.enterLiteral = function(ctx) {
 };
 
-// Exit a parse tree produced by ExprParser#identifier.
-ExprParserListener.prototype.exitIdentifier = function(ctx) {
+// Exit a parse tree produced by ExprParser#literal.
+ExprParserListener.prototype.exitLiteral = function(ctx) {
 };
 
 

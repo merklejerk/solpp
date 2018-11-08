@@ -433,8 +433,8 @@ contract TestContract {
 		_var7 = 9 / 23025850;
 		// Expect: 0xffff21524117
 		_var1 = 0xffff21524117;
-		// Expect: _var2 = x + _var4;
-		_var2 = x + _var4;
+		// Expect: STRS[0] = x + _var4;
+		_var2 = STRS[0] + _var4;
 	}
 
 	function bar2() pure internal returns (bool) {
@@ -446,8 +446,8 @@ contract TestContract {
 		string s3 = "yes";
 		// Expect: s4 = "bye";
 		string s4 = "bye";
-		// Expect: return false || false || true ||
-		return false || false || true ||
+		// Expect: return false || true ||
+		return false || true ||
 			// Expect: true || false || true ||
 			true || false || true ||
 			// Expect: false || true && false ||

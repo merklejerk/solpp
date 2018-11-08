@@ -8,13 +8,14 @@ expressionRoot: expr=expression EOF ;
 
 expression
 	: num=expression units=UNIT_KW #unitsOperation
-	| value=expressionValue #valueOperation
+	| value=literal #literalOperation
+	| name=IDENTIFIER #identifierOperation
 	| obj=expression DOT key=IDENTIFIER #propertyOperation
 	| list=expression LBRACKET inner=expression RBRACKET #indexOperation
 	| LBRACKET items=listItems RBRACKET #listOperation
 	| LPAREN inner=expression RPAREN #groupOperation
 	| DEFINED_KW LPAREN name=IDENTIFIER RPAREN #definedOperation
-	| PEEK_KW LPAREN inner=expression RPAREN #peekOperation
+	| PEEK_KW LPAREN name=IDENTIFIER RPAREN #peekOperation
 	| callee=expression LPAREN args=callArguments? RPAREN #callOperation
 	| op=BITWISE_INVERT_OP right=expression #bitwiseInvertOperation
 	| <assoc=right> left=expression op=POW_OP right=expression #powerOperation
@@ -27,23 +28,20 @@ expression
 	| condition=expression TERNARY_OP first=expression TERNARY_SEPARATOR second=expression #ternaryOperation
 	;
 
-expressionValue
-	: stringLiteral
-	| numberLiteral
-	| booleanLiteral
-	| identifier ;
+literal
+	: str=stringLiteral
+	| num=numberLiteral
+	| bool=booleanLiteral ;
 
-identifier: name=IDENTIFIER ;
+stringLiteral: value=STRING_LITERAL ;
 
-stringLiteral: str=STRING_LITERAL ;
-
-booleanLiteral: bool=BOOLEAN_LITERAL ;
+booleanLiteral: value=BOOLEAN_LITERAL ;
 
 numberLiteral
-	: literal=OCTAL_LITERAL #octalLiteral
-	| literal=HEX_LITERAL #hexLiteral
-	| literal=BINARY_LITERAL #binaryLiteral
-	| literal=DECIMAL_LITERAL #decimalLiteral
+	: value=OCTAL_LITERAL #octalLiteral
+	| value=HEX_LITERAL #hexLiteral
+	| value=BINARY_LITERAL #binaryLiteral
+	| value=DECIMAL_LITERAL #decimalLiteral
 	;
 
 callArguments

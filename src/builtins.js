@@ -165,21 +165,13 @@ function decimal(x) {
 	return bn.parse(x);
 }
 
-function _toString(x) {
-	if (_.isNil(x))
-		return '';
-	if (typeof(x) != 'string')
-		return `${x}`;
-	return x;
-}
-
 function quote(x) {
-	return JSON.stringify(_toString(x));
+	return JSON.stringify(ops.string.toString(x));
 }
 
 function unquote(x) {
 	x = x.trim();
-	if (ops.isStringLiteral(x)) {
+	if (ops.string.isStringLiteral(x)) {
 		if (x[0] == '\'')
 			x = '"' + x.substr(1, x.length-2) + '"';
 		return JSON.parse(x);
@@ -190,7 +182,7 @@ function unquote(x) {
 function concat(...args) {
 	let r = '';
 	for (let a of args)
-		r += _toString(a);
+		r += ops.string.toString(a);
 	return r;
 }
 concat.maxArgs = 1000;
@@ -221,19 +213,19 @@ strHex.minArgs = 1;
 strHex.maxArgs = 3;
 
 function uppercase(s) {
-	return _toString(s).toUpperCase();
+	return ops.string.toString(s).toUpperCase();
 }
 
 function lowercase(s) {
-	return _toString(s).toLowerCase();
+	return ops.string.toString(s).toLowerCase();
 }
 
 function camelcase(s) {
-	return _.camelCase(_toString(s));
+	return _.camelCase(ops.string.toString(s));
 }
 
 function capitalize(s) {
-	return _.capitalize(_toString(s));
+	return _.capitalize(ops.string.toString(s));
 }
 
 function keccak(...args) {
@@ -270,10 +262,6 @@ function keyToAddress(key) {
 		'0x'+ethjs.privateToAddress(key).toString('hex'));
 }
 
-function islist(x) {
-	return _.isArray(x);
-}
-
 function range(end, start, step) {
 	if (_.isNil(start)) {
 		end = bn.int(end);
@@ -302,28 +290,28 @@ range.minArgs = 1;
 range.maxArgs = 3;
 
 function join(list, separator) {
-	separator = _toString(separator || '');
-	if (!_.isArray(list))
+	separator = ops.string.toString(separator || '');
+	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
-	return _.map(list, i => _toString(i)).join(separator);
+	return _.map(list, i => ops.string.toString(i)).join(separator);
 }
 join.minArgs = 1;
 join.minArgs = 2;
 
 function len(x) {
-	if (!_.isArrayLike(x))
+	if (!_.isNumber(x.length))
 		throw new Error(`Cannot take the length of "${x}"`);
 	return x.length;
 }
 
 function sum(list) {
-	if (!_.isArray(list))
+	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
 	return _.reduce(list, (s,v) => bn.add(s, v), '0');
 }
 
 function map(list, fn) {
-	if (!_.isArray(list))
+	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
 	fn = new FunctionAdapter(fn);
 	const r = [];
@@ -337,7 +325,7 @@ function map(list, fn) {
 }
 
 function reduce(list, fn, initial='0') {
-	if (!_.isArray(list))
+	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
 	fn = new FunctionAdapter(fn);
 	let r = initial;
@@ -392,7 +380,7 @@ module.exports = {
 	keccak: keccak,
 	keccak256: keccak,
 	key2addr: keyToAddress,
-	islist: islist,
+	islist: ops.list.isList,
 	range: range,
 	join: join,
 	len: len,

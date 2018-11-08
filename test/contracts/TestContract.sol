@@ -90,7 +90,7 @@ contract TestContract {
 	bytes32 _bytes8 = $${keccak(1)};
 
 	address _addrs[] = [
-	// #def LIST [keccak256('foo'), keccak256('bar') ,keccak256(0x34920381af)]
+	// #def LIST [keccak256('foo'), keccak256('bar'), keccak256(0x34920381af)]
 	// #for i, k in LIST
 		$${key2addr(i)}$${k == len(LIST) - 1 ? '' : ','}
 	// #done
@@ -104,7 +104,7 @@ contract TestContract {
 
 	// Sometimes join is simpler than a for loop.
 	bytes32 _keys2[] = [
-		$${join(LIST, ',\n\t\t')}
+		$${join(LIST, concat(',\n', __indent))}
 	];
 
 	// Block comment directives.
@@ -160,8 +160,8 @@ contract TestContract {
 		// Expect: 0xffff21524117
 		_var1 = $${hex(~0x3 ^ 0xdeadbeef | 0x4 & 0xffffffffffff)};
 		// #def STRS ['x', '_var4']
-		// Expect: _var2 = x + _var4;
-		_var2 = ${STRS[0]} + $${peek(STRS[1])};
+		// Expect: STRS[0] = x + _var4;
+		_var2 = ${STRS[0]} + $${STRS[1]};
 	}
 
 	function bar2() pure internal returns (bool) {
@@ -177,8 +177,8 @@ contract TestContract {
 		// #def FOO 'foo'
 		// #def FOO2 foo
 		// #macro FUNC8(a, b) (a != b)
-		// Expect: return false || false || true ||
-		return $${bool(BAD_DEF)} || ${BAD_DEF} || ${EXT_SYMBOL_1} ||
+		// Expect: return false || true ||
+		return $${bool(BAD_DEF)} || ${EXT_SYMBOL_1} ||
 			// Expect: true || false || true ||
 			$${bool(ALIAS1)} || $${bool(DEF2)} || $${bool(~0 ^ 0)} ||
 			// Expect: false || true && false ||

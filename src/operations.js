@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const bn = require('bn-str-256');
 const bitwise = require('./bitwise');
+const {getNodeText, isNode, isTerminal} = require('./antlr-utils');
 
 const QUOTED_REGEX = /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/;
 
@@ -34,6 +35,36 @@ function isStringLiteral(x) {
 	return QUOTED_REGEX.test(x);
 }
 
+function toString(x) {
+	if (_.isNil(x))
+		return '';
+	if (_.isFunction(x.toString))
+		return x.toString();
+	if (isNode(x) || ixTerminal(x))
+		return getNodeText(x).trim();
+	if (_.isFunction(x))
+		return `<Function>`;
+	if (_.isNumber(x))
+		return bn.parse(x);
+	if (_.isArray(x))
+		return _.map(x, i => toString(i)).join(',');
+	if (typeof(x) != 'string')
+		return `${x}`;
+	return x;
+}
+
+function isList(x) {
+	return _.isArray(x);
+}
+
+function getListItem(list, idx) {
+	if (idx < 0 || idx >= list.length) {
+		throw new Error(`Index ${idx} is out of range ` +
+			`(${list.length})`);
+	}
+	return list[idx];
+}
+
 module.exports = {
 	math: {
 		add: add,
@@ -62,5 +93,12 @@ module.exports = {
 		shift: (a, b) => bitwise.shift(a, b),
 		invert: (x) => bitwise.invert(x)
 	},
-	isStringLiteral: isStringLiteral
+	string: {
+		isStringLiteral: isStringLiteral,
+		toString: toString
+	},
+	list: {
+		isList: isList,
+		at: getListItem
+	}
 };

@@ -30,12 +30,6 @@ ExprParserVisitor.prototype.visitGroupOperation = function(ctx) {
 };
 
 
-// Visit a parse tree produced by ExprParser#valueOperation.
-ExprParserVisitor.prototype.visitValueOperation = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by ExprParser#ternaryOperation.
 ExprParserVisitor.prototype.visitTernaryOperation = function(ctx) {
   return this.visitChildren(ctx);
@@ -114,20 +108,26 @@ ExprParserVisitor.prototype.visitLogicalOperation = function(ctx) {
 };
 
 
+// Visit a parse tree produced by ExprParser#literalOperation.
+ExprParserVisitor.prototype.visitLiteralOperation = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by ExprParser#listOperation.
 ExprParserVisitor.prototype.visitListOperation = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by ExprParser#expressionValue.
-ExprParserVisitor.prototype.visitExpressionValue = function(ctx) {
+// Visit a parse tree produced by ExprParser#identifierOperation.
+ExprParserVisitor.prototype.visitIdentifierOperation = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by ExprParser#identifier.
-ExprParserVisitor.prototype.visitIdentifier = function(ctx) {
+// Visit a parse tree produced by ExprParser#literal.
+ExprParserVisitor.prototype.visitLiteral = function(ctx) {
   return this.visitChildren(ctx);
 };
 

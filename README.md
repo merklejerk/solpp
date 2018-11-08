@@ -598,7 +598,7 @@ and can be called during [evaluation](#evaluation).
 | Function | Description |
 |----------|-------------|
 | `defined(x)` | Test whether the symbol `x` is defined |
-| `peek(x)` | Return the *literal* value of `x` (does not evaluate the contents of `x`)  |
+| `peek(x)` | Return the *literal* value of symbol `x` (does not evaluate the contents of `x`)  |
 | `bool(x)` | Coerce `x` into a boolean |
 | `islist(x)` | Check if `x` is a list |
 
@@ -677,3 +677,5 @@ and can be called during [evaluation](#evaluation).
 |----------|-------------|
 | `E` | The mathematical constant *e* |
 | `PI` | The mathematical constant *π* |
+| `__line` | The line number of the expression |
+| `__indent` | The indentation of the expression (string of whitespaces leading up to the expression |

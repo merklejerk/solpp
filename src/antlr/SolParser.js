@@ -7,7 +7,7 @@ var SolParserVisitor = require('./SolParserVisitor').SolParserVisitor;
 var grammarFileName = "SolParser.g4";
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003(\u00e6\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003(\u00e8\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f\u0004",
     "\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010\u0004",
@@ -24,127 +24,128 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0003\b\u0006\be\n\b\r\b\u000e\bf\u0003\t\u0003\t\u0003\n\u0003\n\u0003",
     "\u000b\u0003\u000b\u0003\u000b\u0003\u000b\u0007\u000bq\n\u000b\f\u000b",
     "\u000e\u000bt\u000b\u000b\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0006",
-    "\fz\n\f\r\f\u000e\f{\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e\u0003",
-    "\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003",
-    "\u000f\u0005\u000f\u008a\n\u000f\u0003\u0010\u0003\u0010\u0003\u0010",
-    "\u0003\u0010\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0003\u0011",
-    "\u0003\u0012\u0003\u0012\u0003\u0012\u0003\u0012\u0003\u0012\u0003\u0013",
-    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0014\u0003\u0014\u0003\u0014",
-    "\u0005\u0014\u00a1\n\u0014\u0003\u0014\u0003\u0014\u0003\u0015\u0003",
-    "\u0015\u0003\u0015\u0005\u0015\u00a8\n\u0015\u0003\u0016\u0006\u0016",
-    "\u00ab\n\u0016\r\u0016\u000e\u0016\u00ac\u0003\u0017\u0007\u0017\u00b0",
-    "\n\u0017\f\u0017\u000e\u0017\u00b3\u000b\u0017\u0003\u0018\u0003\u0018",
-    "\u0003\u0018\u0003\u0018\u0003\u0018\u0005\u0018\u00ba\n\u0018\u0003",
-    "\u0019\u0003\u0019\u0003\u0019\u0003\u0019\u0003\u0019\u0005\u0019\u00c1",
-    "\n\u0019\u0003\u001a\u0003\u001a\u0003\u001a\u0003\u001a\u0003\u001b",
-    "\u0003\u001b\u0003\u001b\u0003\u001b\u0003\u001c\u0003\u001c\u0003\u001c",
-    "\u0003\u001d\u0003\u001d\u0003\u001d\u0003\u001d\u0003\u001e\u0003\u001e",
-    "\u0003\u001e\u0003\u001f\u0003\u001f\u0003\u001f\u0003\u001f\u0003 ",
-    "\u0003 \u0003 \u0003 \u0005 \u00dd\n \u0003 \u0003 \u0003 \u0003 \u0003",
-    "!\u0003!\u0003!\u0003!\u0003\u00b1\u0002\"\u0002\u0004\u0006\b\n\f\u000e",
-    "\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&(*,.02468:<>@\u0002",
-    "\u0005\u0003\u0002\u0007\t\u0003\u0002\n\n\u0003\u0002\"\"\u0002\u00e4",
-    "\u0002E\u0003\u0002\u0002\u0002\u0004L\u0003\u0002\u0002\u0002\u0006",
-    "[\u0003\u0002\u0002\u0002\b]\u0003\u0002\u0002\u0002\n_\u0003\u0002",
-    "\u0002\u0002\fa\u0003\u0002\u0002\u0002\u000ed\u0003\u0002\u0002\u0002",
-    "\u0010h\u0003\u0002\u0002\u0002\u0012j\u0003\u0002\u0002\u0002\u0014",
-    "l\u0003\u0002\u0002\u0002\u0016w\u0003\u0002\u0002\u0002\u0018\u007f",
-    "\u0003\u0002\u0002\u0002\u001a\u0081\u0003\u0002\u0002\u0002\u001c\u0089",
-    "\u0003\u0002\u0002\u0002\u001e\u008b\u0003\u0002\u0002\u0002 \u008f",
-    "\u0003\u0002\u0002\u0002\"\u0094\u0003\u0002\u0002\u0002$\u0099\u0003",
-    "\u0002\u0002\u0002&\u009d\u0003\u0002\u0002\u0002(\u00a4\u0003\u0002",
-    "\u0002\u0002*\u00aa\u0003\u0002\u0002\u0002,\u00b1\u0003\u0002\u0002",
-    "\u0002.\u00b4\u0003\u0002\u0002\u00020\u00bb\u0003\u0002\u0002\u0002",
-    "2\u00c2\u0003\u0002\u0002\u00024\u00c6\u0003\u0002\u0002\u00026\u00ca",
-    "\u0003\u0002\u0002\u00028\u00cd\u0003\u0002\u0002\u0002:\u00d1\u0003",
-    "\u0002\u0002\u0002<\u00d4\u0003\u0002\u0002\u0002>\u00d8\u0003\u0002",
-    "\u0002\u0002@\u00e2\u0003\u0002\u0002\u0002BD\u0005\u0004\u0003\u0002",
-    "CB\u0003\u0002\u0002\u0002DG\u0003\u0002\u0002\u0002EC\u0003\u0002\u0002",
-    "\u0002EF\u0003\u0002\u0002\u0002FH\u0003\u0002\u0002\u0002GE\u0003\u0002",
-    "\u0002\u0002HI\u0007\u0002\u0002\u0003I\u0003\u0003\u0002\u0002\u0002",
-    "JM\u0005\u001c\u000f\u0002KM\u0005\u0006\u0004\u0002LJ\u0003\u0002\u0002",
-    "\u0002LK\u0003\u0002\u0002\u0002M\u0005\u0003\u0002\u0002\u0002N\\\u0005",
-    "\n\u0006\u0002O\\\u0005\f\u0007\u0002P\\\u0005\u0014\u000b\u0002Q\\",
-    "\u0005\u0016\f\u0002R\\\u0005\u0012\n\u0002S\\\u0005\u0018\r\u0002T",
-    "\\\u0005\u001a\u000e\u0002U\\\u0005\b\u0005\u0002V\\\u0007\u0011\u0002",
-    "\u0002W\\\u0007\u0012\u0002\u0002X\\\u0005\u000e\b\u0002Y\\\u0005\u0010",
-    "\t\u0002Z\\\u0007\n\u0002\u0002[N\u0003\u0002\u0002\u0002[O\u0003\u0002",
-    "\u0002\u0002[P\u0003\u0002\u0002\u0002[Q\u0003\u0002\u0002\u0002[R\u0003",
-    "\u0002\u0002\u0002[S\u0003\u0002\u0002\u0002[T\u0003\u0002\u0002\u0002",
-    "[U\u0003\u0002\u0002\u0002[V\u0003\u0002\u0002\u0002[W\u0003\u0002\u0002",
-    "\u0002[X\u0003\u0002\u0002\u0002[Y\u0003\u0002\u0002\u0002[Z\u0003\u0002",
-    "\u0002\u0002\\\u0007\u0003\u0002\u0002\u0002]^\t\u0002\u0002\u0002^",
-    "\t\u0003\u0002\u0002\u0002_`\u0007\u0005\u0002\u0002`\u000b\u0003\u0002",
-    "\u0002\u0002ab\u0007\u0006\u0002\u0002b\r\u0003\u0002\u0002\u0002ce",
-    "\u0007\u000b\u0002\u0002dc\u0003\u0002\u0002\u0002ef\u0003\u0002\u0002",
-    "\u0002fd\u0003\u0002\u0002\u0002fg\u0003\u0002\u0002\u0002g\u000f\u0003",
-    "\u0002\u0002\u0002hi\u0007\f\u0002\u0002i\u0011\u0003\u0002\u0002\u0002",
-    "jk\u0007\u0010\u0002\u0002k\u0013\u0003\u0002\u0002\u0002lm\u0007\u000f",
-    "\u0002\u0002mn\u0007\u000b\u0002\u0002nr\u0007\u0007\u0002\u0002oq\u0007",
-    "\u000b\u0002\u0002po\u0003\u0002\u0002\u0002qt\u0003\u0002\u0002\u0002",
-    "rp\u0003\u0002\u0002\u0002rs\u0003\u0002\u0002\u0002su\u0003\u0002\u0002",
-    "\u0002tr\u0003\u0002\u0002\u0002uv\u0007\n\u0002\u0002v\u0015\u0003",
-    "\u0002\u0002\u0002wy\u0007\u000f\u0002\u0002xz\n\u0003\u0002\u0002y",
-    "x\u0003\u0002\u0002\u0002z{\u0003\u0002\u0002\u0002{y\u0003\u0002\u0002",
-    "\u0002{|\u0003\u0002\u0002\u0002|}\u0003\u0002\u0002\u0002}~\u0007\n",
-    "\u0002\u0002~\u0017\u0003\u0002\u0002\u0002\u007f\u0080\u0007(\u0002",
-    "\u0002\u0080\u0019\u0003\u0002\u0002\u0002\u0081\u0082\u0007&\u0002",
-    "\u0002\u0082\u001b\u0003\u0002\u0002\u0002\u0083\u008a\u0005\"\u0012",
-    "\u0002\u0084\u008a\u0005\u001e\u0010\u0002\u0085\u008a\u0005 \u0011",
-    "\u0002\u0086\u008a\u0005$\u0013\u0002\u0087\u008a\u0005.\u0018\u0002",
-    "\u0088\u008a\u0005<\u001f\u0002\u0089\u0083\u0003\u0002\u0002\u0002",
-    "\u0089\u0084\u0003\u0002\u0002\u0002\u0089\u0085\u0003\u0002\u0002\u0002",
-    "\u0089\u0086\u0003\u0002\u0002\u0002\u0089\u0087\u0003\u0002\u0002\u0002",
-    "\u0089\u0088\u0003\u0002\u0002\u0002\u008a\u001d\u0003\u0002\u0002\u0002",
-    "\u008b\u008c\u0007\u0013\u0002\u0002\u008c\u008d\u0007\u0011\u0002\u0002",
-    "\u008d\u008e\u0007\"\u0002\u0002\u008e\u001f\u0003\u0002\u0002\u0002",
-    "\u008f\u0090\u0007\u0013\u0002\u0002\u0090\u0091\u0007\u0011\u0002\u0002",
-    "\u0091\u0092\u0005*\u0016\u0002\u0092\u0093\u0007\"\u0002\u0002\u0093",
-    "!\u0003\u0002\u0002\u0002\u0094\u0095\u0007\u0014\u0002\u0002\u0095",
-    "\u0096\u0005&\u0014\u0002\u0096\u0097\u0005*\u0016\u0002\u0097\u0098",
-    "\u0007\"\u0002\u0002\u0098#\u0003\u0002\u0002\u0002\u0099\u009a\u0007",
-    "\u0015\u0002\u0002\u009a\u009b\u0007\u0011\u0002\u0002\u009b\u009c\u0007",
-    "\"\u0002\u0002\u009c%\u0003\u0002\u0002\u0002\u009d\u009e\u0007\u0011",
-    "\u0002\u0002\u009e\u00a0\u0007\u001d\u0002\u0002\u009f\u00a1\u0005(",
-    "\u0015\u0002\u00a0\u009f\u0003\u0002\u0002\u0002\u00a0\u00a1\u0003\u0002",
-    "\u0002\u0002\u00a1\u00a2\u0003\u0002\u0002\u0002\u00a2\u00a3\u0007\u001e",
-    "\u0002\u0002\u00a3\'\u0003\u0002\u0002\u0002\u00a4\u00a7\u0007\u0011",
-    "\u0002\u0002\u00a5\u00a6\u0007\u001f\u0002\u0002\u00a6\u00a8\u0005(",
-    "\u0015\u0002\u00a7\u00a5\u0003\u0002\u0002\u0002\u00a7\u00a8\u0003\u0002",
-    "\u0002\u0002\u00a8)\u0003\u0002\u0002\u0002\u00a9\u00ab\n\u0004\u0002",
-    "\u0002\u00aa\u00a9\u0003\u0002\u0002\u0002\u00ab\u00ac\u0003\u0002\u0002",
-    "\u0002\u00ac\u00aa\u0003\u0002\u0002\u0002\u00ac\u00ad\u0003\u0002\u0002",
-    "\u0002\u00ad+\u0003\u0002\u0002\u0002\u00ae\u00b0\u0005\u0004\u0003",
-    "\u0002\u00af\u00ae\u0003\u0002\u0002\u0002\u00b0\u00b3\u0003\u0002\u0002",
-    "\u0002\u00b1\u00b2\u0003\u0002\u0002\u0002\u00b1\u00af\u0003\u0002\u0002",
-    "\u0002\u00b2-\u0003\u0002\u0002\u0002\u00b3\u00b1\u0003\u0002\u0002",
-    "\u0002\u00b4\u00b5\u00054\u001b\u0002\u00b5\u00b9\u0005,\u0017\u0002",
-    "\u00b6\u00ba\u00052\u001a\u0002\u00b7\u00ba\u00050\u0019\u0002\u00b8",
-    "\u00ba\u0005:\u001e\u0002\u00b9\u00b6\u0003\u0002\u0002\u0002\u00b9",
-    "\u00b7\u0003\u0002\u0002\u0002\u00b9\u00b8\u0003\u0002\u0002\u0002\u00ba",
-    "/\u0003\u0002\u0002\u0002\u00bb\u00bc\u00058\u001d\u0002\u00bc\u00c0",
-    "\u0005,\u0017\u0002\u00bd\u00c1\u00052\u001a\u0002\u00be\u00c1\u0005",
-    "0\u0019\u0002\u00bf\u00c1\u0005:\u001e\u0002\u00c0\u00bd\u0003\u0002",
-    "\u0002\u0002\u00c0\u00be\u0003\u0002\u0002\u0002\u00c0\u00bf\u0003\u0002",
-    "\u0002\u0002\u00c11\u0003\u0002\u0002\u0002\u00c2\u00c3\u00056\u001c",
-    "\u0002\u00c3\u00c4\u0005,\u0017\u0002\u00c4\u00c5\u0005:\u001e\u0002",
-    "\u00c53\u0003\u0002\u0002\u0002\u00c6\u00c7\u0007\u0016\u0002\u0002",
-    "\u00c7\u00c8\u0005*\u0016\u0002\u00c8\u00c9\u0007\"\u0002\u0002\u00c9",
-    "5\u0003\u0002\u0002\u0002\u00ca\u00cb\u0007\u0018\u0002\u0002\u00cb",
-    "\u00cc\u0007\"\u0002\u0002\u00cc7\u0003\u0002\u0002\u0002\u00cd\u00ce",
-    "\u0007\u0017\u0002\u0002\u00ce\u00cf\u0005*\u0016\u0002\u00cf\u00d0",
-    "\u0007\"\u0002\u0002\u00d09\u0003\u0002\u0002\u0002\u00d1\u00d2\u0007",
-    "\u0019\u0002\u0002\u00d2\u00d3\u0007\"\u0002\u0002\u00d3;\u0003\u0002",
-    "\u0002\u0002\u00d4\u00d5\u0005> \u0002\u00d5\u00d6\u0005,\u0017\u0002",
-    "\u00d6\u00d7\u0005@!\u0002\u00d7=\u0003\u0002\u0002\u0002\u00d8\u00d9",
-    "\u0007\u001a\u0002\u0002\u00d9\u00dc\u0007\u0011\u0002\u0002\u00da\u00db",
-    "\u0007\u001f\u0002\u0002\u00db\u00dd\u0007\u0011\u0002\u0002\u00dc\u00da",
-    "\u0003\u0002\u0002\u0002\u00dc\u00dd\u0003\u0002\u0002\u0002\u00dd\u00de",
-    "\u0003\u0002\u0002\u0002\u00de\u00df\u0007\u001c\u0002\u0002\u00df\u00e0",
-    "\u0005*\u0016\u0002\u00e0\u00e1\u0007\"\u0002\u0002\u00e1?\u0003\u0002",
-    "\u0002\u0002\u00e2\u00e3\u0007\u001b\u0002\u0002\u00e3\u00e4\u0007\"",
-    "\u0002\u0002\u00e4A\u0003\u0002\u0002\u0002\u0010EL[fr{\u0089\u00a0",
-    "\u00a7\u00ac\u00b1\u00b9\u00c0\u00dc"].join("");
+    "\fz\n\f\r\f\u000e\f{\u0003\f\u0003\f\u0003\r\u0003\r\u0003\r\u0003\u000e",
+    "\u0003\u000e\u0003\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f",
+    "\u0003\u000f\u0003\u000f\u0005\u000f\u008c\n\u000f\u0003\u0010\u0003",
+    "\u0010\u0003\u0010\u0003\u0010\u0003\u0011\u0003\u0011\u0003\u0011\u0003",
+    "\u0011\u0003\u0011\u0003\u0012\u0003\u0012\u0003\u0012\u0003\u0012\u0003",
+    "\u0012\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0014\u0003",
+    "\u0014\u0003\u0014\u0005\u0014\u00a3\n\u0014\u0003\u0014\u0003\u0014",
+    "\u0003\u0015\u0003\u0015\u0003\u0015\u0005\u0015\u00aa\n\u0015\u0003",
+    "\u0016\u0006\u0016\u00ad\n\u0016\r\u0016\u000e\u0016\u00ae\u0003\u0017",
+    "\u0007\u0017\u00b2\n\u0017\f\u0017\u000e\u0017\u00b5\u000b\u0017\u0003",
+    "\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0003\u0018\u0005\u0018\u00bc",
+    "\n\u0018\u0003\u0019\u0003\u0019\u0003\u0019\u0003\u0019\u0003\u0019",
+    "\u0005\u0019\u00c3\n\u0019\u0003\u001a\u0003\u001a\u0003\u001a\u0003",
+    "\u001a\u0003\u001b\u0003\u001b\u0003\u001b\u0003\u001b\u0003\u001c\u0003",
+    "\u001c\u0003\u001c\u0003\u001d\u0003\u001d\u0003\u001d\u0003\u001d\u0003",
+    "\u001e\u0003\u001e\u0003\u001e\u0003\u001f\u0003\u001f\u0003\u001f\u0003",
+    "\u001f\u0003 \u0003 \u0003 \u0003 \u0005 \u00df\n \u0003 \u0003 \u0003",
+    " \u0003 \u0003!\u0003!\u0003!\u0003!\u0003\u00b3\u0002\"\u0002\u0004",
+    "\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e ",
+    "\"$&(*,.02468:<>@\u0002\u0005\u0003\u0002\u0007\t\u0003\u0002\n\n\u0003",
+    "\u0002\"\"\u0002\u00e6\u0002E\u0003\u0002\u0002\u0002\u0004L\u0003\u0002",
+    "\u0002\u0002\u0006[\u0003\u0002\u0002\u0002\b]\u0003\u0002\u0002\u0002",
+    "\n_\u0003\u0002\u0002\u0002\fa\u0003\u0002\u0002\u0002\u000ed\u0003",
+    "\u0002\u0002\u0002\u0010h\u0003\u0002\u0002\u0002\u0012j\u0003\u0002",
+    "\u0002\u0002\u0014l\u0003\u0002\u0002\u0002\u0016w\u0003\u0002\u0002",
+    "\u0002\u0018\u007f\u0003\u0002\u0002\u0002\u001a\u0082\u0003\u0002\u0002",
+    "\u0002\u001c\u008b\u0003\u0002\u0002\u0002\u001e\u008d\u0003\u0002\u0002",
+    "\u0002 \u0091\u0003\u0002\u0002\u0002\"\u0096\u0003\u0002\u0002\u0002",
+    "$\u009b\u0003\u0002\u0002\u0002&\u009f\u0003\u0002\u0002\u0002(\u00a6",
+    "\u0003\u0002\u0002\u0002*\u00ac\u0003\u0002\u0002\u0002,\u00b3\u0003",
+    "\u0002\u0002\u0002.\u00b6\u0003\u0002\u0002\u00020\u00bd\u0003\u0002",
+    "\u0002\u00022\u00c4\u0003\u0002\u0002\u00024\u00c8\u0003\u0002\u0002",
+    "\u00026\u00cc\u0003\u0002\u0002\u00028\u00cf\u0003\u0002\u0002\u0002",
+    ":\u00d3\u0003\u0002\u0002\u0002<\u00d6\u0003\u0002\u0002\u0002>\u00da",
+    "\u0003\u0002\u0002\u0002@\u00e4\u0003\u0002\u0002\u0002BD\u0005\u0004",
+    "\u0003\u0002CB\u0003\u0002\u0002\u0002DG\u0003\u0002\u0002\u0002EC\u0003",
+    "\u0002\u0002\u0002EF\u0003\u0002\u0002\u0002FH\u0003\u0002\u0002\u0002",
+    "GE\u0003\u0002\u0002\u0002HI\u0007\u0002\u0002\u0003I\u0003\u0003\u0002",
+    "\u0002\u0002JM\u0005\u001c\u000f\u0002KM\u0005\u0006\u0004\u0002LJ\u0003",
+    "\u0002\u0002\u0002LK\u0003\u0002\u0002\u0002M\u0005\u0003\u0002\u0002",
+    "\u0002N\\\u0005\n\u0006\u0002O\\\u0005\f\u0007\u0002P\\\u0005\u0014",
+    "\u000b\u0002Q\\\u0005\u0016\f\u0002R\\\u0005\u0012\n\u0002S\\\u0005",
+    "\u0018\r\u0002T\\\u0005\u001a\u000e\u0002U\\\u0005\b\u0005\u0002V\\",
+    "\u0007\u0011\u0002\u0002W\\\u0007\u0012\u0002\u0002X\\\u0005\u000e\b",
+    "\u0002Y\\\u0005\u0010\t\u0002Z\\\u0007\n\u0002\u0002[N\u0003\u0002\u0002",
+    "\u0002[O\u0003\u0002\u0002\u0002[P\u0003\u0002\u0002\u0002[Q\u0003\u0002",
+    "\u0002\u0002[R\u0003\u0002\u0002\u0002[S\u0003\u0002\u0002\u0002[T\u0003",
+    "\u0002\u0002\u0002[U\u0003\u0002\u0002\u0002[V\u0003\u0002\u0002\u0002",
+    "[W\u0003\u0002\u0002\u0002[X\u0003\u0002\u0002\u0002[Y\u0003\u0002\u0002",
+    "\u0002[Z\u0003\u0002\u0002\u0002\\\u0007\u0003\u0002\u0002\u0002]^\t",
+    "\u0002\u0002\u0002^\t\u0003\u0002\u0002\u0002_`\u0007\u0005\u0002\u0002",
+    "`\u000b\u0003\u0002\u0002\u0002ab\u0007\u0006\u0002\u0002b\r\u0003\u0002",
+    "\u0002\u0002ce\u0007\u000b\u0002\u0002dc\u0003\u0002\u0002\u0002ef\u0003",
+    "\u0002\u0002\u0002fd\u0003\u0002\u0002\u0002fg\u0003\u0002\u0002\u0002",
+    "g\u000f\u0003\u0002\u0002\u0002hi\u0007\f\u0002\u0002i\u0011\u0003\u0002",
+    "\u0002\u0002jk\u0007\u0010\u0002\u0002k\u0013\u0003\u0002\u0002\u0002",
+    "lm\u0007\u000f\u0002\u0002mn\u0007\u000b\u0002\u0002nr\u0007\u0007\u0002",
+    "\u0002oq\u0007\u000b\u0002\u0002po\u0003\u0002\u0002\u0002qt\u0003\u0002",
+    "\u0002\u0002rp\u0003\u0002\u0002\u0002rs\u0003\u0002\u0002\u0002su\u0003",
+    "\u0002\u0002\u0002tr\u0003\u0002\u0002\u0002uv\u0007\n\u0002\u0002v",
+    "\u0015\u0003\u0002\u0002\u0002wy\u0007\u000f\u0002\u0002xz\n\u0003\u0002",
+    "\u0002yx\u0003\u0002\u0002\u0002z{\u0003\u0002\u0002\u0002{y\u0003\u0002",
+    "\u0002\u0002{|\u0003\u0002\u0002\u0002|}\u0003\u0002\u0002\u0002}~\u0007",
+    "\n\u0002\u0002~\u0017\u0003\u0002\u0002\u0002\u007f\u0080\u0007\u000e",
+    "\u0002\u0002\u0080\u0081\u0007(\u0002\u0002\u0081\u0019\u0003\u0002",
+    "\u0002\u0002\u0082\u0083\u0007\r\u0002\u0002\u0083\u0084\u0007&\u0002",
+    "\u0002\u0084\u001b\u0003\u0002\u0002\u0002\u0085\u008c\u0005\"\u0012",
+    "\u0002\u0086\u008c\u0005\u001e\u0010\u0002\u0087\u008c\u0005 \u0011",
+    "\u0002\u0088\u008c\u0005$\u0013\u0002\u0089\u008c\u0005.\u0018\u0002",
+    "\u008a\u008c\u0005<\u001f\u0002\u008b\u0085\u0003\u0002\u0002\u0002",
+    "\u008b\u0086\u0003\u0002\u0002\u0002\u008b\u0087\u0003\u0002\u0002\u0002",
+    "\u008b\u0088\u0003\u0002\u0002\u0002\u008b\u0089\u0003\u0002\u0002\u0002",
+    "\u008b\u008a\u0003\u0002\u0002\u0002\u008c\u001d\u0003\u0002\u0002\u0002",
+    "\u008d\u008e\u0007\u0013\u0002\u0002\u008e\u008f\u0007\u0011\u0002\u0002",
+    "\u008f\u0090\u0007\"\u0002\u0002\u0090\u001f\u0003\u0002\u0002\u0002",
+    "\u0091\u0092\u0007\u0013\u0002\u0002\u0092\u0093\u0007\u0011\u0002\u0002",
+    "\u0093\u0094\u0005*\u0016\u0002\u0094\u0095\u0007\"\u0002\u0002\u0095",
+    "!\u0003\u0002\u0002\u0002\u0096\u0097\u0007\u0014\u0002\u0002\u0097",
+    "\u0098\u0005&\u0014\u0002\u0098\u0099\u0005*\u0016\u0002\u0099\u009a",
+    "\u0007\"\u0002\u0002\u009a#\u0003\u0002\u0002\u0002\u009b\u009c\u0007",
+    "\u0015\u0002\u0002\u009c\u009d\u0007\u0011\u0002\u0002\u009d\u009e\u0007",
+    "\"\u0002\u0002\u009e%\u0003\u0002\u0002\u0002\u009f\u00a0\u0007\u0011",
+    "\u0002\u0002\u00a0\u00a2\u0007\u001d\u0002\u0002\u00a1\u00a3\u0005(",
+    "\u0015\u0002\u00a2\u00a1\u0003\u0002\u0002\u0002\u00a2\u00a3\u0003\u0002",
+    "\u0002\u0002\u00a3\u00a4\u0003\u0002\u0002\u0002\u00a4\u00a5\u0007\u001e",
+    "\u0002\u0002\u00a5\'\u0003\u0002\u0002\u0002\u00a6\u00a9\u0007\u0011",
+    "\u0002\u0002\u00a7\u00a8\u0007\u001f\u0002\u0002\u00a8\u00aa\u0005(",
+    "\u0015\u0002\u00a9\u00a7\u0003\u0002\u0002\u0002\u00a9\u00aa\u0003\u0002",
+    "\u0002\u0002\u00aa)\u0003\u0002\u0002\u0002\u00ab\u00ad\n\u0004\u0002",
+    "\u0002\u00ac\u00ab\u0003\u0002\u0002\u0002\u00ad\u00ae\u0003\u0002\u0002",
+    "\u0002\u00ae\u00ac\u0003\u0002\u0002\u0002\u00ae\u00af\u0003\u0002\u0002",
+    "\u0002\u00af+\u0003\u0002\u0002\u0002\u00b0\u00b2\u0005\u0004\u0003",
+    "\u0002\u00b1\u00b0\u0003\u0002\u0002\u0002\u00b2\u00b5\u0003\u0002\u0002",
+    "\u0002\u00b3\u00b4\u0003\u0002\u0002\u0002\u00b3\u00b1\u0003\u0002\u0002",
+    "\u0002\u00b4-\u0003\u0002\u0002\u0002\u00b5\u00b3\u0003\u0002\u0002",
+    "\u0002\u00b6\u00b7\u00054\u001b\u0002\u00b7\u00bb\u0005,\u0017\u0002",
+    "\u00b8\u00bc\u00052\u001a\u0002\u00b9\u00bc\u00050\u0019\u0002\u00ba",
+    "\u00bc\u0005:\u001e\u0002\u00bb\u00b8\u0003\u0002\u0002\u0002\u00bb",
+    "\u00b9\u0003\u0002\u0002\u0002\u00bb\u00ba\u0003\u0002\u0002\u0002\u00bc",
+    "/\u0003\u0002\u0002\u0002\u00bd\u00be\u00058\u001d\u0002\u00be\u00c2",
+    "\u0005,\u0017\u0002\u00bf\u00c3\u00052\u001a\u0002\u00c0\u00c3\u0005",
+    "0\u0019\u0002\u00c1\u00c3\u0005:\u001e\u0002\u00c2\u00bf\u0003\u0002",
+    "\u0002\u0002\u00c2\u00c0\u0003\u0002\u0002\u0002\u00c2\u00c1\u0003\u0002",
+    "\u0002\u0002\u00c31\u0003\u0002\u0002\u0002\u00c4\u00c5\u00056\u001c",
+    "\u0002\u00c5\u00c6\u0005,\u0017\u0002\u00c6\u00c7\u0005:\u001e\u0002",
+    "\u00c73\u0003\u0002\u0002\u0002\u00c8\u00c9\u0007\u0016\u0002\u0002",
+    "\u00c9\u00ca\u0005*\u0016\u0002\u00ca\u00cb\u0007\"\u0002\u0002\u00cb",
+    "5\u0003\u0002\u0002\u0002\u00cc\u00cd\u0007\u0018\u0002\u0002\u00cd",
+    "\u00ce\u0007\"\u0002\u0002\u00ce7\u0003\u0002\u0002\u0002\u00cf\u00d0",
+    "\u0007\u0017\u0002\u0002\u00d0\u00d1\u0005*\u0016\u0002\u00d1\u00d2",
+    "\u0007\"\u0002\u0002\u00d29\u0003\u0002\u0002\u0002\u00d3\u00d4\u0007",
+    "\u0019\u0002\u0002\u00d4\u00d5\u0007\"\u0002\u0002\u00d5;\u0003\u0002",
+    "\u0002\u0002\u00d6\u00d7\u0005> \u0002\u00d7\u00d8\u0005,\u0017\u0002",
+    "\u00d8\u00d9\u0005@!\u0002\u00d9=\u0003\u0002\u0002\u0002\u00da\u00db",
+    "\u0007\u001a\u0002\u0002\u00db\u00de\u0007\u0011\u0002\u0002\u00dc\u00dd",
+    "\u0007\u001f\u0002\u0002\u00dd\u00df\u0007\u0011\u0002\u0002\u00de\u00dc",
+    "\u0003\u0002\u0002\u0002\u00de\u00df\u0003\u0002\u0002\u0002\u00df\u00e0",
+    "\u0003\u0002\u0002\u0002\u00e0\u00e1\u0007\u001c\u0002\u0002\u00e1\u00e2",
+    "\u0005*\u0016\u0002\u00e2\u00e3\u0007\"\u0002\u0002\u00e3?\u0003\u0002",
+    "\u0002\u0002\u00e4\u00e5\u0007\u001b\u0002\u0002\u00e5\u00e6\u0007\"",
+    "\u0002\u0002\u00e6A\u0003\u0002\u0002\u0002\u0010EL[fr{\u008b\u00a2",
+    "\u00a9\u00ae\u00b3\u00bb\u00c2\u00de"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -337,7 +338,7 @@ SolParser.prototype.sourceUnit = function() {
         this.state = 67;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << SolParser.BLOCK_COMMENT) | (1 << SolParser.LINE_COMMENT) | (1 << SolParser.STRING_LITERAL) | (1 << SolParser.NUMBER_LITERAL) | (1 << SolParser.BOOLEAN_LITERAL) | (1 << SolParser.SEMICOLON) | (1 << SolParser.WS) | (1 << SolParser.EOL) | (1 << SolParser.IMPORT_KW) | (1 << SolParser.PRAGMA_VERSION) | (1 << SolParser.IDENTIFIER) | (1 << SolParser.WORD) | (1 << SolParser.DEF_KW) | (1 << SolParser.MACRO_KW) | (1 << SolParser.UNDEF_KW) | (1 << SolParser.IF_KW) | (1 << SolParser.FOR_KW))) !== 0) || _la===SolParser.EVAL_MACRO_EXPRESSION || _la===SolParser.EXPAND_MACRO_EXPRESSION) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << SolParser.BLOCK_COMMENT) | (1 << SolParser.LINE_COMMENT) | (1 << SolParser.STRING_LITERAL) | (1 << SolParser.NUMBER_LITERAL) | (1 << SolParser.BOOLEAN_LITERAL) | (1 << SolParser.SEMICOLON) | (1 << SolParser.WS) | (1 << SolParser.EOL) | (1 << SolParser.BEGIN_EVAL_MACRO_EXPRESSION) | (1 << SolParser.BEGIN_EXPAND_MACRO_EXPRESSION) | (1 << SolParser.IMPORT_KW) | (1 << SolParser.PRAGMA_VERSION) | (1 << SolParser.IDENTIFIER) | (1 << SolParser.WORD) | (1 << SolParser.DEF_KW) | (1 << SolParser.MACRO_KW) | (1 << SolParser.UNDEF_KW) | (1 << SolParser.IF_KW) | (1 << SolParser.FOR_KW))) !== 0)) {
             this.state = 64;
             this.anything();
             this.state = 69;
@@ -434,12 +435,12 @@ SolParser.prototype.anything = function() {
         case SolParser.SEMICOLON:
         case SolParser.WS:
         case SolParser.EOL:
+        case SolParser.BEGIN_EVAL_MACRO_EXPRESSION:
+        case SolParser.BEGIN_EXPAND_MACRO_EXPRESSION:
         case SolParser.IMPORT_KW:
         case SolParser.PRAGMA_VERSION:
         case SolParser.IDENTIFIER:
         case SolParser.WORD:
-        case SolParser.EVAL_MACRO_EXPRESSION:
-        case SolParser.EXPAND_MACRO_EXPRESSION:
             this.enterOuterAlt(localctx, 2);
             this.state = 73;
             this.code();
@@ -1311,12 +1312,16 @@ function MacroExpansionContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = SolParser.RULE_macroExpansion;
-    this.expression = null; // Token
+    this.expr = null; // Token
     return this;
 }
 
 MacroExpansionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 MacroExpansionContext.prototype.constructor = MacroExpansionContext;
+
+MacroExpansionContext.prototype.BEGIN_EXPAND_MACRO_EXPRESSION = function() {
+    return this.getToken(SolParser.BEGIN_EXPAND_MACRO_EXPRESSION, 0);
+};
 
 MacroExpansionContext.prototype.EXPAND_MACRO_EXPRESSION = function() {
     return this.getToken(SolParser.EXPAND_MACRO_EXPRESSION, 0);
@@ -1354,7 +1359,9 @@ SolParser.prototype.macroExpansion = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 125;
-        localctx.expression = this.match(SolParser.EXPAND_MACRO_EXPRESSION);
+        this.match(SolParser.BEGIN_EXPAND_MACRO_EXPRESSION);
+        this.state = 126;
+        localctx.expr = this.match(SolParser.EXPAND_MACRO_EXPRESSION);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1379,12 +1386,16 @@ function MacroEvaluationContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = SolParser.RULE_macroEvaluation;
-    this.expression = null; // Token
+    this.expr = null; // Token
     return this;
 }
 
 MacroEvaluationContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 MacroEvaluationContext.prototype.constructor = MacroEvaluationContext;
+
+MacroEvaluationContext.prototype.BEGIN_EVAL_MACRO_EXPRESSION = function() {
+    return this.getToken(SolParser.BEGIN_EVAL_MACRO_EXPRESSION, 0);
+};
 
 MacroEvaluationContext.prototype.EVAL_MACRO_EXPRESSION = function() {
     return this.getToken(SolParser.EVAL_MACRO_EXPRESSION, 0);
@@ -1421,8 +1432,10 @@ SolParser.prototype.macroEvaluation = function() {
     this.enterRule(localctx, 24, SolParser.RULE_macroEvaluation);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 127;
-        localctx.expression = this.match(SolParser.EVAL_MACRO_EXPRESSION);
+        this.state = 128;
+        this.match(SolParser.BEGIN_EVAL_MACRO_EXPRESSION);
+        this.state = 129;
+        localctx.expr = this.match(SolParser.EVAL_MACRO_EXPRESSION);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1507,43 +1520,43 @@ SolParser.prototype.directive = function() {
     var localctx = new DirectiveContext(this, this._ctx, this.state);
     this.enterRule(localctx, 26, SolParser.RULE_directive);
     try {
-        this.state = 135;
+        this.state = 137;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,6,this._ctx);
         switch(la_) {
         case 1:
             this.enterOuterAlt(localctx, 1);
-            this.state = 129;
+            this.state = 131;
             this.defineMacroDirective();
             break;
 
         case 2:
             this.enterOuterAlt(localctx, 2);
-            this.state = 130;
+            this.state = 132;
             this.nakedDefineDirective();
             break;
 
         case 3:
             this.enterOuterAlt(localctx, 3);
-            this.state = 131;
+            this.state = 133;
             this.defineDirective();
             break;
 
         case 4:
             this.enterOuterAlt(localctx, 4);
-            this.state = 132;
+            this.state = 134;
             this.undefineDirective();
             break;
 
         case 5:
             this.enterOuterAlt(localctx, 5);
-            this.state = 133;
+            this.state = 135;
             this.ifBlock();
             break;
 
         case 6:
             this.enterOuterAlt(localctx, 6);
-            this.state = 134;
+            this.state = 136;
             this.forBlock();
             break;
 
@@ -1622,11 +1635,11 @@ SolParser.prototype.nakedDefineDirective = function() {
     this.enterRule(localctx, 28, SolParser.RULE_nakedDefineDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 137;
-        this.match(SolParser.DEF_KW);
-        this.state = 138;
-        localctx.name = this.match(SolParser.IDENTIFIER);
         this.state = 139;
+        this.match(SolParser.DEF_KW);
+        this.state = 140;
+        localctx.name = this.match(SolParser.IDENTIFIER);
+        this.state = 141;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1707,13 +1720,13 @@ SolParser.prototype.defineDirective = function() {
     this.enterRule(localctx, 30, SolParser.RULE_defineDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 141;
-        this.match(SolParser.DEF_KW);
-        this.state = 142;
-        localctx.name = this.match(SolParser.IDENTIFIER);
         this.state = 143;
-        localctx.body = this.directivePayload();
+        this.match(SolParser.DEF_KW);
         this.state = 144;
+        localctx.name = this.match(SolParser.IDENTIFIER);
+        this.state = 145;
+        localctx.body = this.directivePayload();
+        this.state = 146;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1794,13 +1807,13 @@ SolParser.prototype.defineMacroDirective = function() {
     this.enterRule(localctx, 32, SolParser.RULE_defineMacroDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 146;
-        this.match(SolParser.MACRO_KW);
-        this.state = 147;
-        localctx.spec = this.functionSpec();
         this.state = 148;
-        localctx.body = this.directivePayload();
+        this.match(SolParser.MACRO_KW);
         this.state = 149;
+        localctx.spec = this.functionSpec();
+        this.state = 150;
+        localctx.body = this.directivePayload();
+        this.state = 151;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1876,11 +1889,11 @@ SolParser.prototype.undefineDirective = function() {
     this.enterRule(localctx, 34, SolParser.RULE_undefineDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 151;
-        this.match(SolParser.UNDEF_KW);
-        this.state = 152;
-        localctx.name = this.match(SolParser.IDENTIFIER);
         this.state = 153;
+        this.match(SolParser.UNDEF_KW);
+        this.state = 154;
+        localctx.name = this.match(SolParser.IDENTIFIER);
+        this.state = 155;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1962,19 +1975,19 @@ SolParser.prototype.functionSpec = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 155;
+        this.state = 157;
         localctx.name = this.match(SolParser.IDENTIFIER);
-        this.state = 156;
-        this.match(SolParser.LPAREN);
         this.state = 158;
+        this.match(SolParser.LPAREN);
+        this.state = 160;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===SolParser.IDENTIFIER) {
-            this.state = 157;
+            this.state = 159;
             localctx.args = this.functionArgs();
         }
 
-        this.state = 160;
+        this.state = 162;
         this.match(SolParser.RPAREN);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2052,15 +2065,15 @@ SolParser.prototype.functionArgs = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 162;
+        this.state = 164;
         localctx.arg = this.match(SolParser.IDENTIFIER);
-        this.state = 165;
+        this.state = 167;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===SolParser.COMMA) {
-            this.state = 163;
+            this.state = 165;
             this.match(SolParser.COMMA);
-            this.state = 164;
+            this.state = 166;
             localctx.rest = this.functionArgs();
         }
 
@@ -2138,11 +2151,11 @@ SolParser.prototype.directivePayload = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 168; 
+        this.state = 170; 
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         do {
-            this.state = 167;
+            this.state = 169;
             _la = this._input.LA(1);
             if(_la<=0 || _la===SolParser.PP_END) {
             this._errHandler.recoverInline(this);
@@ -2151,7 +2164,7 @@ SolParser.prototype.directivePayload = function() {
             	this._errHandler.reportMatch(this);
                 this.consume();
             }
-            this.state = 170; 
+            this.state = 172; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << SolParser.PP_LINE_BEGIN) | (1 << SolParser.PP_BLOCK_BEGIN) | (1 << SolParser.BLOCK_COMMENT) | (1 << SolParser.LINE_COMMENT) | (1 << SolParser.STRING_LITERAL) | (1 << SolParser.NUMBER_LITERAL) | (1 << SolParser.BOOLEAN_LITERAL) | (1 << SolParser.SEMICOLON) | (1 << SolParser.WS) | (1 << SolParser.EOL) | (1 << SolParser.BEGIN_EVAL_MACRO_EXPRESSION) | (1 << SolParser.BEGIN_EXPAND_MACRO_EXPRESSION) | (1 << SolParser.IMPORT_KW) | (1 << SolParser.PRAGMA_VERSION) | (1 << SolParser.IDENTIFIER) | (1 << SolParser.WORD) | (1 << SolParser.DEF_KW) | (1 << SolParser.MACRO_KW) | (1 << SolParser.UNDEF_KW) | (1 << SolParser.IF_KW) | (1 << SolParser.ELIF_KW) | (1 << SolParser.ELSE_KW) | (1 << SolParser.ENDIF_KW) | (1 << SolParser.FOR_KW) | (1 << SolParser.DONE_KW) | (1 << SolParser.IN_KW) | (1 << SolParser.LPAREN) | (1 << SolParser.RPAREN) | (1 << SolParser.COMMA) | (1 << SolParser.PP_CONT) | (1 << SolParser.PP_COMMENT))) !== 0) || ((((_la - 33)) & ~0x1f) == 0 && ((1 << (_la - 33)) & ((1 << (SolParser.PP_WS - 33)) | (1 << (SolParser.PP_BLOCK_WS - 33)) | (1 << (SolParser.LEAVE_EVAL_MACRO_EXPRESSION - 33)) | (1 << (SolParser.EVAL_MACRO_EXPRESSION - 33)) | (1 << (SolParser.LEAVE_EXPAND_MACRO_EXPRESSION - 33)) | (1 << (SolParser.EXPAND_MACRO_EXPRESSION - 33)))) !== 0));
@@ -2227,15 +2240,15 @@ SolParser.prototype.blockContent = function() {
     this.enterRule(localctx, 42, SolParser.RULE_blockContent);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 175;
+        this.state = 177;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,10,this._ctx)
         while(_alt!=1 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
             if(_alt===1+1) {
-                this.state = 172;
+                this.state = 174;
                 this.anything(); 
             }
-            this.state = 177;
+            this.state = 179;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,10,this._ctx);
         }
@@ -2325,23 +2338,23 @@ SolParser.prototype.ifBlock = function() {
     this.enterRule(localctx, 44, SolParser.RULE_ifBlock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 178;
+        this.state = 180;
         localctx.dir = this.ifDirective();
-        this.state = 179;
+        this.state = 181;
         localctx.content = this.blockContent();
-        this.state = 183;
+        this.state = 185;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case SolParser.ELSE_KW:
-            this.state = 180;
+            this.state = 182;
             localctx.elseAlt = this.elseBlock();
             break;
         case SolParser.ELIF_KW:
-            this.state = 181;
+            this.state = 183;
             localctx.elifAlt = this.elifBlock();
             break;
         case SolParser.ENDIF_KW:
-            this.state = 182;
+            this.state = 184;
             this.endifDirective();
             break;
         default:
@@ -2432,23 +2445,23 @@ SolParser.prototype.elifBlock = function() {
     this.enterRule(localctx, 46, SolParser.RULE_elifBlock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 185;
+        this.state = 187;
         localctx.dir = this.elifDirective();
-        this.state = 186;
+        this.state = 188;
         localctx.content = this.blockContent();
-        this.state = 190;
+        this.state = 192;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case SolParser.ELSE_KW:
-            this.state = 187;
+            this.state = 189;
             localctx.elseAlt = this.elseBlock();
             break;
         case SolParser.ELIF_KW:
-            this.state = 188;
+            this.state = 190;
             localctx.elifAlt = this.elifBlock();
             break;
         case SolParser.ENDIF_KW:
-            this.state = 189;
+            this.state = 191;
             this.endifDirective();
             break;
         default:
@@ -2528,11 +2541,11 @@ SolParser.prototype.elseBlock = function() {
     this.enterRule(localctx, 48, SolParser.RULE_elseBlock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 192;
-        this.elseDirective();
-        this.state = 193;
-        localctx.content = this.blockContent();
         this.state = 194;
+        this.elseDirective();
+        this.state = 195;
+        localctx.content = this.blockContent();
+        this.state = 196;
         this.endifDirective();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2608,11 +2621,11 @@ SolParser.prototype.ifDirective = function() {
     this.enterRule(localctx, 50, SolParser.RULE_ifDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 196;
-        this.match(SolParser.IF_KW);
-        this.state = 197;
-        localctx.condition = this.directivePayload();
         this.state = 198;
+        this.match(SolParser.IF_KW);
+        this.state = 199;
+        localctx.condition = this.directivePayload();
+        this.state = 200;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2683,9 +2696,9 @@ SolParser.prototype.elseDirective = function() {
     this.enterRule(localctx, 52, SolParser.RULE_elseDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 200;
+        this.state = 202;
         this.match(SolParser.ELSE_KW);
-        this.state = 201;
+        this.state = 203;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2761,11 +2774,11 @@ SolParser.prototype.elifDirective = function() {
     this.enterRule(localctx, 54, SolParser.RULE_elifDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 203;
-        this.match(SolParser.ELIF_KW);
-        this.state = 204;
-        localctx.condition = this.directivePayload();
         this.state = 205;
+        this.match(SolParser.ELIF_KW);
+        this.state = 206;
+        localctx.condition = this.directivePayload();
+        this.state = 207;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2836,9 +2849,9 @@ SolParser.prototype.endifDirective = function() {
     this.enterRule(localctx, 56, SolParser.RULE_endifDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 207;
+        this.state = 209;
         this.match(SolParser.ENDIF_KW);
-        this.state = 208;
+        this.state = 210;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2915,11 +2928,11 @@ SolParser.prototype.forBlock = function() {
     this.enterRule(localctx, 58, SolParser.RULE_forBlock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 210;
-        localctx.dir = this.forDirective();
-        this.state = 211;
-        localctx.content = this.blockContent();
         this.state = 212;
+        localctx.dir = this.forDirective();
+        this.state = 213;
+        localctx.content = this.blockContent();
+        this.state = 214;
         this.doneDirective();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -3018,25 +3031,25 @@ SolParser.prototype.forDirective = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 214;
+        this.state = 216;
         this.match(SolParser.FOR_KW);
-        this.state = 215;
+        this.state = 217;
         localctx.iterator = this.match(SolParser.IDENTIFIER);
-        this.state = 218;
+        this.state = 220;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===SolParser.COMMA) {
-            this.state = 216;
+            this.state = 218;
             this.match(SolParser.COMMA);
-            this.state = 217;
+            this.state = 219;
             localctx.key = this.match(SolParser.IDENTIFIER);
         }
 
-        this.state = 220;
-        this.match(SolParser.IN_KW);
-        this.state = 221;
-        localctx.iterable = this.directivePayload();
         this.state = 222;
+        this.match(SolParser.IN_KW);
+        this.state = 223;
+        localctx.iterable = this.directivePayload();
+        this.state = 224;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -3107,9 +3120,9 @@ SolParser.prototype.doneDirective = function() {
     this.enterRule(localctx, 62, SolParser.RULE_doneDirective);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 224;
+        this.state = 226;
         this.match(SolParser.DONE_KW);
-        this.state = 225;
+        this.state = 227;
         this.match(SolParser.PP_END);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

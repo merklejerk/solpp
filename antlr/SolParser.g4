@@ -53,10 +53,10 @@ importStatement
 	: IMPORT_KW (~SEMICOLON)+ SEMICOLON ;
 
 macroExpansion
-	: expression=EXPAND_MACRO_EXPRESSION ;
+	: BEGIN_EXPAND_MACRO_EXPRESSION expr=EXPAND_MACRO_EXPRESSION ;
 
 macroEvaluation
-	: expression=EVAL_MACRO_EXPRESSION ;
+	: BEGIN_EVAL_MACRO_EXPRESSION expr=EVAL_MACRO_EXPRESSION ;
 
 directive
 	: defineMacroDirective

@@ -7,78 +7,76 @@ var ExprParserVisitor = require('./ExprParserVisitor').ExprParserVisitor;
 var grammarFileName = "ExprParser.g4";
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003!y\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
+    "\u0003!t\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
     "\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004\b",
-    "\t\b\u0004\t\t\t\u0004\n\t\n\u0003\u0002\u0003\u0002\u0003\u0002\u0003",
+    "\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0003\u0002\u0003\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005",
+    "\u0003/\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0005\u00031\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0005\u0003U\n\u0003\u0003\u0003\u0007\u0003X\n\u0003\f\u0003",
-    "\u000e\u0003[\u000b\u0003\u0003\u0004\u0003\u0004\u0003\u0004\u0003",
-    "\u0004\u0005\u0004a\n\u0004\u0003\u0005\u0003\u0005\u0003\u0006\u0003",
-    "\u0006\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0005",
-    "\bm\n\b\u0003\t\u0003\t\u0003\t\u0005\tr\n\t\u0003\n\u0003\n\u0003\n",
-    "\u0005\nw\n\n\u0003\n\u0002\u0003\u0004\u000b\u0002\u0004\u0006\b\n",
-    "\f\u000e\u0010\u0012\u0002\u0004\u0003\u0002\u0018\u001a\u0003\u0002",
-    "\u0016\u0017\u0002\u0089\u0002\u0014\u0003\u0002\u0002\u0002\u00040",
-    "\u0003\u0002\u0002\u0002\u0006`\u0003\u0002\u0002\u0002\bb\u0003\u0002",
-    "\u0002\u0002\nd\u0003\u0002\u0002\u0002\ff\u0003\u0002\u0002\u0002\u000e",
-    "l\u0003\u0002\u0002\u0002\u0010n\u0003\u0002\u0002\u0002\u0012s\u0003",
-    "\u0002\u0002\u0002\u0014\u0015\u0005\u0004\u0003\u0002\u0015\u0016\u0007",
-    "\u0002\u0002\u0003\u0016\u0003\u0003\u0002\u0002\u0002\u0017\u0018\b",
-    "\u0003\u0001\u0002\u00181\u0005\u0006\u0004\u0002\u0019\u001a\u0007",
-    "\r\u0002\u0002\u001a\u001b\u0005\u0012\n\u0002\u001b\u001c\u0007\u000e",
-    "\u0002\u0002\u001c1\u0003\u0002\u0002\u0002\u001d\u001e\u0007\u000b",
-    "\u0002\u0002\u001e\u001f\u0005\u0004\u0003\u0002\u001f \u0007\f\u0002",
-    "\u0002 1\u0003\u0002\u0002\u0002!\"\u0007\u0012\u0002\u0002\"#\u0007",
-    "\u000b\u0002\u0002#$\u0007\u0015\u0002\u0002$1\u0007\f\u0002\u0002%",
-    "&\u0007\u0013\u0002\u0002&\'\u0007\u000b\u0002\u0002\'(\u0005\u0004",
-    "\u0003\u0002()\u0007\f\u0002\u0002)1\u0003\u0002\u0002\u0002*+\u0007",
-    "\u001d\u0002\u0002+1\u0005\u0004\u0003\u000b,-\u0007\u0017\u0002\u0002",
-    "-1\u0005\u0004\u0003\t./\u0007\u001b\u0002\u0002/1\u0005\u0004\u0003",
-    "\u00040\u0017\u0003\u0002\u0002\u00020\u0019\u0003\u0002\u0002\u0002",
-    "0\u001d\u0003\u0002\u0002\u00020!\u0003\u0002\u0002\u00020%\u0003\u0002",
-    "\u0002\u00020*\u0003\u0002\u0002\u00020,\u0003\u0002\u0002\u00020.\u0003",
-    "\u0002\u0002\u00021Y\u0003\u0002\u0002\u000223\f\n\u0002\u000234\u0007",
-    "\u001c\u0002\u00024X\u0005\u0004\u0003\n56\f\b\u0002\u000267\u0007\u001e",
-    "\u0002\u00027X\u0005\u0004\u0003\t89\f\u0007\u0002\u00029:\t\u0002\u0002",
-    "\u0002:X\u0005\u0004\u0003\b;<\f\u0006\u0002\u0002<=\t\u0003\u0002\u0002",
-    "=X\u0005\u0004\u0003\u0007>?\f\u0005\u0002\u0002?@\u0007\u001f\u0002",
-    "\u0002@X\u0005\u0004\u0003\u0006AB\f\u0003\u0002\u0002BC\u0007 \u0002",
-    "\u0002CD\u0005\u0004\u0003\u0002DE\u0007!\u0002\u0002EF\u0005\u0004",
-    "\u0003\u0004FX\u0003\u0002\u0002\u0002GH\f\u0014\u0002\u0002HX\u0007",
-    "\u0014\u0002\u0002IJ\f\u0012\u0002\u0002JK\u0007\u0010\u0002\u0002K",
-    "X\u0007\u0015\u0002\u0002LM\f\u0011\u0002\u0002MN\u0007\r\u0002\u0002",
-    "NO\u0005\u0004\u0003\u0002OP\u0007\u000e\u0002\u0002PX\u0003\u0002\u0002",
-    "\u0002QR\f\f\u0002\u0002RT\u0007\u000b\u0002\u0002SU\u0005\u0010\t\u0002",
-    "TS\u0003\u0002\u0002\u0002TU\u0003\u0002\u0002\u0002UV\u0003\u0002\u0002",
-    "\u0002VX\u0007\f\u0002\u0002W2\u0003\u0002\u0002\u0002W5\u0003\u0002",
-    "\u0002\u0002W8\u0003\u0002\u0002\u0002W;\u0003\u0002\u0002\u0002W>\u0003",
-    "\u0002\u0002\u0002WA\u0003\u0002\u0002\u0002WG\u0003\u0002\u0002\u0002",
-    "WI\u0003\u0002\u0002\u0002WL\u0003\u0002\u0002\u0002WQ\u0003\u0002\u0002",
-    "\u0002X[\u0003\u0002\u0002\u0002YW\u0003\u0002\u0002\u0002YZ\u0003\u0002",
-    "\u0002\u0002Z\u0005\u0003\u0002\u0002\u0002[Y\u0003\u0002\u0002\u0002",
-    "\\a\u0005\n\u0006\u0002]a\u0005\u000e\b\u0002^a\u0005\f\u0007\u0002",
-    "_a\u0005\b\u0005\u0002`\\\u0003\u0002\u0002\u0002`]\u0003\u0002\u0002",
-    "\u0002`^\u0003\u0002\u0002\u0002`_\u0003\u0002\u0002\u0002a\u0007\u0003",
-    "\u0002\u0002\u0002bc\u0007\u0015\u0002\u0002c\t\u0003\u0002\u0002\u0002",
-    "de\u0007\u0006\u0002\u0002e\u000b\u0003\u0002\u0002\u0002fg\u0007\u0011",
-    "\u0002\u0002g\r\u0003\u0002\u0002\u0002hm\u0007\u0007\u0002\u0002im",
-    "\u0007\b\u0002\u0002jm\u0007\t\u0002\u0002km\u0007\n\u0002\u0002lh\u0003",
-    "\u0002\u0002\u0002li\u0003\u0002\u0002\u0002lj\u0003\u0002\u0002\u0002",
-    "lk\u0003\u0002\u0002\u0002m\u000f\u0003\u0002\u0002\u0002nq\u0005\u0004",
-    "\u0003\u0002op\u0007\u000f\u0002\u0002pr\u0005\u0010\t\u0002qo\u0003",
-    "\u0002\u0002\u0002qr\u0003\u0002\u0002\u0002r\u0011\u0003\u0002\u0002",
-    "\u0002sv\u0005\u0004\u0003\u0002tu\u0007\u000f\u0002\u0002uw\u0005\u0012",
-    "\n\u0002vt\u0003\u0002\u0002\u0002vw\u0003\u0002\u0002\u0002w\u0013",
-    "\u0003\u0002\u0002\u0002\n0TWY`lqv"].join("");
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005",
+    "\u0003S\n\u0003\u0003\u0003\u0007\u0003V\n\u0003\f\u0003\u000e\u0003",
+    "Y\u000b\u0003\u0003\u0004\u0003\u0004\u0003\u0004\u0005\u0004^\n\u0004",
+    "\u0003\u0005\u0003\u0005\u0003\u0006\u0003\u0006\u0003\u0007\u0003\u0007",
+    "\u0003\u0007\u0003\u0007\u0005\u0007h\n\u0007\u0003\b\u0003\b\u0003",
+    "\b\u0005\bm\n\b\u0003\t\u0003\t\u0003\t\u0005\tr\n\t\u0003\t\u0002\u0003",
+    "\u0004\n\u0002\u0004\u0006\b\n\f\u000e\u0010\u0002\u0004\u0003\u0002",
+    "\u0018\u001a\u0003\u0002\u0016\u0017\u0002\u0085\u0002\u0012\u0003\u0002",
+    "\u0002\u0002\u0004.\u0003\u0002\u0002\u0002\u0006]\u0003\u0002\u0002",
+    "\u0002\b_\u0003\u0002\u0002\u0002\na\u0003\u0002\u0002\u0002\fg\u0003",
+    "\u0002\u0002\u0002\u000ei\u0003\u0002\u0002\u0002\u0010n\u0003\u0002",
+    "\u0002\u0002\u0012\u0013\u0005\u0004\u0003\u0002\u0013\u0014\u0007\u0002",
+    "\u0002\u0003\u0014\u0003\u0003\u0002\u0002\u0002\u0015\u0016\b\u0003",
+    "\u0001\u0002\u0016/\u0005\u0006\u0004\u0002\u0017/\u0007\u0015\u0002",
+    "\u0002\u0018\u0019\u0007\r\u0002\u0002\u0019\u001a\u0005\u0010\t\u0002",
+    "\u001a\u001b\u0007\u000e\u0002\u0002\u001b/\u0003\u0002\u0002\u0002",
+    "\u001c\u001d\u0007\u000b\u0002\u0002\u001d\u001e\u0005\u0004\u0003\u0002",
+    "\u001e\u001f\u0007\f\u0002\u0002\u001f/\u0003\u0002\u0002\u0002 !\u0007",
+    "\u0012\u0002\u0002!\"\u0007\u000b\u0002\u0002\"#\u0007\u0015\u0002\u0002",
+    "#/\u0007\f\u0002\u0002$%\u0007\u0013\u0002\u0002%&\u0007\u000b\u0002",
+    "\u0002&\'\u0007\u0015\u0002\u0002\'/\u0007\f\u0002\u0002()\u0007\u001d",
+    "\u0002\u0002)/\u0005\u0004\u0003\u000b*+\u0007\u0017\u0002\u0002+/\u0005",
+    "\u0004\u0003\t,-\u0007\u001b\u0002\u0002-/\u0005\u0004\u0003\u0004.",
+    "\u0015\u0003\u0002\u0002\u0002.\u0017\u0003\u0002\u0002\u0002.\u0018",
+    "\u0003\u0002\u0002\u0002.\u001c\u0003\u0002\u0002\u0002. \u0003\u0002",
+    "\u0002\u0002.$\u0003\u0002\u0002\u0002.(\u0003\u0002\u0002\u0002.*\u0003",
+    "\u0002\u0002\u0002.,\u0003\u0002\u0002\u0002/W\u0003\u0002\u0002\u0002",
+    "01\f\n\u0002\u000212\u0007\u001c\u0002\u00022V\u0005\u0004\u0003\n3",
+    "4\f\b\u0002\u000245\u0007\u001e\u0002\u00025V\u0005\u0004\u0003\t67",
+    "\f\u0007\u0002\u000278\t\u0002\u0002\u00028V\u0005\u0004\u0003\b9:\f",
+    "\u0006\u0002\u0002:;\t\u0003\u0002\u0002;V\u0005\u0004\u0003\u0007<",
+    "=\f\u0005\u0002\u0002=>\u0007\u001f\u0002\u0002>V\u0005\u0004\u0003",
+    "\u0006?@\f\u0003\u0002\u0002@A\u0007 \u0002\u0002AB\u0005\u0004\u0003",
+    "\u0002BC\u0007!\u0002\u0002CD\u0005\u0004\u0003\u0004DV\u0003\u0002",
+    "\u0002\u0002EF\f\u0015\u0002\u0002FV\u0007\u0014\u0002\u0002GH\f\u0012",
+    "\u0002\u0002HI\u0007\u0010\u0002\u0002IV\u0007\u0015\u0002\u0002JK\f",
+    "\u0011\u0002\u0002KL\u0007\r\u0002\u0002LM\u0005\u0004\u0003\u0002M",
+    "N\u0007\u000e\u0002\u0002NV\u0003\u0002\u0002\u0002OP\f\f\u0002\u0002",
+    "PR\u0007\u000b\u0002\u0002QS\u0005\u000e\b\u0002RQ\u0003\u0002\u0002",
+    "\u0002RS\u0003\u0002\u0002\u0002ST\u0003\u0002\u0002\u0002TV\u0007\f",
+    "\u0002\u0002U0\u0003\u0002\u0002\u0002U3\u0003\u0002\u0002\u0002U6\u0003",
+    "\u0002\u0002\u0002U9\u0003\u0002\u0002\u0002U<\u0003\u0002\u0002\u0002",
+    "U?\u0003\u0002\u0002\u0002UE\u0003\u0002\u0002\u0002UG\u0003\u0002\u0002",
+    "\u0002UJ\u0003\u0002\u0002\u0002UO\u0003\u0002\u0002\u0002VY\u0003\u0002",
+    "\u0002\u0002WU\u0003\u0002\u0002\u0002WX\u0003\u0002\u0002\u0002X\u0005",
+    "\u0003\u0002\u0002\u0002YW\u0003\u0002\u0002\u0002Z^\u0005\b\u0005\u0002",
+    "[^\u0005\f\u0007\u0002\\^\u0005\n\u0006\u0002]Z\u0003\u0002\u0002\u0002",
+    "][\u0003\u0002\u0002\u0002]\\\u0003\u0002\u0002\u0002^\u0007\u0003\u0002",
+    "\u0002\u0002_`\u0007\u0006\u0002\u0002`\t\u0003\u0002\u0002\u0002ab",
+    "\u0007\u0011\u0002\u0002b\u000b\u0003\u0002\u0002\u0002ch\u0007\u0007",
+    "\u0002\u0002dh\u0007\b\u0002\u0002eh\u0007\t\u0002\u0002fh\u0007\n\u0002",
+    "\u0002gc\u0003\u0002\u0002\u0002gd\u0003\u0002\u0002\u0002ge\u0003\u0002",
+    "\u0002\u0002gf\u0003\u0002\u0002\u0002h\r\u0003\u0002\u0002\u0002il",
+    "\u0005\u0004\u0003\u0002jk\u0007\u000f\u0002\u0002km\u0005\u000e\b\u0002",
+    "lj\u0003\u0002\u0002\u0002lm\u0003\u0002\u0002\u0002m\u000f\u0003\u0002",
+    "\u0002\u0002nq\u0005\u0004\u0003\u0002op\u0007\u000f\u0002\u0002pr\u0005",
+    "\u0010\t\u0002qo\u0003\u0002\u0002\u0002qr\u0003\u0002\u0002\u0002r",
+    "\u0011\u0003\u0002\u0002\u0002\n.RUW]glq"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -101,9 +99,8 @@ var symbolicNames = [ null, "BLOCK_COMMENT", "LINE_COMMENT", "WS", "STRING_LITER
                       "BITWISE_INVERT_OP", "BITWISE_OP", "LOGICAL_OP", "TERNARY_OP", 
                       "TERNARY_SEPARATOR" ];
 
-var ruleNames =  [ "expressionRoot", "expression", "expressionValue", "identifier", 
-                   "stringLiteral", "booleanLiteral", "numberLiteral", "callArguments", 
-                   "listItems" ];
+var ruleNames =  [ "expressionRoot", "expression", "literal", "stringLiteral", 
+                   "booleanLiteral", "numberLiteral", "callArguments", "listItems" ];
 
 function ExprParser (input) {
 	antlr4.Parser.call(this, input);
@@ -158,13 +155,12 @@ ExprParser.TERNARY_SEPARATOR = 31;
 
 ExprParser.RULE_expressionRoot = 0;
 ExprParser.RULE_expression = 1;
-ExprParser.RULE_expressionValue = 2;
-ExprParser.RULE_identifier = 3;
-ExprParser.RULE_stringLiteral = 4;
-ExprParser.RULE_booleanLiteral = 5;
-ExprParser.RULE_numberLiteral = 6;
-ExprParser.RULE_callArguments = 7;
-ExprParser.RULE_listItems = 8;
+ExprParser.RULE_literal = 2;
+ExprParser.RULE_stringLiteral = 3;
+ExprParser.RULE_booleanLiteral = 4;
+ExprParser.RULE_numberLiteral = 5;
+ExprParser.RULE_callArguments = 6;
+ExprParser.RULE_listItems = 7;
 
 function ExpressionRootContext(parser, parent, invokingState) {
 	if(parent===undefined) {
@@ -222,9 +218,9 @@ ExprParser.prototype.expressionRoot = function() {
     this.enterRule(localctx, 0, ExprParser.RULE_expressionRoot);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 18;
+        this.state = 16;
         localctx.expr = this.expression(0);
-        this.state = 19;
+        this.state = 17;
         this.match(ExprParser.EOF);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -349,42 +345,6 @@ GroupOperationContext.prototype.exitRule = function(listener) {
 GroupOperationContext.prototype.accept = function(visitor) {
     if ( visitor instanceof ExprParserVisitor ) {
         return visitor.visitGroupOperation(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
-function ValueOperationContext(parser, ctx) {
-	ExpressionContext.call(this, parser);
-    this.value = null; // ExpressionValueContext;
-    ExpressionContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-ValueOperationContext.prototype = Object.create(ExpressionContext.prototype);
-ValueOperationContext.prototype.constructor = ValueOperationContext;
-
-ExprParser.ValueOperationContext = ValueOperationContext;
-
-ValueOperationContext.prototype.expressionValue = function() {
-    return this.getTypedRuleContext(ExpressionValueContext,0);
-};
-ValueOperationContext.prototype.enterRule = function(listener) {
-    if(listener instanceof ExprParserListener ) {
-        listener.enterValueOperation(this);
-	}
-};
-
-ValueOperationContext.prototype.exitRule = function(listener) {
-    if(listener instanceof ExprParserListener ) {
-        listener.exitValueOperation(this);
-	}
-};
-
-ValueOperationContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof ExprParserVisitor ) {
-        return visitor.visitValueOperation(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -718,7 +678,7 @@ BitwiseInvertOperationContext.prototype.accept = function(visitor) {
 
 function PeekOperationContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
-    this.inner = null; // ExpressionContext;
+    this.name = null; // Token;
     ExpressionContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
@@ -740,8 +700,8 @@ PeekOperationContext.prototype.RPAREN = function() {
     return this.getToken(ExprParser.RPAREN, 0);
 };
 
-PeekOperationContext.prototype.expression = function() {
-    return this.getTypedRuleContext(ExpressionContext,0);
+PeekOperationContext.prototype.IDENTIFIER = function() {
+    return this.getToken(ExprParser.IDENTIFIER, 0);
 };
 PeekOperationContext.prototype.enterRule = function(listener) {
     if(listener instanceof ExprParserListener ) {
@@ -1013,6 +973,42 @@ LogicalOperationContext.prototype.accept = function(visitor) {
 };
 
 
+function LiteralOperationContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    this.value = null; // LiteralContext;
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+LiteralOperationContext.prototype = Object.create(ExpressionContext.prototype);
+LiteralOperationContext.prototype.constructor = LiteralOperationContext;
+
+ExprParser.LiteralOperationContext = LiteralOperationContext;
+
+LiteralOperationContext.prototype.literal = function() {
+    return this.getTypedRuleContext(LiteralContext,0);
+};
+LiteralOperationContext.prototype.enterRule = function(listener) {
+    if(listener instanceof ExprParserListener ) {
+        listener.enterLiteralOperation(this);
+	}
+};
+
+LiteralOperationContext.prototype.exitRule = function(listener) {
+    if(listener instanceof ExprParserListener ) {
+        listener.exitLiteralOperation(this);
+	}
+};
+
+LiteralOperationContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof ExprParserVisitor ) {
+        return visitor.visitLiteralOperation(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 function ListOperationContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     this.items = null; // ListItemsContext;
@@ -1057,6 +1053,42 @@ ListOperationContext.prototype.accept = function(visitor) {
 };
 
 
+function IdentifierOperationContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    this.name = null; // Token;
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+IdentifierOperationContext.prototype = Object.create(ExpressionContext.prototype);
+IdentifierOperationContext.prototype.constructor = IdentifierOperationContext;
+
+ExprParser.IdentifierOperationContext = IdentifierOperationContext;
+
+IdentifierOperationContext.prototype.IDENTIFIER = function() {
+    return this.getToken(ExprParser.IDENTIFIER, 0);
+};
+IdentifierOperationContext.prototype.enterRule = function(listener) {
+    if(listener instanceof ExprParserListener ) {
+        listener.enterIdentifierOperation(this);
+	}
+};
+
+IdentifierOperationContext.prototype.exitRule = function(listener) {
+    if(listener instanceof ExprParserListener ) {
+        listener.exitIdentifierOperation(this);
+	}
+};
+
+IdentifierOperationContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof ExprParserVisitor ) {
+        return visitor.visitIdentifierOperation(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 
 ExprParser.prototype.expression = function(_p) {
 	if(_p===undefined) {
@@ -1071,7 +1103,7 @@ ExprParser.prototype.expression = function(_p) {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 46;
+        this.state = 44;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case ExprParser.STRING_LITERAL:
@@ -1080,94 +1112,100 @@ ExprParser.prototype.expression = function(_p) {
         case ExprParser.BINARY_LITERAL:
         case ExprParser.DECIMAL_LITERAL:
         case ExprParser.BOOLEAN_LITERAL:
-        case ExprParser.IDENTIFIER:
-            localctx = new ValueOperationContext(this, localctx);
+            localctx = new LiteralOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
 
-            this.state = 22;
-            localctx.value = this.expressionValue();
+            this.state = 20;
+            localctx.value = this.literal();
+            break;
+        case ExprParser.IDENTIFIER:
+            localctx = new IdentifierOperationContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
+            this.state = 21;
+            localctx.name = this.match(ExprParser.IDENTIFIER);
             break;
         case ExprParser.LBRACKET:
             localctx = new ListOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 23;
+            this.state = 22;
             this.match(ExprParser.LBRACKET);
-            this.state = 24;
+            this.state = 23;
             localctx.items = this.listItems();
-            this.state = 25;
+            this.state = 24;
             this.match(ExprParser.RBRACKET);
             break;
         case ExprParser.LPAREN:
             localctx = new GroupOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 27;
+            this.state = 26;
             this.match(ExprParser.LPAREN);
-            this.state = 28;
+            this.state = 27;
             localctx.inner = this.expression(0);
-            this.state = 29;
+            this.state = 28;
             this.match(ExprParser.RPAREN);
             break;
         case ExprParser.DEFINED_KW:
             localctx = new DefinedOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 31;
+            this.state = 30;
             this.match(ExprParser.DEFINED_KW);
-            this.state = 32;
+            this.state = 31;
             this.match(ExprParser.LPAREN);
-            this.state = 33;
+            this.state = 32;
             localctx.name = this.match(ExprParser.IDENTIFIER);
-            this.state = 34;
+            this.state = 33;
             this.match(ExprParser.RPAREN);
             break;
         case ExprParser.PEEK_KW:
             localctx = new PeekOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 35;
+            this.state = 34;
             this.match(ExprParser.PEEK_KW);
-            this.state = 36;
+            this.state = 35;
             this.match(ExprParser.LPAREN);
+            this.state = 36;
+            localctx.name = this.match(ExprParser.IDENTIFIER);
             this.state = 37;
-            localctx.inner = this.expression(0);
-            this.state = 38;
             this.match(ExprParser.RPAREN);
             break;
         case ExprParser.BITWISE_INVERT_OP:
             localctx = new BitwiseInvertOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 40;
+            this.state = 38;
             localctx.op = this.match(ExprParser.BITWISE_INVERT_OP);
-            this.state = 41;
+            this.state = 39;
             localctx.right = this.expression(9);
             break;
         case ExprParser.SUB_OP:
             localctx = new NegateOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 42;
+            this.state = 40;
             localctx.op = this.match(ExprParser.SUB_OP);
-            this.state = 43;
+            this.state = 41;
             localctx.right = this.expression(7);
             break;
         case ExprParser.NOT_OP:
             localctx = new LogicalNotOperationContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 44;
+            this.state = 42;
             localctx.op = this.match(ExprParser.NOT_OP);
-            this.state = 45;
+            this.state = 43;
             localctx.right = this.expression(2);
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
         }
         this._ctx.stop = this._input.LT(-1);
-        this.state = 87;
+        this.state = 85;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,3,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -1176,7 +1214,7 @@ ExprParser.prototype.expression = function(_p) {
                     this.triggerExitRuleEvent();
                 }
                 _prevctx = localctx;
-                this.state = 85;
+                this.state = 83;
                 this._errHandler.sync(this);
                 var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
                 switch(la_) {
@@ -1184,13 +1222,13 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new PowerOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 48;
+                    this.state = 46;
                     if (!( this.precpred(this._ctx, 8))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 8)");
                     }
-                    this.state = 49;
+                    this.state = 47;
                     localctx.op = this.match(ExprParser.POW_OP);
-                    this.state = 50;
+                    this.state = 48;
                     localctx.right = this.expression(8);
                     break;
 
@@ -1198,13 +1236,13 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new BitwiseOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 51;
+                    this.state = 49;
                     if (!( this.precpred(this._ctx, 6))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 6)");
                     }
-                    this.state = 52;
+                    this.state = 50;
                     localctx.op = this.match(ExprParser.BITWISE_OP);
-                    this.state = 53;
+                    this.state = 51;
                     localctx.right = this.expression(7);
                     break;
 
@@ -1212,11 +1250,11 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new ArithmeticOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 54;
+                    this.state = 52;
                     if (!( this.precpred(this._ctx, 5))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 5)");
                     }
-                    this.state = 55;
+                    this.state = 53;
                     localctx.op = this._input.LT(1);
                     _la = this._input.LA(1);
                     if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExprParser.MUL_OP) | (1 << ExprParser.DIV_OP) | (1 << ExprParser.MOD_OP))) !== 0))) {
@@ -1226,7 +1264,7 @@ ExprParser.prototype.expression = function(_p) {
                     	this._errHandler.reportMatch(this);
                         this.consume();
                     }
-                    this.state = 56;
+                    this.state = 54;
                     localctx.right = this.expression(6);
                     break;
 
@@ -1234,11 +1272,11 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new ArithmeticOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 57;
+                    this.state = 55;
                     if (!( this.precpred(this._ctx, 4))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 4)");
                     }
-                    this.state = 58;
+                    this.state = 56;
                     localctx.op = this._input.LT(1);
                     _la = this._input.LA(1);
                     if(!(_la===ExprParser.ADD_OP || _la===ExprParser.SUB_OP)) {
@@ -1248,7 +1286,7 @@ ExprParser.prototype.expression = function(_p) {
                     	this._errHandler.reportMatch(this);
                         this.consume();
                     }
-                    this.state = 59;
+                    this.state = 57;
                     localctx.right = this.expression(5);
                     break;
 
@@ -1256,13 +1294,13 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new LogicalOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 60;
+                    this.state = 58;
                     if (!( this.precpred(this._ctx, 3))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 3)");
                     }
-                    this.state = 61;
+                    this.state = 59;
                     localctx.op = this.match(ExprParser.LOGICAL_OP);
-                    this.state = 62;
+                    this.state = 60;
                     localctx.right = this.expression(4);
                     break;
 
@@ -1270,17 +1308,17 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new TernaryOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.condition = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 63;
+                    this.state = 61;
                     if (!( this.precpred(this._ctx, 1))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 1)");
                     }
-                    this.state = 64;
+                    this.state = 62;
                     this.match(ExprParser.TERNARY_OP);
-                    this.state = 65;
+                    this.state = 63;
                     localctx.first = this.expression(0);
-                    this.state = 66;
+                    this.state = 64;
                     this.match(ExprParser.TERNARY_SEPARATOR);
-                    this.state = 67;
+                    this.state = 65;
                     localctx.second = this.expression(2);
                     break;
 
@@ -1288,11 +1326,11 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new UnitsOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.num = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 69;
-                    if (!( this.precpred(this._ctx, 18))) {
-                        throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 18)");
+                    this.state = 67;
+                    if (!( this.precpred(this._ctx, 19))) {
+                        throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 19)");
                     }
-                    this.state = 70;
+                    this.state = 68;
                     localctx.units = this.match(ExprParser.UNIT_KW);
                     break;
 
@@ -1300,13 +1338,13 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new PropertyOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.obj = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 71;
+                    this.state = 69;
                     if (!( this.precpred(this._ctx, 16))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 16)");
                     }
-                    this.state = 72;
+                    this.state = 70;
                     this.match(ExprParser.DOT);
-                    this.state = 73;
+                    this.state = 71;
                     localctx.key = this.match(ExprParser.IDENTIFIER);
                     break;
 
@@ -1314,15 +1352,15 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new IndexOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.list = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 74;
+                    this.state = 72;
                     if (!( this.precpred(this._ctx, 15))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 15)");
                     }
-                    this.state = 75;
+                    this.state = 73;
                     this.match(ExprParser.LBRACKET);
-                    this.state = 76;
+                    this.state = 74;
                     localctx.inner = this.expression(0);
-                    this.state = 77;
+                    this.state = 75;
                     this.match(ExprParser.RBRACKET);
                     break;
 
@@ -1330,27 +1368,27 @@ ExprParser.prototype.expression = function(_p) {
                     localctx = new CallOperationContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.callee = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, ExprParser.RULE_expression);
-                    this.state = 79;
+                    this.state = 77;
                     if (!( this.precpred(this._ctx, 10))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 10)");
                     }
-                    this.state = 80;
+                    this.state = 78;
                     this.match(ExprParser.LPAREN);
-                    this.state = 82;
+                    this.state = 80;
                     this._errHandler.sync(this);
                     _la = this._input.LA(1);
                     if((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExprParser.STRING_LITERAL) | (1 << ExprParser.OCTAL_LITERAL) | (1 << ExprParser.HEX_LITERAL) | (1 << ExprParser.BINARY_LITERAL) | (1 << ExprParser.DECIMAL_LITERAL) | (1 << ExprParser.LPAREN) | (1 << ExprParser.LBRACKET) | (1 << ExprParser.BOOLEAN_LITERAL) | (1 << ExprParser.DEFINED_KW) | (1 << ExprParser.PEEK_KW) | (1 << ExprParser.IDENTIFIER) | (1 << ExprParser.SUB_OP) | (1 << ExprParser.NOT_OP) | (1 << ExprParser.BITWISE_INVERT_OP))) !== 0)) {
-                        this.state = 81;
+                        this.state = 79;
                         localctx.args = this.callArguments();
                     }
 
-                    this.state = 84;
+                    this.state = 82;
                     this.match(ExprParser.RPAREN);
                     break;
 
                 } 
             }
-            this.state = 89;
+            this.state = 87;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,3,this._ctx);
         }
@@ -1369,7 +1407,7 @@ ExprParser.prototype.expression = function(_p) {
     return localctx;
 };
 
-function ExpressionValueContext(parser, parent, invokingState) {
+function LiteralContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -1378,44 +1416,43 @@ function ExpressionValueContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ExprParser.RULE_expressionValue;
+    this.ruleIndex = ExprParser.RULE_literal;
+    this.str = null; // StringLiteralContext
+    this.num = null; // NumberLiteralContext
+    this.bool = null; // BooleanLiteralContext
     return this;
 }
 
-ExpressionValueContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ExpressionValueContext.prototype.constructor = ExpressionValueContext;
+LiteralContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+LiteralContext.prototype.constructor = LiteralContext;
 
-ExpressionValueContext.prototype.stringLiteral = function() {
+LiteralContext.prototype.stringLiteral = function() {
     return this.getTypedRuleContext(StringLiteralContext,0);
 };
 
-ExpressionValueContext.prototype.numberLiteral = function() {
+LiteralContext.prototype.numberLiteral = function() {
     return this.getTypedRuleContext(NumberLiteralContext,0);
 };
 
-ExpressionValueContext.prototype.booleanLiteral = function() {
+LiteralContext.prototype.booleanLiteral = function() {
     return this.getTypedRuleContext(BooleanLiteralContext,0);
 };
 
-ExpressionValueContext.prototype.identifier = function() {
-    return this.getTypedRuleContext(IdentifierContext,0);
-};
-
-ExpressionValueContext.prototype.enterRule = function(listener) {
+LiteralContext.prototype.enterRule = function(listener) {
     if(listener instanceof ExprParserListener ) {
-        listener.enterExpressionValue(this);
+        listener.enterLiteral(this);
 	}
 };
 
-ExpressionValueContext.prototype.exitRule = function(listener) {
+LiteralContext.prototype.exitRule = function(listener) {
     if(listener instanceof ExprParserListener ) {
-        listener.exitExpressionValue(this);
+        listener.exitLiteral(this);
 	}
 };
 
-ExpressionValueContext.prototype.accept = function(visitor) {
+LiteralContext.prototype.accept = function(visitor) {
     if ( visitor instanceof ExprParserVisitor ) {
-        return visitor.visitExpressionValue(this);
+        return visitor.visitLiteral(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -1424,110 +1461,37 @@ ExpressionValueContext.prototype.accept = function(visitor) {
 
 
 
-ExprParser.ExpressionValueContext = ExpressionValueContext;
+ExprParser.LiteralContext = LiteralContext;
 
-ExprParser.prototype.expressionValue = function() {
+ExprParser.prototype.literal = function() {
 
-    var localctx = new ExpressionValueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 4, ExprParser.RULE_expressionValue);
+    var localctx = new LiteralContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 4, ExprParser.RULE_literal);
     try {
-        this.state = 94;
+        this.state = 91;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case ExprParser.STRING_LITERAL:
             this.enterOuterAlt(localctx, 1);
-            this.state = 90;
-            this.stringLiteral();
+            this.state = 88;
+            localctx.str = this.stringLiteral();
             break;
         case ExprParser.OCTAL_LITERAL:
         case ExprParser.HEX_LITERAL:
         case ExprParser.BINARY_LITERAL:
         case ExprParser.DECIMAL_LITERAL:
             this.enterOuterAlt(localctx, 2);
-            this.state = 91;
-            this.numberLiteral();
+            this.state = 89;
+            localctx.num = this.numberLiteral();
             break;
         case ExprParser.BOOLEAN_LITERAL:
             this.enterOuterAlt(localctx, 3);
-            this.state = 92;
-            this.booleanLiteral();
-            break;
-        case ExprParser.IDENTIFIER:
-            this.enterOuterAlt(localctx, 4);
-            this.state = 93;
-            this.identifier();
+            this.state = 90;
+            localctx.bool = this.booleanLiteral();
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
         }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function IdentifierContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ExprParser.RULE_identifier;
-    this.name = null; // Token
-    return this;
-}
-
-IdentifierContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-IdentifierContext.prototype.constructor = IdentifierContext;
-
-IdentifierContext.prototype.IDENTIFIER = function() {
-    return this.getToken(ExprParser.IDENTIFIER, 0);
-};
-
-IdentifierContext.prototype.enterRule = function(listener) {
-    if(listener instanceof ExprParserListener ) {
-        listener.enterIdentifier(this);
-	}
-};
-
-IdentifierContext.prototype.exitRule = function(listener) {
-    if(listener instanceof ExprParserListener ) {
-        listener.exitIdentifier(this);
-	}
-};
-
-IdentifierContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof ExprParserVisitor ) {
-        return visitor.visitIdentifier(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
-
-
-ExprParser.IdentifierContext = IdentifierContext;
-
-ExprParser.prototype.identifier = function() {
-
-    var localctx = new IdentifierContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, ExprParser.RULE_identifier);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 96;
-        localctx.name = this.match(ExprParser.IDENTIFIER);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1552,7 +1516,7 @@ function StringLiteralContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = ExprParser.RULE_stringLiteral;
-    this.str = null; // Token
+    this.value = null; // Token
     return this;
 }
 
@@ -1591,11 +1555,11 @@ ExprParser.StringLiteralContext = StringLiteralContext;
 ExprParser.prototype.stringLiteral = function() {
 
     var localctx = new StringLiteralContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 8, ExprParser.RULE_stringLiteral);
+    this.enterRule(localctx, 6, ExprParser.RULE_stringLiteral);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 98;
-        localctx.str = this.match(ExprParser.STRING_LITERAL);
+        this.state = 93;
+        localctx.value = this.match(ExprParser.STRING_LITERAL);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1620,7 +1584,7 @@ function BooleanLiteralContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = ExprParser.RULE_booleanLiteral;
-    this.bool = null; // Token
+    this.value = null; // Token
     return this;
 }
 
@@ -1659,11 +1623,11 @@ ExprParser.BooleanLiteralContext = BooleanLiteralContext;
 ExprParser.prototype.booleanLiteral = function() {
 
     var localctx = new BooleanLiteralContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 10, ExprParser.RULE_booleanLiteral);
+    this.enterRule(localctx, 8, ExprParser.RULE_booleanLiteral);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 100;
-        localctx.bool = this.match(ExprParser.BOOLEAN_LITERAL);
+        this.state = 95;
+        localctx.value = this.match(ExprParser.BOOLEAN_LITERAL);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1703,7 +1667,7 @@ NumberLiteralContext.prototype.copyFrom = function(ctx) {
 
 function OctalLiteralContext(parser, ctx) {
 	NumberLiteralContext.call(this, parser);
-    this.literal = null; // Token;
+    this.value = null; // Token;
     NumberLiteralContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
@@ -1739,7 +1703,7 @@ OctalLiteralContext.prototype.accept = function(visitor) {
 
 function BinaryLiteralContext(parser, ctx) {
 	NumberLiteralContext.call(this, parser);
-    this.literal = null; // Token;
+    this.value = null; // Token;
     NumberLiteralContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
@@ -1775,7 +1739,7 @@ BinaryLiteralContext.prototype.accept = function(visitor) {
 
 function DecimalLiteralContext(parser, ctx) {
 	NumberLiteralContext.call(this, parser);
-    this.literal = null; // Token;
+    this.value = null; // Token;
     NumberLiteralContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
@@ -1811,7 +1775,7 @@ DecimalLiteralContext.prototype.accept = function(visitor) {
 
 function HexLiteralContext(parser, ctx) {
 	NumberLiteralContext.call(this, parser);
-    this.literal = null; // Token;
+    this.value = null; // Token;
     NumberLiteralContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
@@ -1851,34 +1815,34 @@ ExprParser.NumberLiteralContext = NumberLiteralContext;
 ExprParser.prototype.numberLiteral = function() {
 
     var localctx = new NumberLiteralContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 12, ExprParser.RULE_numberLiteral);
+    this.enterRule(localctx, 10, ExprParser.RULE_numberLiteral);
     try {
-        this.state = 106;
+        this.state = 101;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case ExprParser.OCTAL_LITERAL:
             localctx = new OctalLiteralContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
-            this.state = 102;
-            localctx.literal = this.match(ExprParser.OCTAL_LITERAL);
+            this.state = 97;
+            localctx.value = this.match(ExprParser.OCTAL_LITERAL);
             break;
         case ExprParser.HEX_LITERAL:
             localctx = new HexLiteralContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
-            this.state = 103;
-            localctx.literal = this.match(ExprParser.HEX_LITERAL);
+            this.state = 98;
+            localctx.value = this.match(ExprParser.HEX_LITERAL);
             break;
         case ExprParser.BINARY_LITERAL:
             localctx = new BinaryLiteralContext(this, localctx);
             this.enterOuterAlt(localctx, 3);
-            this.state = 104;
-            localctx.literal = this.match(ExprParser.BINARY_LITERAL);
+            this.state = 99;
+            localctx.value = this.match(ExprParser.BINARY_LITERAL);
             break;
         case ExprParser.DECIMAL_LITERAL:
             localctx = new DecimalLiteralContext(this, localctx);
             this.enterOuterAlt(localctx, 4);
-            this.state = 105;
-            localctx.literal = this.match(ExprParser.DECIMAL_LITERAL);
+            this.state = 100;
+            localctx.value = this.match(ExprParser.DECIMAL_LITERAL);
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
@@ -1955,19 +1919,19 @@ ExprParser.CallArgumentsContext = CallArgumentsContext;
 ExprParser.prototype.callArguments = function() {
 
     var localctx = new CallArgumentsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 14, ExprParser.RULE_callArguments);
+    this.enterRule(localctx, 12, ExprParser.RULE_callArguments);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 108;
+        this.state = 103;
         localctx.arg = this.expression(0);
-        this.state = 111;
+        this.state = 106;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===ExprParser.COMMA) {
-            this.state = 109;
+            this.state = 104;
             this.match(ExprParser.COMMA);
-            this.state = 110;
+            this.state = 105;
             localctx.rest = this.callArguments();
         }
 
@@ -2043,19 +2007,19 @@ ExprParser.ListItemsContext = ListItemsContext;
 ExprParser.prototype.listItems = function() {
 
     var localctx = new ListItemsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 16, ExprParser.RULE_listItems);
+    this.enterRule(localctx, 14, ExprParser.RULE_listItems);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 113;
+        this.state = 108;
         localctx.item = this.expression(0);
-        this.state = 116;
+        this.state = 111;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===ExprParser.COMMA) {
-            this.state = 114;
+            this.state = 109;
             this.match(ExprParser.COMMA);
-            this.state = 115;
+            this.state = 110;
             localctx.rest = this.listItems();
         }
 
@@ -2098,7 +2062,7 @@ ExprParser.prototype.expression_sempred = function(localctx, predIndex) {
 		case 5:
 			return this.precpred(this._ctx, 1);
 		case 6:
-			return this.precpred(this._ctx, 18);
+			return this.precpred(this._ctx, 19);
 		case 7:
 			return this.precpred(this._ctx, 16);
 		case 8:

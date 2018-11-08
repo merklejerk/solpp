@@ -5,13 +5,14 @@ const {
 	createParseTree,
 	getNodeRuleName,
 	getNodeText,
+	getNodeIndentation,
 	getNodeLocation,
 	createLocationString
 } = require('./antlr-utils');
 const {SolLexer} = require('./antlr/SolLexer');
 const {SolParser} = require('./antlr/SolParser');
 const Macro = require('./macro');
-const {createExpression, toBool} = require('./macro-expression');
+const {createExpression, toBool} = require('./expression');
 
 class Oven {
 	constructor(opts={}) {
@@ -114,10 +115,13 @@ class Oven {
 					return r;
 				}
 			case 'MacroExpansion': {
-					return this._expandNodeExpression(node.expression);
+
+					return this._expandNodeExpression(node.expr,
+						getNodeIndentation(node));
 				}
 			case 'MacroEvaluation': {
-					return this._evaluateNodeExpression(node.expression);
+					return this._evaluateNodeExpression(node.expr, false,
+						getNodeIndentation(node));
 				}
 		}
 		if (node.children) {
@@ -129,15 +133,25 @@ class Oven {
 		return getNodeText(node);
 	}
 
-	_evaluateNodeExpression(node, asBool=false) {
+	_augmentContext(node, indent='') {
+		const loc = getNodeLocation(node);
+		return _.merge(this.ctx, {
+			defs: {
+				'__line': loc.line,
+				'__indent': JSON.stringify(indent)
+			}});
+	}
+
+	_evaluateNodeExpression(node, asBool=false, indent='') {
 		let expr = this._createNodeExpression(node);
 		try {
-			const r = expr.evaluate(this.ctx);
+			const r = expr.evaluate(this._augmentContext(node, indent));
 			if (asBool)
 				return toBool(r);
 			return r;
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
+			console.error(err);
 			const content = getNodeText(node, true);
 			throw new Error(`Failed to evaluate expression: "${content}" in ` +
 		 		loc + `: ${err.message}`, err);
@@ -154,10 +168,10 @@ class Oven {
 		}
 	}
 
-	_expandNodeExpression(node) {
+	_expandNodeExpression(node, indent='') {
 		let expr = this._createNodeExpression(node);
 		try {
-			return expr.expand(this.ctx);
+			return expr.expand(this._augmentContext(node, indent));
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);

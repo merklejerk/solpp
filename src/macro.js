@@ -3,7 +3,7 @@ const _ = require('lodash');
 const {
 	getNodeText,
 	getNodeLocation} = require('./antlr-utils');
-const {createExpression} = require('./macro-expression');
+const {createExpression} = require('./expression');
 
 function substitute(original, dict) {
 	return original.replace(/\b[a-z_][a-z0-9_]*\b/ig,
@@ -53,6 +53,10 @@ class Macro {
 		ctx.stack.push(_.zipObject(this.args, args));
 		return this.expr.evaluate(ctx);
 		ctx.stack.pop();
+	}
+
+	toString() {
+		return this.body;
 	}
 }
 

@@ -2,18 +2,26 @@
 const _ = require('lodash');
 const antlr = require('antlr4');
 
+function isNode(v) {
+	return _.isFunction(v.getRuleContext);
+}
+
+function isTerminal(v) {
+	return _.isObject(v.symbol);
+}
+
 function getNodeText(node, trim=false) {
 	if (node.symbol && node.symbol.type == -1)
 		return ''; // EOF
 	let t = null;
-	if (_.isNil(node.start)) {
-		t = node.getText();
-	} else {
-		const start = node.start.start || node.start;
-		const stop = node.stop.stop || node.stop;
+	if (!_.isNil(node.start)) {
+		const start = _.get(node.start, 'start', node.start);
+		const stop = _.get(node.stop, 'stop', node.stop);
 		const stream = node.getInputStream ?
 			node.getInputStream() : node.start.getInputStream();
 		t = stream.getText(start, stop);
+	} else {
+		t = node.getText();
 	}
 	if (trim)
 		return t.trim();
@@ -23,8 +31,27 @@ function getNodeText(node, trim=false) {
 function getNodeLocation(node) {
 	return {
 		line: node.line || node.start.line,
-		column: node.column || node.start.column
+		column: node.column || node.start.column,
+		start: node.start.start || node.start
 	};
+}
+
+function getNodeIndentation(node) {
+	let indent = '';
+	let ch = '';
+	const stream = node.getInputStream ?
+		node.getInputStream() : node.start.getInputStream();
+	let o = _.get(node.start, 'start', node.start) - 1;
+	for (; o > 0; --o) {
+		ch = stream.getText(o, o)
+		if (/[\r\n]/.test(ch))
+			break;
+		if (/\s/.test(ch))
+			indent = ch + indent;
+		else
+			indent = ' ' + indent;
+	}
+	return indent;
 }
 
 function createLocationString(loc, unit) {
@@ -65,7 +92,10 @@ function createParseTree(LexerType, ParserType, startRule, text, mode=null) {
 module.exports = {
 	getNodeText: getNodeText,
 	getNodeLocation: getNodeLocation,
+	getNodeIndentation: getNodeIndentation,
 	createLocationString: createLocationString,
 	getNodeRuleName: getNodeRuleName,
-	createParseTree: createParseTree
+	createParseTree: createParseTree,
+	isNode: isNode,
+	isTerminal: isTerminal
 };
