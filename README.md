@@ -508,12 +508,18 @@ Another great use case for preprocessors is unrolling loops or generating
 constant values for an array. The `#for` directive can help you do all those
 things and more.
 
+`#for` directives iterate over a list, either one you have explicity defined with 
+the list operator (`[...]`) or from a list producing function function such as
+`range()`. `#for` directives have the syntax `#for ITEM, IDX in LIST`, which
+iterates over values and indices, or simply `#for ITEM in LIST`, if you only
+want to iterate over the values in a list.
+
 **Input**
 ```js
 // Calculate the summation of 0...4
 uint256 sum = 0;
-// #for I in range(1, 5)
-sum += $${I};
+// #for ITEM in range(1, 5)
+sum += $${ITEM};
 // #done
 ```
 
