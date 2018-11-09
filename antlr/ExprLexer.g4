@@ -28,6 +28,7 @@ LBRACKET: '[' ;
 RBRACKET: ']' ;
 COMMA: ',' ;
 DOT: '.' ;
+LAMBDA_ARROW: '=>' ;
 
 BOOLEAN_LITERAL
 	: 'true'

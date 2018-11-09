@@ -508,7 +508,7 @@ Another great use case for preprocessors is unrolling loops or generating
 constant values for an array. The `#for` directive can help you do all those
 things and more.
 
-`#for` directives iterate over a list, either one you have explicity defined with 
+`#for` directives iterate over a list, either one you have explicity defined with
 the list operator (`[...]`) or from a list producing function function such as
 `range()`. `#for` directives have the syntax `#for ITEM, IDX in LIST`, which
 iterates over values and indices, or simply `#for ITEM in LIST`, if you only
@@ -572,6 +572,7 @@ decimal component will result in an error.
 | `foo(x, y, z)` | Call function/macro `foo` with arguments `x`, `y`, and `z` |
 | `id` | Evaluate the symbol `id` |
 | `[a, b, c]` | Create a list with values `a`, `b`, and `c`, which can be expressions |
+| `(a, b) => ...` | Define an anonymous (lambda) macro, useful for the `map()` and `reduce()` [builtins](#list-functions) |
 
 ##### Literals
 
@@ -666,6 +667,8 @@ and can be called during [evaluation](#evaluation).
 | `len(x)` | Get the length of list `x` |
 | `range(end)` | Create a list of numbers from `0` to `end` (exclusive) with step size `1` |
 | `range(start, end, step=1)` | Create a list of numbers from `start` to `end` (exclusive) with step size `step` |
+| `concat(...)` | Combines a series of lists into one. |
+| `sum(x)` | Returns the sum of all values in `x`. |
 | `join(a, sep='')` | Join list `a` into a string with separator `sep` |
 | `map(a, fn)` | Create a list where each item in `a` is run through the function/macro `fn`. If `fn` can take two arguments, the index of the item will be passed as the 2nd argument. |
 | `reduce(a, fn, initial=0)` | Run items in the list `a` through the function/macro `fn`, which takes 2-3 arguments (`total, value, [index]`) and returns the new total. |

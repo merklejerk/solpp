@@ -26,6 +26,7 @@ expression
 	| left=expression op=LOGICAL_OP right=expression #logicalOperation
 	| op=NOT_OP right=expression #logicalNotOperation
 	| condition=expression TERNARY_OP first=expression TERNARY_SEPARATOR second=expression #ternaryOperation
+	| lambda=lambdaExpression #lambdaOperation
 	;
 
 literal
@@ -49,3 +50,10 @@ callArguments
 
 listItems
 	: item=expression (COMMA rest=listItems)? ;
+
+lambdaExpression
+	: LPAREN args=idList RPAREN LAMBDA_ARROW body=expression
+	| arg=IDENTIFIER? LAMBDA_ARROW body=expression ;
+
+idList
+	: arg=IDENTIFIER (COMMA rest=idList)? ;

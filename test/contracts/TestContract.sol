@@ -141,8 +141,12 @@ contract TestContract {
 			${EXT_SYMBOL_5} * ${ALIAS2} - $${log(EXT_SYMBOL_5, 2)} /
 			// Expect: 10**3 + 10**this.foo(2) + 10 / 32 +
 			${FUNC1(3)} + ${FUNC1(this.foo(2))} + $${FUNC2(1, 9)} / $${FUNC3(5.52)} +
-			// Expect: 9000000000000000018 + 128 + 21220 +
+			// Expect: 9000000000000000018 + 128 + 16168 +
 			$${FUNC4(2)} + $${sum(VALS)} + $${reduce(map(VALS, FUNC2), REDUCER)} +
+			// Expect: 17 +
+			$${reduce(map(VALS, x => round(x**0.5)), (s, r) => r + s)} +
+			// Expect: 138 +
+			$${sum(concat(VALS, [10]))} +
 			// Expect: 2500000000008 + (1 days + 2 hours);
 			$${FUNC2(2.5 finney, 8)} + (${FUNC2(1 days, 2 hours)});
 		// #macro FUNC5(x, y, z) hex((x + y) * z**10, 20)

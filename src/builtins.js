@@ -180,10 +180,15 @@ function unquote(x) {
 }
 
 function concat(...args) {
-	let r = '';
-	for (let a of args)
-		r += ops.string.toString(a);
-	return r;
+	if (args.length == 0)
+		return [];
+	if (typeof(args[0]) == 'string') {
+		let r = '';
+		for (let a of args)
+			r += ops.string.toString(a);
+		return r;
+	}
+	return _.concat(...args);
 }
 concat.maxArgs = 1000;
 concat.minArgs = 1;
@@ -310,10 +315,18 @@ function sum(list) {
 	return _.reduce(list, (s,v) => bn.add(s, v), '0');
 }
 
+function toCallable(v) {
+	if (ops.fn.isCallable(v))
+		return v;
+	if (_.isFunction(v))
+		return new FunctionAdapter(v);
+	throw new Error(`"${ops.string.toString(v)}" is not callable`);
+}
+
 function map(list, fn) {
 	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
-	fn = new FunctionAdapter(fn);
+	fn = toCallable(fn);
 	const r = [];
 	for (let i = 0; i < list.length; i++) {
 		if (fn.maxArgs >= 2)
@@ -327,7 +340,7 @@ function map(list, fn) {
 function reduce(list, fn, initial='0') {
 	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
-	fn = new FunctionAdapter(fn);
+	fn = toCallable(fn);
 	let r = initial;
 	for (let i = 0; i < list.length; i++) {
 		if (fn.maxArgs >= 3)

@@ -1,6 +1,6 @@
 {
 	"name": "solpp",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"description": "A solidity preprocessor and flattener CLI and library",
 	"repository": "https://github.com/merklejerk/solpp",
 	"author": "Lawrence Forman <me@merklejerk.com>",
@@ -38,6 +38,7 @@
 		"cli",
 		"library",
 		"macro",
-		"macros"
+		"macros",
+		"smart contract"
 	]
 }

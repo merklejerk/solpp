@@ -42,7 +42,7 @@ class Macro {
 		return substitute(this.body, _.zipObject(this.args, args));
 	}
 
-	evaluate(args, ctx={}) {
+	evaluate(args, ctx) {
 		args = args || [];
 		try {
 			this.expr = this.expr || createExpression(this.body);
@@ -51,8 +51,9 @@ class Macro {
 			throw new Error(err.message + ` in ` + loc, err);
 		}
 		ctx.stack.push(_.zipObject(this.args, args));
-		return this.expr.evaluate(ctx);
+		const r = this.expr.evaluate(ctx);
 		ctx.stack.pop();
+		return r;
 	}
 
 	toString() {

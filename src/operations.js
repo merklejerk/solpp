@@ -17,12 +17,6 @@ function eq(a, b) {
 	}
 }
 
-function add(a, b) {
-	if (_.isArray(a))
-		return [...a, b];
-	return bn.add(a, b);
-}
-
 function toBool(x) {
 	if (x === true)
 		return true;
@@ -65,9 +59,14 @@ function getListItem(list, idx) {
 	return list[idx];
 }
 
+function isCallable(v) {
+	return v && _.isArray(v.args) &&
+		_.isFunction(v.expand) && _.isFunction(v.evaluate);
+}
+
 module.exports = {
 	math: {
-		add: add,
+		add: (a, b) => bn.add(a, b),
 		sub: (a, b) => bn.sub(a, b),
 		mul: (a, b) => bn.mul(a, b),
 		div: (a, b) => bn.div(a, b),
@@ -100,5 +99,8 @@ module.exports = {
 	list: {
 		isList: isList,
 		at: getListItem
+	},
+	fn: {
+		isCallable: isCallable
 	}
 };

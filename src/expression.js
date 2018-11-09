@@ -7,12 +7,14 @@ const {
 	createParseTree,
 	getNodeText,
 	getNodeRuleName,
+	getNodeLocation,
 	isNode
 } = require('./antlr-utils');
 const builtins = require('./builtins');
 const ops = require('./operations');
 const units = require('./units');
 const FunctionAdapter = require('./function-adapter');
+const Lambda = require('./lambda');
 
 function contextLookup(ctx, name) {
 	const stack = ctx.stack || [];
@@ -28,13 +30,13 @@ function contextLookup(ctx, name) {
 		return builtins[name];
 }
 
-function evaluateCode(body, ctx={}) {
+function evaluateCode(body, ctx) {
 	if (!_.isString(body))
 		return body;
 	return createExpression(body).evaluate(ctx);
 }
 
-function expandCode(body, ctx={}) {
+function expandCode(body, ctx) {
 	if (!_.isString(body))
 		return body;
 	return createExpression(body).expand(ctx);
@@ -48,16 +50,19 @@ function createExpression(body) {
 	}
 }
 
-function evaluateToFunction(node, ctx={}) {
+function evaluateToFunction(node, ctx) {
 	try {
-		return new FunctionAdapter(evaluate(node, ctx));
+		const fn = evaluate(node, ctx);
+		if (ops.fn.isCallable(fn))
+			return fn;
+		return new FunctionAdapter(fn);
 	} catch (err) {
 		throw new Error(`${err.message}: ` +
 			`"${getNodeText(node, true)}"`);
 	}
 }
 
-function evaluateToList(node, ctx={}) {
+function evaluateToList(node, ctx) {
 	const list = evaluate(node, ctx);
 	if (!ops.list.isList(list)) {
 		throw new Error(`Expression does not evaluate to a list: ` +
@@ -66,7 +71,7 @@ function evaluateToList(node, ctx={}) {
 	return list;
 }
 
-function expand(node, ctx={}) {
+function expand(node, ctx) {
 	const name = getNodeRuleName(node);
 	switch (name) {
 		case 'IdentifierOperation': {
@@ -76,13 +81,8 @@ function expand(node, ctx={}) {
 		}
 		case 'CallOperation': {
 			let fn =  evaluateToFunction(node.callee, ctx);
-			let args = node.args;
-			let _args = [];
-			while (args) {
-				_args.push(getNodeText(args.arg));
-				args = args.rest;
-			}
-			return fn.expand(_args, ctx);
+			let args = _.map(collectArgs(node.args), a => getNodeText(a, true));
+			return fn.expand(args, ctx);
 		}
 		case 'TernaryOperation': {
 			const condition = evaluate(node.condition, ctx);
@@ -94,7 +94,19 @@ function expand(node, ctx={}) {
 	return getNodeText(node, true);
 }
 
-function evaluate(node, ctx={}) {
+function collectArgs(node, arg='arg', rest='rest') {
+	const args = [];
+	while (node) {
+		if (node[arg])
+			args.push(node[arg]);
+		if (!(rest in node))
+			break;
+		node = node[rest];
+	}
+	return args;
+}
+
+function evaluate(node, ctx) {
 	const name = getNodeRuleName(node);
 	switch (name) {
 		case 'LogicalOperation': {
@@ -198,30 +210,43 @@ function evaluate(node, ctx={}) {
 		}
 		case 'CallOperation': {
 			let fn =  evaluateToFunction(node.callee, ctx);
-			let args = node.args;
-			let _args = [];
-			while (args) {
-				_args.push(evaluate(args.arg, ctx));
-				args = args.rest;
-			}
-			return fn.evaluate(_args, ctx);
+			const args = _.map(collectArgs(node.args), a => evaluate(a, ctx));
+			return fn.evaluate(args, ctx);
+		}
+		case 'LambdaOperation': {
+			node = node.children[0];
+			let args = [];
+			if (node.args)
+				args = _.map(collectArgs(node.args), a => getNodeText(a, true));
+			else if (node.arg)
+				args = [getNodeText(node.arg, true)];
+			return new Lambda(
+					args,
+					new Expression(node.body),
+					getNodeText(node.body, true));
 		}
 	}
+	return false;
 }
 
 class Expression {
-	constructor(body) {
-		this.body = body;
-		this.root = createParseTree(
-			ExprLexer, ExprParser, 'expressionRoot', body);
+	constructor(bodyOrNode) {
+		if (typeof(bodyOrNode) == 'string') {
+			this.body = bodyOrNode;
+			this.expr = createParseTree(
+				ExprLexer, ExprParser, 'expressionRoot', bodyOrNode).expr;
+		} else {
+			this.body = getNodeText(bodyOrNode);
+			this.expr = bodyOrNode;
+		}
 	}
 
-	evaluate(ctx={}) {
-		return evaluate(this.root.expr, ctx);
+	evaluate(ctx) {
+		return evaluate(this.expr, ctx);
 	}
 
-	expand(ctx={}) {
-		return expand(this.root.expr, ctx);
+	expand(ctx) {
+		return expand(this.expr, ctx);
 	}
 
 	toString() {

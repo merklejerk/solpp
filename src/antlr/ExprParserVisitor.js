@@ -108,6 +108,12 @@ ExprParserVisitor.prototype.visitLogicalOperation = function(ctx) {
 };
 
 
+// Visit a parse tree produced by ExprParser#lambdaOperation.
+ExprParserVisitor.prototype.visitLambdaOperation = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by ExprParser#literalOperation.
 ExprParserVisitor.prototype.visitLiteralOperation = function(ctx) {
   return this.visitChildren(ctx);
@@ -176,6 +182,18 @@ ExprParserVisitor.prototype.visitCallArguments = function(ctx) {
 
 // Visit a parse tree produced by ExprParser#listItems.
 ExprParserVisitor.prototype.visitListItems = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by ExprParser#lambdaExpression.
+ExprParserVisitor.prototype.visitLambdaExpression = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by ExprParser#idList.
+ExprParserVisitor.prototype.visitIdList = function(ctx) {
   return this.visitChildren(ctx);
 };
 

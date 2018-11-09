@@ -155,6 +155,15 @@ ExprParserListener.prototype.exitLogicalOperation = function(ctx) {
 };
 
 
+// Enter a parse tree produced by ExprParser#lambdaOperation.
+ExprParserListener.prototype.enterLambdaOperation = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#lambdaOperation.
+ExprParserListener.prototype.exitLambdaOperation = function(ctx) {
+};
+
+
 // Enter a parse tree produced by ExprParser#literalOperation.
 ExprParserListener.prototype.enterLiteralOperation = function(ctx) {
 };
@@ -260,6 +269,24 @@ ExprParserListener.prototype.enterListItems = function(ctx) {
 
 // Exit a parse tree produced by ExprParser#listItems.
 ExprParserListener.prototype.exitListItems = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ExprParser#lambdaExpression.
+ExprParserListener.prototype.enterLambdaExpression = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#lambdaExpression.
+ExprParserListener.prototype.exitLambdaExpression = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ExprParser#idList.
+ExprParserListener.prototype.enterIdList = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#idList.
+ExprParserListener.prototype.exitIdList = function(ctx) {
 };
 
 

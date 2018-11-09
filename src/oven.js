@@ -151,7 +151,6 @@ class Oven {
 			return r;
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
-			console.error(err);
 			const content = getNodeText(node, true);
 			throw new Error(`Failed to evaluate expression: "${content}" in ` +
 		 		loc + `: ${err.message}`, err);
