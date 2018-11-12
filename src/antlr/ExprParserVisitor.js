@@ -150,6 +150,12 @@ ExprParserVisitor.prototype.visitBooleanLiteral = function(ctx) {
 };
 
 
+// Visit a parse tree produced by ExprParser#fstringLiteral.
+ExprParserVisitor.prototype.visitFstringLiteral = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by ExprParser#octalLiteral.
 ExprParserVisitor.prototype.visitOctalLiteral = function(ctx) {
   return this.visitChildren(ctx);

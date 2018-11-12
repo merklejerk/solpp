@@ -1,6 +1,5 @@
 'use strict'
 const _ = require('lodash');
-const bn = require('bn-str-256');
 const {ExprLexer} = require('./antlr/ExprLexer');
 const {ExprParser} = require('./antlr/ExprParser');
 const {
@@ -10,6 +9,7 @@ const {
 	getNodeLocation,
 	isNode
 } = require('./antlr-utils');
+const bn = require('./bn');
 const builtins = require('./builtins');
 const ops = require('./operations');
 const units = require('./units');
@@ -31,13 +31,13 @@ function contextLookup(ctx, name) {
 }
 
 function evaluateCode(body, ctx) {
-	if (!_.isString(body))
+	if (!_.isString(body) || body.literal)
 		return body;
 	return createExpression(body).evaluate(ctx);
 }
 
 function expandCode(body, ctx) {
-	if (!_.isString(body))
+	if (!_.isString(body) || body.literal)
 		return body;
 	return createExpression(body).expand(ctx);
 }
@@ -195,7 +195,12 @@ function evaluate(node, ctx) {
 			if (kind == 'BooleanLiteral')
 				return v != 'false';
 			if (kind == 'StringLiteral')
-				return builtins.unquote(v);
+				return _.assign(ops.string.unquote(v), {literal: true});
+			if (kind == 'FstringLiteral') {
+				return _.assign(ops.string.interpolate(
+					ops.string.unquote(v),
+					expr => evaluateCode(expr, ctx)), {literal: true});
+			}
 			return v;
 		}
 		case 'IdentifierOperation': {
@@ -231,7 +236,7 @@ function evaluate(node, ctx) {
 
 class Expression {
 	constructor(bodyOrNode) {
-		if (typeof(bodyOrNode) == 'string') {
+		if (_.isString(bodyOrNode)) {
 			this.body = bodyOrNode;
 			this.expr = createParseTree(
 				ExprLexer, ExprParser, 'expressionRoot', bodyOrNode).expr;

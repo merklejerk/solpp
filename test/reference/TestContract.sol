@@ -393,6 +393,11 @@ contract TestContract {
 		0xbe99dfa90a4789d025fe7d447db0eb4102dc82ed9c0e27b2782a050b9b8a6c56
 	];
 
+	uint8 _u8a[] = [
+		// Expect: 1337,1337,1337
+		1337,1337,1337
+	];
+
 	// Block comment directives.
 	uint256 _sum = 0 + 100 + 200 + 300;
 	uint256 _sum2 = 0 + 100 + 200 + 300;
@@ -450,6 +455,12 @@ contract TestContract {
 		string s3 = "yes";
 		// Expect: s4 = "bye";
 		string s4 = "bye";
+		// Expect: s5 = "Hello, Samwise 32!";
+		string s5 = "Hello, Samwise 32!";
+		// Expect: s6 = "Hello, Samwise Gamgee!";
+		string s6 = "Hello, Samwise Gamgee!";
+		// Expect: s7 = "foofoofoo";
+		string s7 = "foofoofoo";
 		// Expect: return false || true ||
 		return false || true ||
 			// Expect: true || false || true ||

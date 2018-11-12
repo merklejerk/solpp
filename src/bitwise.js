@@ -1,6 +1,6 @@
 'use strict'
 const _ = require('lodash');
-const bn = require('bn-str-256');
+const bn = require('./bn');
 
 const BIT_FLIP = [1, 0];
 

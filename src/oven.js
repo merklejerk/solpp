@@ -150,6 +150,7 @@ class Oven {
 				return toBool(r);
 			return r;
 		} catch (err) {
+			console.error(err);
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
 			throw new Error(`Failed to evaluate expression: "${content}" in ` +

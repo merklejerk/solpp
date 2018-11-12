@@ -1,9 +1,10 @@
 const _ = require('lodash');
-const bn = require('bn-str-256');
+const bn = require('./bn');
 const bitwise = require('./bitwise');
 const {getNodeText, isNode, isTerminal} = require('./antlr-utils');
 
-const QUOTED_REGEX = /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/;
+const QUOTED_REGEX = /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)$/;
+const HEX_LITERAL_REGEX = /^0x[0-9a-f]$/i;
 
 function eq(a, b) {
 	if (_.isNil(a) && _.isNil(b))
@@ -25,26 +26,66 @@ function toBool(x) {
 	return true;
 }
 
-function isStringLiteral(x) {
+function isQuotedString(x) {
 	return QUOTED_REGEX.test(x);
 }
 
 function toString(x) {
+	let r = '';
 	if (_.isNil(x))
-		return '';
-	if (_.isFunction(x.toString))
-		return x.toString();
-	if (isNode(x) || ixTerminal(x))
-		return getNodeText(x).trim();
-	if (_.isFunction(x))
-		return `<Function>`;
-	if (_.isNumber(x))
-		return bn.parse(x);
-	if (_.isArray(x))
-		return _.map(x, i => toString(i)).join(',');
-	if (typeof(x) != 'string')
-		return `${x}`;
-	return x;
+		r = '';
+	else if (_.isString(x))
+		r = x;
+	else if (_.isFunction(x.toString))
+		r = x.toString();
+	else if (isNode(x) || ixTerminal(x))
+		r = getNodeText(x).trim();
+	else if (_.isFunction(x))
+		r = `<Function>`;
+	else if (_.isNumber(x))
+		r = bn.parse(x);
+	else if (_.isArray(x))
+		r = _.map(x, i => toString(i)).join(',');
+	else
+		r = `${x}`;
+	r.literal = true;
+	return r;
+}
+
+function toBuffer(x) {
+	if (_.isBuffer(x))
+		return x;
+	if (x === true)
+		x = 1;
+	else if (x === false)
+		x = 0;
+	if (!_.isString(x) && typeof(x) != 'number')
+		throw new Error('Type is not convertible to Buffer');
+	if (_.isString(x)) {
+		if (x.literal)
+			return Buffer.from(x, 'utf-8');
+		if (HEX_LITERAL_REGEX.test(x))
+			return Buffer.from(x.substr(2), 'hex');
+	}
+	return bn.toBuffer(x);
+}
+
+function interpolate(str, evaluate) {
+	const re = /\${([^}]*)}/gi;
+	return toString(str.replace(re, s => {
+		const expr = s.substr(2, s.length - 3);
+		return toString(evaluate(expr));
+	}));
+}
+
+function unquote(x) {
+	x = x.trim();
+	if (isQuotedString(x)) {
+		if (x[0] == '\'' || x[0] == '`')
+			x = '"' + x.substr(1, x.length-2) + '"';
+		x = JSON.parse(x);
+	}
+	return toString(x);
 }
 
 function isList(x) {
@@ -93,8 +134,10 @@ module.exports = {
 		invert: (x) => bitwise.invert(x)
 	},
 	string: {
-		isStringLiteral: isStringLiteral,
-		toString: toString
+		isQuotedString: isQuotedString,
+		toString: toString,
+		interpolate: interpolate,
+		unquote: unquote
 	},
 	list: {
 		isList: isList,
@@ -102,5 +145,6 @@ module.exports = {
 	},
 	fn: {
 		isCallable: isCallable
-	}
+	},
+	toBuffer: toBuffer
 };

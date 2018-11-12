@@ -107,6 +107,11 @@ contract TestContract {
 		$${join(LIST, concat(',\n', __indent))}
 	];
 
+	uint8 _u8a[] = [
+		// Expect: 1337,1337,1337
+		$${filled(3, 1337)}
+	];
+
 	// Block comment directives.
 	uint256 _sum = 0/* #for I in range(3) */ + $${(I+1)*100}/* #done */;
 	uint256 _sum2 = 0/* #for I in range(1,4) */ + $${I*100}/* #done */;
@@ -178,6 +183,14 @@ contract TestContract {
 		string s3 = $${FUNC7(0x100)};
 		// Expect: s4 = "bye";
 		string s4 = $${quote(0*10 == 0 ? 'bye' : 'hello')};
+		// #macro GREETING(first, last) quote(`Hello, ${first} ${last}!`)
+		// Expect: s5 = "Hello, Samwise 32!";
+		string s5 = $${GREETING('Samwise', 2**5)};
+		// #def LASTNAME 'Gamgee'
+		// Expect: s6 = "Hello, Samwise Gamgee!";
+		string s6 = $${GREETING('Samwise', LASTNAME)};
+		// Expect: s7 = "foofoofoo";
+		string s7 = $${quote(repeat('foo', 3))};
 		// #def FOO 'foo'
 		// #def FOO2 foo
 		// #macro FUNC8(a, b) (a != b)

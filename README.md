@@ -88,6 +88,9 @@ contract MyContract {
    bytes32 _bytes = $${hex(int((2**0.5) * 1e18) << 8)}; // -> bytes32 _bytes = 0x13a04bbdfdc9be8800;
    // Maybe we want to combine some strings.
    string _fullName = $${quote(join(['Bob', 'Smith'], ' '))}; // -> string _fullName = "Bob Smith";
+   // Or do string interpolation.
+   // #macro GREETING(first, last) quote(`Hello, ${first} ${last}!`)
+   string _fullName2 = $${GREETING('Bob', 'Smith')} // -> string _fullName2 = "Hello, Bob Smith!";
    // Convert a private key to an address? Sure!
    // #def PRIV_KEY 0x563b99585e0709e3a7ac78b8957aa0f53bc874a86f288884d7ccafe3b9e9b934
    address _addr = $${key2addr(PRIV_KEY)}; // -> _addr = 0x86c0bfFbA7b505c82f1533aFe6C69A604c3e2870;
@@ -586,6 +589,7 @@ precision.
 | `false` | `false` boolean |
 | `"foo"` | Double quoted string |
 | `'foo'` | Single quoted string |
+| <code>&#96;foo ${bar}&#96;</code> | Interpolated string (with `bar` evaluated in place) |
 | `32` | Positive integer number |
 | `-32` | Negative integer number |
 | `32.55` | Decimal number |
@@ -656,8 +660,9 @@ and can be called during [evaluation](#evaluation).
 | `strhex(x)` | Return the utf-8 hex of a string `x`. |
 | `uppercase(x)` | Uppercase the string `x`. |
 | `lowercase(x)` | Lowercase the string `x`. |
-| `camelcase(x)` | camelcase the string `x`. |
+| `camelcase(x)` | Camelcase the string `x`. |
 | `capitalize(x)` | capitalize the string `x`. |
+| `repeat(s, n)` | Repeat the string `s` `n` times. |
 
 #### List Functions
 
@@ -667,6 +672,7 @@ and can be called during [evaluation](#evaluation).
 | `len(x)` | Get the length of list `x` |
 | `range(end)` | Create a list of numbers from `0` to `end` (exclusive) with step size `1` |
 | `range(start, end, step=1)` | Create a list of numbers from `start` to `end` (exclusive) with step size `step` |
+| `filled(len, value=0)` | Create a `len` length list filled with `value` |
 | `concat(...)` | Combines a series of lists into one. |
 | `sum(x)` | Returns the sum of all values in `x`. |
 | `join(a, sep='')` | Join list `a` into a string with separator `sep` |

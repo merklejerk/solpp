@@ -218,6 +218,15 @@ ExprParserListener.prototype.exitBooleanLiteral = function(ctx) {
 };
 
 
+// Enter a parse tree produced by ExprParser#fstringLiteral.
+ExprParserListener.prototype.enterFstringLiteral = function(ctx) {
+};
+
+// Exit a parse tree produced by ExprParser#fstringLiteral.
+ExprParserListener.prototype.exitFstringLiteral = function(ctx) {
+};
+
+
 // Enter a parse tree produced by ExprParser#octalLiteral.
 ExprParserListener.prototype.enterOctalLiteral = function(ctx) {
 };

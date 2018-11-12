@@ -14,6 +14,9 @@ STRING_LITERAL
 	: '"' (~[\r\n] | '\\"')*? '"'
 	| '\'' (~[\r\n] | '\\\'')*? '\'' ;
 
+FSTRING_LITERAL
+	: '`' (~[\r\n] | '\\`')*? '`' ;
+
 OCTAL_LITERAL: '0' [0-7]+ ;
 
 HEX_LITERAL: ('0x' | '0X') [0-9A-Fa-f]+ ;

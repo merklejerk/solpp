@@ -1,8 +1,8 @@
 'use strict'
 const _ = require('lodash');
-const bn = require('bn-str-256');
 const ethjs = require('ethereumjs-util');
 const ops = require('./operations');
+const bn = require('./bn');
 const FunctionAdapter = require('./function-adapter');
 
 const MIN_UINT8_VALUE = 0;
@@ -30,7 +30,7 @@ const MIN_INT128_VALUE = bn.neg(bn.pow(2, 128-1));
 const MAX_INT256_VALUE = bn.sub(bn.pow(2, 256-1), 1);
 const MIN_INT256_VALUE = bn.neg(bn.pow(2, 256-1));
 
-const HEX_LITERAL_REGEX = /^0x[0-9a-f]$/i;
+const toString = ops.string.toString;
 
 function int(n) {
 	return bn.int(n);
@@ -166,32 +166,27 @@ function decimal(x) {
 }
 
 function quote(x) {
-	return JSON.stringify(ops.string.toString(x));
-}
-
-function unquote(x) {
-	x = x.trim();
-	if (ops.string.isStringLiteral(x)) {
-		if (x[0] == '\'')
-			x = '"' + x.substr(1, x.length-2) + '"';
-		return JSON.parse(x);
-	}
-	return x;
+	return toString(JSON.stringify(toString(x)));
 }
 
 function concat(...args) {
 	if (args.length == 0)
 		return [];
-	if (typeof(args[0]) == 'string') {
+	if (_.isString(args[0])) {
 		let r = '';
 		for (let a of args)
-			r += ops.string.toString(a);
-		return r;
+			r += toString(a);
+		return toString(r);
 	}
 	return _.concat(...args);
 }
 concat.maxArgs = 1000;
 concat.minArgs = 1;
+
+
+function repeat(s, n) {
+	return toString(_.repeat(s, n));
+}
 
 function strHex(x, bytes=null, encoding='utf-8') {
 	bytes = bn.toNumber(bn.int(bytes || 0));
@@ -218,43 +213,24 @@ strHex.minArgs = 1;
 strHex.maxArgs = 3;
 
 function uppercase(s) {
-	return ops.string.toString(s).toUpperCase();
+	return toString(toString(s).toUpperCase());
 }
 
 function lowercase(s) {
-	return ops.string.toString(s).toLowerCase();
+	return toString(toString(s).toLowerCase());
 }
 
 function camelcase(s) {
-	return _.camelCase(ops.string.toString(s));
+	return toString(_.camelCase(toString(s)));
 }
 
 function capitalize(s) {
-	return _.capitalize(ops.string.toString(s));
+	return toString(_.capitalize(toString(s)));
 }
 
 function keccak(...args) {
-	const buffers = [];
-	for (let a of args) {
-		try {
-			if (a === true)
-				a = 1;
-			else if (a === false)
-				a = 0;
-			if (typeof(a) != 'string' && typeof(a) != 'number')
-				throw new Error('Unsupported type');
-			if (typeof(a) == 'string' && HEX_LITERAL_REGEX.test(a)) {
-				buffers.push(Buffer.from(a.substr(2), 'hex'));
-			}
-			try {
-				buffers.push(bn.toBuffer(a));
-			} catch (err) {
-				buffers.push(Buffer.from(a, 'utf-8'));
-			}
-		} catch (err) {
-			throw new Error(`Cannot convert ${a} to a buffer for hashing.`);
-		}
-	}
+	args = _.flatten(args);
+	const buffers = _.map(args, v => ops.toBuffer(v));
 	return '0x' + ethjs.keccak256(Buffer.concat(buffers)).toString('hex');
 }
 keccak.minArgs = 1;
@@ -294,11 +270,20 @@ function range(end, start, step) {
 range.minArgs = 1;
 range.maxArgs = 3;
 
+function filled(len, value) {
+	len = bn.toNumber(len || 0);
+	if (_.isNil(value))
+		value = 0;
+	return _.times(len, i => value);
+}
+filled.minArgs = 1;
+filled.maxArgs = 2;
+
 function join(list, separator) {
-	separator = ops.string.toString(separator || '');
+	separator = toString(separator || '');
 	if (!ops.list.isList(list))
 		throw new Error(`"${list}" is not a list`);
-	return _.map(list, i => ops.string.toString(i)).join(separator);
+	return toString(_.map(list, i => toString(i)).join(separator));
 }
 join.minArgs = 1;
 join.minArgs = 2;
@@ -320,7 +305,7 @@ function toCallable(v) {
 		return v;
 	if (_.isFunction(v))
 		return new FunctionAdapter(v);
-	throw new Error(`"${ops.string.toString(v)}" is not callable`);
+	throw new Error(`"${toString(v)}" is not callable`);
 }
 
 function map(list, fn) {
@@ -383,18 +368,20 @@ module.exports = {
 	decimal: decimal,
 	bool: ops.logical.bool,
 	quote: quote,
-	unquote: unquote,
+	unquote: ops.string.unquote,
 	uppercase: uppercase,
 	lowercase: lowercase,
 	camelcase: camelcase,
 	capitalize: capitalize,
 	strhex: strHex,
 	concat: concat,
+	repeat: repeat,
 	keccak: keccak,
 	keccak256: keccak,
 	key2addr: keyToAddress,
 	islist: ops.list.isList,
 	range: range,
+	filled: filled,
 	join: join,
 	len: len,
 	sum: sum,

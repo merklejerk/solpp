@@ -31,12 +31,15 @@ expression
 
 literal
 	: str=stringLiteral
+	| fstr=fstringLiteral
 	| num=numberLiteral
 	| bool=booleanLiteral ;
 
 stringLiteral: value=STRING_LITERAL ;
 
 booleanLiteral: value=BOOLEAN_LITERAL ;
+
+fstringLiteral: value=FSTRING_LITERAL ;
 
 numberLiteral
 	: value=OCTAL_LITERAL #octalLiteral
