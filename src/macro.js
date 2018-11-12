@@ -2,7 +2,8 @@
 const _ = require('lodash');
 const {
 	getNodeText,
-	getNodeLocation} = require('./antlr-utils');
+	getNodeLocation,
+	createLocationString} = require('./antlr-utils');
 const {createExpression} = require('./expression');
 
 function substitute(original, dict) {
@@ -47,7 +48,7 @@ class Macro {
 		try {
 			this.expr = this.expr || createExpression(this.body);
 		} catch (err) {
-			const loc = createLocationString(loc, this.unit);
+			const loc = createLocationString(this.loc, this.unit);
 			throw new Error(err.message + ` in ` + loc, err);
 		}
 		ctx.stack.push(_.zipObject(this.args, args));
