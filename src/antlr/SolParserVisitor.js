@@ -204,5 +204,11 @@ SolParserVisitor.prototype.visitDoneDirective = function(ctx) {
 };
 
 
+// Visit a parse tree produced by SolParser#endDirective.
+SolParserVisitor.prototype.visitEndDirective = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 
 exports.SolParserVisitor = SolParserVisitor;

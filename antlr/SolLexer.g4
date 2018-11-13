@@ -91,9 +91,6 @@ DEF_KW
 	: 'def'
 	| 'define' ;
 
-MACRO_KW
-	: 'macro' ;
-
 UNDEF_KW
 	: 'undef'
 	| 'undefine' ;
@@ -118,13 +115,11 @@ RPAREN: ')' ;
 
 COMMA: ',' ;
 
-PP_CONT: '\\' LF -> skip ;
-
-PP_COMMENT: '//' -> skip ;
+PP_CONT: '\\' LF [\t ]* '//' [\t ]* -> skip ;
 
 PP_END: (LF|EOF) -> popMode ;
 
-PP_WS: [\t ]+ -> skip ;
+PP_WS: [\t ]+ -> type(WS);
 
 PP_IDENTIFIER: IDENTIFIER -> type(IDENTIFIER) ;
 
@@ -133,7 +128,6 @@ PP_WORD: WORD -> type(WORD) ;
 // Preprocessor block comment mode
 mode PP_BLOCK_MODE ;
 PP_BLOCK_DEF_KW: DEF_KW -> type(DEF_KW) ;
-PP_BLOCK_MACRO_KW: MACRO_KW -> type(MACRO_KW) ;
 PP_BLOCK_UNDEF_KW: UNDEF_KW -> type(UNDEF_KW) ;
 PP_BLOCK_IF_KW: IF_KW -> type(IF_KW) ;
 PP_BLOCK_ELIF_KW: ELIF_KW -> type(ELIF_KW) ;
@@ -145,7 +139,7 @@ PP_BLOCK_IN_KW: IN_KW -> type(IN_KW) ;
 PP_BLOCK_LPAREN: LPAREN -> type(LPAREN) ;
 PP_BLOCK_RPAREN: RPAREN -> type(RPAREN) ;
 PP_BLOCK_COMMA: COMMA -> type(COMMA) ;
-PP_BLOCK_WS: [\t \r\n]+ -> skip;
+PP_BLOCK_WS: [\t \r\n]+ -> type(WS) ;
 PP_BLOCK_IDENTIFIER: IDENTIFIER -> type(IDENTIFIER) ;
 PP_BLOCK_WORD: WORD -> type(WORD) ;
 PP_BLOCK_END: ('*/'|EOF) -> type(PP_END), popMode;

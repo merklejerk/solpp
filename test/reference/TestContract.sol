@@ -429,7 +429,7 @@ contract TestContract {
 			// Expect: 138 +
 			138 +
 			// Expect: 2500000000008 + (1 days + 2 hours);
-			2500000000000008 + (1 days + 2 hours);
+			2500000000000008 + (1days + 2hours);
 		// Expect: _var5 = 0x000000000000000000000000000003282b0d3000;
 		_var5 = 0x000000000000000000000000000003282b0d3000;
 		// Expect: _var2 = 6;
@@ -461,6 +461,8 @@ contract TestContract {
 		string s6 = "Hello, Samwise Gamgee!";
 		// Expect: s7 = "foofoofoo";
 		string s7 = "foofoofoo";
+		// Expect: s8 = "I SPAN MULTIPLE LINES";
+		string s8 = "I SPAN MULTIPLE LINES";
 		// Expect: return false || true ||
 		return false || true ||
 			// Expect: true || false || true ||

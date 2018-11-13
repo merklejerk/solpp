@@ -13,15 +13,14 @@ function isTerminal(v) {
 function getNodeText(node, trim=false) {
 	if (node.symbol && node.symbol.type == -1)
 		return ''; // EOF
-	let t = null;
-	if (!_.isNil(node.start)) {
-		const start = _.get(node.start, 'start', node.start);
-		const stop = _.get(node.stop, 'stop', node.stop);
-		const stream = node.getInputStream ?
-			node.getInputStream() : node.start.getInputStream();
-		t = stream.getText(start, stop);
+	let t = '';
+	if (node.symbol) {
+		t = node.getText()
+	} else if (node.children) {
+		for (let ch of node.children)
+			t += getNodeText(ch);
 	} else {
-		t = node.getText();
+		t = node.getInputStream().getText(node.start, node.stop);
 	}
 	if (trim)
 		return t.trim();

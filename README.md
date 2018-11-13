@@ -16,7 +16,7 @@ math and builtin functions suitable for use with Solidity's primitives.
 - Simple, practical language inspired by C preprocessor directives,
 python, and javascript.
 - Easily declare symbols and macro functions in your source file with
-`#def` and `#macro` if directives.
+`#def` directives.
 - `#if`/`#elif`/`#else` blocks for conditional code rendering.
 - `#for` blocks for repeating code.
 - Expand (substitute) with `${...}` or evaluate with `$${...}` symbols, macros,
@@ -71,11 +71,11 @@ contract MyContract {
    // #undef EIGHT_QUARTERS
 
    // Define and use a macro.
-   // #macro POW(a, b) a ** b
+   // #def POW(a, b) a ** b
    // Here we expand then evaluate the symbol.
    uint256 _var3 = ${POW(2, 3)} + $${POW(16, 0.5)}; // -> uint256 _var3 = 2 ** 3 + 4;
    // Macros can call other macros and symbols during evaluation.
-   // #macro SQUARE(x) POW(x, 2)
+   // #def SQUARE(x) POW(x, 2)
    uint256 _var4 = $${SQUARE(10)}; // -> uint256 _var4 = 100;
    // You can also evaluate expressions inline.
    // Here we compute LOG(10) expressed as parts per million
@@ -89,7 +89,7 @@ contract MyContract {
    // Maybe we want to combine some strings.
    string _fullName = $${quote(join(['Bob', 'Smith'], ' '))}; // -> string _fullName = "Bob Smith";
    // Or do string interpolation.
-   // #macro GREETING(first, last) quote(`Hello, ${first} ${last}!`)
+   // #def GREETING(first, last) quote(`Hello, ${first} ${last}!`)
    string _fullName2 = $${GREETING('Bob', 'Smith')} // -> string _fullName2 = "Hello, Bob Smith!";
    // Convert a private key to an address? Sure!
    // #def PRIV_KEY 0x563b99585e0709e3a7ac78b8957aa0f53bc874a86f288884d7ccafe3b9e9b934
@@ -280,7 +280,7 @@ directive on the next immediate line comment.
 // Block comment directives are great in tight #for loops or #if blocks.
 // This will render: uint256 fac5 = 1 * 2 * 3 * 4 * 5;
 uint256 fac5 = 1/* #for i in range(2, 6) */ * $${i}/* #done */;
-bool maybe = /* #if SOME_SYMBOL */true/* #else */false;
+bool maybe = /* #if SOME_SYMBOL */true/* #else */false;/* #endif */
 ```
 
 ### Symbols
@@ -322,7 +322,7 @@ uint256 y = 2;
 ### Macros
 Macros are similar to symbols except that they take some arguments, like a
 function. They can be defined externally in a (javascript) definitions file or
-from within your code with the `#macro` directive.
+from within your code also with the `#def` directive.
 
 [Expanding](#expansion) a macro will perform a substitution of the arguments
 across its contents. [Evaluating](#evaluation) a macro will evaluate its
@@ -336,14 +336,14 @@ If you no longer need a macro, you can undefine it with the `#undef` directive.
 **Input**
 ```js
 // Define a macro
-// #macro MY_MACRO(x) (x / 2) + 1
+// #def MY_MACRO(x) (x / 2) + 1
 // Expand it.
 uint256 x = ${MY_MACRO(10)};
 // Evaluate it.
 uint256 y = $${MY_MACRO(10)};
 
 // Define a new macro that calls the other macro.
-// #macro OTHER_MACRO(x) MY_MACRO(x * 10)
+// #def OTHER_MACRO(x) MY_MACRO(x * 10)
 // Evaluate it.
 uint256 z = $${OTHER_MACRO(8)};
 
@@ -382,7 +382,7 @@ substituted throughout the macro's contents.
 uint256 v = 1 + ${SYM_1};
 
 // Expanding a macro.
-// #macro MACRO_1(x) x / 2
+// #def MACRO_1(x) x / 2
 uint256 v2 = 1 + ${MACRO_1(100)};
 ```
 
@@ -417,12 +417,12 @@ undefined, it will take on the value of `0`.
 uint256 v = 1 + $${SYM_1};
 
 // Evaluating a macro.
-// #macro MACRO_1(x) x * 2
+// #def MACRO_1(x) x * 2
 uint256 v2 = 1 + $${MACRO_1(2)};
 
 // Macro calling another macro and referencing a symbol.
 // #def SYM_2 2 ** 3
-// #macro MACRO_2(x) MACRO_1(x) + SYM_2
+// #def MACRO_2(x) MACRO_1(x) + SYM_2
 uint256 v3 = $${MACRO_2(4)};
 ```
 **Result**

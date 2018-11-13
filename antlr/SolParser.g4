@@ -67,22 +67,22 @@ directive
 	| forBlock ;
 
 nakedDefineDirective
-	: DEF_KW name=IDENTIFIER PP_END ;
+	: DEF_KW WS name=IDENTIFIER endDirective ;
 
 defineDirective
-	: DEF_KW name=IDENTIFIER body=directivePayload PP_END ;
+	: DEF_KW WS name=IDENTIFIER WS body=directivePayload endDirective ;
 
 defineMacroDirective
-	: MACRO_KW spec=functionSpec body=directivePayload PP_END ;
+	: DEF_KW WS spec=functionSpec WS body=directivePayload endDirective ;
 
 undefineDirective
-	: UNDEF_KW name=IDENTIFIER PP_END ;
+	: UNDEF_KW WS name=IDENTIFIER endDirective ;
 
 functionSpec
 	: name=IDENTIFIER LPAREN args=functionArgs? RPAREN ;
 
 functionArgs
-	: arg=IDENTIFIER (COMMA rest=functionArgs)? ;
+	: WS? arg=IDENTIFIER WS? (COMMA rest=functionArgs)? ;
 
 directivePayload
 	: (~PP_END)+ ;
@@ -100,22 +100,25 @@ elseBlock
 	: elseDirective content=blockContent endifDirective ;
 
 ifDirective
-	: IF_KW condition=directivePayload PP_END ;
+	: IF_KW WS condition=directivePayload endDirective ;
 
 elseDirective
-	: ELSE_KW PP_END ;
+	: ELSE_KW endDirective ;
 
 elifDirective
-	: ELIF_KW condition=directivePayload PP_END ;
+	: ELIF_KW WS condition=directivePayload endDirective ;
 
 endifDirective
-	: ENDIF_KW PP_END ;
+	: ENDIF_KW endDirective ;
 
 forBlock
 	: dir=forDirective content=blockContent doneDirective ;
 
 forDirective
-	: FOR_KW iterator=IDENTIFIER (COMMA key=IDENTIFIER)? IN_KW iterable=directivePayload PP_END ;
+	: FOR_KW WS iterator=IDENTIFIER (WS? COMMA WS? key=IDENTIFIER)? WS IN_KW WS iterable=directivePayload endDirective ;
 
 doneDirective
-	: DONE_KW PP_END ;
+	: DONE_KW endDirective ;
+
+endDirective
+	: WS? PP_END;

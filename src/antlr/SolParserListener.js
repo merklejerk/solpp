@@ -299,5 +299,14 @@ SolParserListener.prototype.exitDoneDirective = function(ctx) {
 };
 
 
+// Enter a parse tree produced by SolParser#endDirective.
+SolParserListener.prototype.enterEndDirective = function(ctx) {
+};
+
+// Exit a parse tree produced by SolParser#endDirective.
+SolParserListener.prototype.exitEndDirective = function(ctx) {
+};
+
+
 
 exports.SolParserListener = SolParserListener;

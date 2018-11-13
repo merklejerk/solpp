@@ -56,7 +56,7 @@ contract TestContract {
 	bool _f = ${OTHER_CONTRACT_SYM_1};
 	// #if !defined(BAD_DEF)
 	// #def DEF3 512
-	// #macro FUNC0(x) quote(log(x, 2))
+	// #def FUNC0(x) quote(log(x, 2))
 	// #def DEF4 booger
 	// Expect: string _str0 = "9" + "256" + "booger";
 	string _str0 = $${FUNC0(0x200)} + $${quote(decimal(0x100))} + $${quote(peek(DEF4))};
@@ -135,11 +135,11 @@ contract TestContract {
 	function bar(uint256 x) internal {
 		// #def ALIAS2 \
 		// (10**18 + 2)
-		// #macro FUNC1(x) 10**x
-		// #macro FUNC2(x, y) x + y
-		// #macro FUNC3(x) round(176 / x)
-		// #macro FUNC4(x) FUNC2(x, 7) * ALIAS2
-		// #macro REDUCER(r, v) v*(r+1)
+		// #def FUNC1(x) 10**x
+		// #def FUNC2(x, y) x + y
+		// #def FUNC3(x) round(176 / x)
+		// #def FUNC4(x) FUNC2(x, 7) * ALIAS2
+		// #def REDUCER(r, v) v*(r+1)
 		// #def VALS [100, 20, 8]
 		_var4  = x *
 			// Expect: 1024 + (10**18 + 2) - 10 /
@@ -154,12 +154,12 @@ contract TestContract {
 			$${sum(concat(VALS, [10]))} +
 			// Expect: 2500000000008 + (1 days + 2 hours);
 			$${FUNC2(2.5 finney, 8)} + (${FUNC2(1 days, 2 hours)});
-		// #macro FUNC5(x, y, z) hex((x + y) * z**10, 20)
+		// #def FUNC5(x, y, z) hex((x + y) * z**10, 20)
 		// Expect: _var5 = 0x000000000000000000000000000003282b0d3000;
 		_var5 = $${FUNC5(8, 4, 14)};
 		// Expect: _var2 = 6;
 		_var2 = $${1+1*2 - (1+1)/2 + 2**3/2};
-		// #macro FUNC6(x) FUNC2(3, x)
+		// #def FUNC6(x) FUNC2(3, x)
 		// Expect: 66 * -256 * 72;
 		_var1 = $${33 << 1} * $${-((2**10) >> 2)} * $${3912 & FUNC6(88-2)};
 		// Expect: _b = true && false;
@@ -174,7 +174,7 @@ contract TestContract {
 	}
 
 	function bar2() pure internal returns (bool) {
-		// #macro FUNC7(x) quote(x >= 0x100 ? 'yes' : 'no')
+		// #def FUNC7(x) quote(x >= 0x100 ? 'yes' : 'no')
 		// Expect: t = "no";
 		string s = $${FUNC7(100)};
 		// Expect: s3 = "yes";
@@ -183,7 +183,7 @@ contract TestContract {
 		string s3 = $${FUNC7(0x100)};
 		// Expect: s4 = "bye";
 		string s4 = $${quote(0*10 == 0 ? 'bye' : 'hello')};
-		// #macro GREETING(first, last) quote(`Hello, ${first} ${last}!`)
+		// #def GREETING(first, last) quote(`Hello, ${first} ${last}!`)
 		// Expect: s5 = "Hello, Samwise 32!";
 		string s5 = $${GREETING('Samwise', 2**5)};
 		// #def LASTNAME 'Gamgee'
@@ -191,9 +191,13 @@ contract TestContract {
 		string s6 = $${GREETING('Samwise', LASTNAME)};
 		// Expect: s7 = "foofoofoo";
 		string s7 = $${quote(repeat('foo', 3))};
+		// #def MULTILINE_DEF I SPAN \
+		// MULTIPLE LINES
+		// Expect: s8 = "I SPAN MULTIPLE LINES";
+		string s8 = $${quote(peek(MULTILINE_DEF))};
 		// #def FOO 'foo'
 		// #def FOO2 foo
-		// #macro FUNC8(a, b) (a != b)
+		// #def FUNC8(a, b) (a != b)
 		// Expect: return false || true ||
 		return $${bool(BAD_DEF)} || ${EXT_SYMBOL_1} ||
 			// Expect: true || false || true ||

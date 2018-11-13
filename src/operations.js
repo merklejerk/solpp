@@ -36,12 +36,12 @@ function toString(x) {
 		r = '';
 	else if (_.isString(x))
 		r = x;
+	else if (_.isFunction(x))
+		r = `<Function>`;
 	else if (_.isFunction(x.toString))
 		r = x.toString();
 	else if (isNode(x) || ixTerminal(x))
 		r = getNodeText(x).trim();
-	else if (_.isFunction(x))
-		r = `<Function>`;
 	else if (_.isNumber(x))
 		r = bn.parse(x);
 	else if (_.isArray(x))
