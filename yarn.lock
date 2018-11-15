@@ -37,7 +37,7 @@ bip66@^1.1.3:
   dependencies:
     safe-buffer "^5.0.1"
 
-bn-str-256@^1.8.0:
+bn-str-256@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/bn-str-256/-/bn-str-256-1.9.1.tgz#898cebee70a3edc3968f97b4cebbc4771025aa82"
   integrity sha512-u3muv3WO5sYv9nUQsPnDGLg731yNt/MOlKPK5pmBVqClcl7tY97tyfKxw8ed44HVrpi+7dkgJgQpbXP47a3GoQ==
