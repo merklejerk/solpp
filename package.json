@@ -1,6 +1,6 @@
 {
 	"name": "solpp",
-	"version": "0.6.0",
+	"version": "0.6.1",
 	"description": "A solidity preprocessor and flattener CLI and library",
 	"repository": "https://github.com/merklejerk/solpp",
 	"author": "Lawrence Forman <me@merklejerk.com>",
@@ -18,7 +18,7 @@
 	"dependencies": {
 		"antlr4": "^4.7.1",
 		"axios": "^0.18.0",
-		"bn-str-256": "^1.8.0",
+		"bn-str-256": "^1.9.1",
 		"commander": "^2.19.0",
 		"ethereumjs-util": "^6.0.0",
 		"lodash": "^4.17.11",
