@@ -52,7 +52,7 @@ BEGIN_EXPAND_MACRO_EXPRESSION
 
 IMPORT_KW: 'import' ;
 
-PRAGMA_VERSION: 'pragma' [\t ]+ 'solidity' [\t ]* '^'?  ([0-9] '.'?)* ';' ;
+PRAGMA_VERSION: 'pragma' [\t ]+ .+? ';' ;
 
 IDENTIFIER: ID_FRAG ;
 
