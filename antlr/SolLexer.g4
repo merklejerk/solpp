@@ -9,6 +9,11 @@ ID_FRAG: [_a-zA-Z] [_a-zA-Z0-9]* ;
 fragment
 EOL_FRAG: LF |  EOF ;
 
+fragment
+STRING_LITERAL_FRAG
+	: '"' (~[\r\n] | '\\"')*? '"'
+	| '\'' (~[\r\n] | '\\\'')*? '\'' ;
+
 PP_LINE_BEGIN
 	: [\t ]* '//' [\t ]* '#' -> skip, pushMode(PP_LINE_MODE) ;
 
@@ -23,9 +28,7 @@ LINE_COMMENT
 	: '//' [\t ]* ~[#\t ] .*? EOL_FRAG
 	| '//' [\t ]* EOL_FRAG ;
 
-STRING_LITERAL
-	: '"' (~["\r\n\\] | ('\\' .))* '"'
-	| '\'' (~['\r\n\\] | ('\\' .))* '\'' ;
+STRING_LITERAL: STRING_LITERAL_FRAG ;
 
 NUMBER_LITERAL
 	: [0-9]+
@@ -44,19 +47,21 @@ WS: [\t ]+ ;
 
 EOL: EOL_FRAG ;
 
-BEGIN_EVAL_MACRO_EXPRESSION
-	: '$${' -> pushMode(INSIDE_EVAL_MACRO_EXPRESSION) ;
-
-BEGIN_EXPAND_MACRO_EXPRESSION
-	: '${' -> pushMode(INSIDE_EXPAND_MACRO_EXPRESSION) ;
+BEGIN_MACRO_EXPR
+	: '$'?'$(' -> pushMode(INSIDE_MACRO_EXPR) ;
 
 IMPORT_KW: 'import' ;
 
-PRAGMA_VERSION: 'pragma' [\t ]+ .+? ';' ;
+PRAGMA: 'pragma' -> skip, pushMode(INSIDE_PRAGMA) ;
 
 IDENTIFIER: ID_FRAG ;
 
 WORD: (~[\t \r\n])+? ;
+
+mode INSIDE_PRAGMA ;
+END_PRAGMA: ';' -> skip, popMode ;
+
+PRAGMA_BODY: ~[;]+;
 
 // Preprocessor disabled mode
 mode NO_PP ;
@@ -79,7 +84,7 @@ NO_PP_EOL: EOL -> type(EOL) ;
 
 NO_PP_IMPORT_KW: IMPORT_KW -> type(IMPORT_KW) ;
 
-NO_PP_PRAGMA_VERSION: PRAGMA_VERSION -> type(PRAGMA_VERSION) ;
+NO_PP_PRAGMA: 'pragma' -> skip, pushMode(INSIDE_PRAGMA) ;
 
 NO_PP_IDENTIFIER: IDENTIFIER -> type(IDENTIFIER) ;
 
@@ -144,12 +149,20 @@ PP_BLOCK_IDENTIFIER: IDENTIFIER -> type(IDENTIFIER) ;
 PP_BLOCK_WORD: WORD -> type(WORD) ;
 PP_BLOCK_END: ('*/'|EOF) -> type(PP_END), popMode;
 
-mode INSIDE_EVAL_MACRO_EXPRESSION ;
-LEAVE_EVAL_MACRO_EXPRESSION: '}' -> skip, popMode ;
 
-EVAL_MACRO_EXPRESSION: (~[}])+ ;
+mode INSIDE_MACRO_EXPR ;
+MACRO_STRING: STRING_LITERAL_FRAG -> type(MACRO_WORD) ;
 
-mode INSIDE_EXPAND_MACRO_EXPRESSION ;
-LEAVE_EXPAND_MACRO_EXPRESSION: '}' -> skip, popMode ;
+MACRO_WORD: ~[()]+ ;
 
-EXPAND_MACRO_EXPRESSION: (~[}])+ ;
+BEGIN_MACRO_EXPR_PAREN
+	: '(' -> type(MACRO_WORD), pushMode(INSIDE_MACRO_EXPR_PAREN_BODY) ;
+
+END_MACRO_EXPR: ')' -> popMode;
+
+mode INSIDE_MACRO_EXPR_PAREN_BODY ;
+END_PAREN_BODY: ')' -> type(MACRO_WORD), popMode ;
+
+PAREN_PAREN: '(' -> type(MACRO_WORD), pushMode(INSIDE_MACRO_EXPR_PAREN_BODY) ;
+
+PAREN_BODY_CONTENT: ~[()]+ -> type(MACRO_WORD) ;

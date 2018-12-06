@@ -13,6 +13,7 @@ const {SolLexer} = require('./antlr/SolLexer');
 const {SolParser} = require('./antlr/SolParser');
 const Macro = require('./macro');
 const {createExpression, toBool} = require('./expression');
+const semverMerge = require('./semver-merge');
 
 class Oven {
 	constructor(opts={}) {
@@ -25,12 +26,16 @@ class Oven {
 		this.noFlatten = opts.noFlatten || false;
 		this.noPreprocessor = opts.noPreprocessor || false;
 		this.tolerant = opts.tolerant || false;
+		this.pragmas = opts.pragmas || [];
 	}
 
 	async transform(code) {
 		const root = createParseTree(SolLexer, SolParser, 'sourceUnit', code,
 			this.noPreprocessor ? 'NO_PP' : null);
-		return this._transformNode(root);
+		const _code = await this._transformNode(root);
+		// If we're the root source unit, prepend the merged pragmas.
+		const prefix = this.depth == 0 ? this._mergePragmas() + '\n\n' : '';
+		return prefix + _code;
 	}
 
 	async _transformNode(node) {
@@ -53,11 +58,10 @@ class Oven {
 					return getNodeText(node);
 				}
 				break;
-			case 'PragmaVersion': {
-					// Squelch pragmas in dependencies.
-					if (this.depth > 0)
-						return '';
-					return getNodeText(node.content);
+			case 'Pragma': {
+					// Aggregate pragmas and output a merged version later.
+					this.pragmas.push(getNodeText(node.body, true));
+					return '';
 				}
 			case 'NakedDefineDirective': {
 					const key = getNodeText(node.name);
@@ -114,14 +118,15 @@ class Oven {
 					}
 					return r;
 				}
-			case 'MacroExpansion': {
-
-					return this._expandNodeExpression(node.expr,
-						getNodeIndentation(node));
-				}
-			case 'MacroEvaluation': {
-					return this._evaluateNodeExpression(node.expr, false,
-						getNodeIndentation(node));
+			case 'MacroExpression': {
+					const prefix = getNodeText(node.prefix, true);
+					if (prefix.startsWith('$$')) {
+						return this._evaluateNodeExpression(node.body, false,
+							getNodeIndentation(node));
+					} else {
+						return this._expandNodeExpression(node.body,
+							getNodeIndentation(node));
+					}
 				}
 		}
 		if (node.children) {
@@ -154,14 +159,14 @@ class Oven {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
 			throw new Error(`Failed to evaluate expression: "${content}" in ` +
-		 		loc + `: ${err.message}`, err);
+				loc + `: ${err.message}`, err);
 		}
 	}
 
 	_createNodeExpression(node) {
-		const content = getNodeText(node, true);
+		const body = getNodeText(node);
 		try {
-			return createExpression(content);
+			return createExpression(body);
 		} catch (err) {
 			const loc = this._getNodeLocationString(node);
 			throw new Error(err.message + ` in ` + loc, err);
@@ -176,7 +181,7 @@ class Oven {
 			const loc = this._getNodeLocationString(node);
 			const content = getNodeText(node, true);
 			throw new Error(`Failed to expand expression: "${content}" in ` +
-		 		loc + `: ${err.message}`, err);
+				loc + `: ${err.message}`, err);
 		}
 	}
 
@@ -212,8 +217,27 @@ class Oven {
 			ctx: this.ctx,
 			cache: this.cache,
 			depth: this.depth + 1,
+			pragmas: this.pragmas
 		});
 		return oven.transform(code);
+	}
+
+	_mergePragmas() {
+		const pragmas = _.map(this.pragmas, s => s.replace(/\s+/g, ''));
+		// Extract the compiler semvers.
+		const compilerVersions = _.map(_.filter(
+			_.map(pragmas, s => /^solidity(.+)$/.exec(s)),
+				m => !!m), m => m[1]);
+		// Extract the feature pragmas.
+		const features = _.uniq(_.filter(pragmas, s => !/^solidity.+$/.test(s)));
+		if (compilerVersions.length == 0)
+			throw new Error('No compiler version defined in any source units!');
+		// Reconcile the compiler version.
+		const compilerVersion = semverMerge(compilerVersions);
+		// Stringify the result.
+		return [
+			`pragma solidity ${compilerVersion};`,
+			..._.map(features, s => `pragma ${s};`)].join('\n');
 	}
 }
 

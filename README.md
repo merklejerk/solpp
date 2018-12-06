@@ -19,11 +19,13 @@ python, and javascript.
 `#def` directives.
 - `#if`/`#elif`/`#else` blocks for conditional code rendering.
 - `#for` blocks for repeating code.
-- Expand (substitute) with `${...}` or evaluate with `$${...}` symbols, macros,
+- Expand (substitute) with `$(...)` or evaluate with `$$(...)` symbols, macros,
 and expressions anywhere in your code.
 - All math is done in extremely high precision (up to120 digits) and can
 represent integers AND decimals.
 - Robust expression syntax with many useful builtin functions.
+
+##### Please see the [ChangeLog](./CHANGELOG.md) for breaking changes between versions.
 
 ## Topics
 - [Example](#example)
@@ -64,36 +66,36 @@ import 'https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-solidity/v2.
 contract MyContract {
    // Define and use a symbol.
    // #def EIGHT_QUARTERS 8 / 4
-   uint256 _var1 = ${EIGHT_QUARTERS}; // -> uint256 _var1 = 8 / 4;
+   uint256 _var1 = $(EIGHT_QUARTERS); // -> uint256 _var1 = 8 / 4;
    // Evaluate a symbol as an expression. Note the double $.
-   uint256 _var2 = $${EIGHT_QUARTERS}; // -> uint256 _var2 = 2;
+   uint256 _var2 = $$(EIGHT_QUARTERS); // -> uint256 _var2 = 2;
    // We can even remove the symbol if we don't need it anymore.
    // #undef EIGHT_QUARTERS
 
    // Define and use a macro.
    // #def POW(a, b) a ** b
    // Here we expand then evaluate the symbol.
-   uint256 _var3 = ${POW(2, 3)} + $${POW(16, 0.5)}; // -> uint256 _var3 = 2 ** 3 + 4;
+   uint256 _var3 = $(POW(2, 3)) + $$(POW(16, 0.5)); // -> uint256 _var3 = 2 ** 3 + 4;
    // Macros can call other macros and symbols during evaluation.
    // #def SQUARE(x) POW(x, 2)
-   uint256 _var4 = $${SQUARE(10)}; // -> uint256 _var4 = 100;
+   uint256 _var4 = $$(SQUARE(10)); // -> uint256 _var4 = 100;
    // You can also evaluate expressions inline.
    // Here we compute LOG(10) expressed as parts per million
    // using some builtin functions.
-   uint256 _log10 = $${int(log(10) * 1e6)}; // -> uint256 _log10 = 2302585;
+   uint256 _log10 = $$(int(log(10) * 1e6)); // -> uint256 _log10 = 2302585;
    // All math supports decimals. here we output sqrt(2) as a
    // decimal string with 16 digits of precision.
-   string _sqrt2 = $${quote(sd(2**0.5, 16))}; // -> string _sqrt2 = "1.414213562373095";
+   string _sqrt2 = $$(quote(sd(2**0.5, 16))); // -> string _sqrt2 = "1.414213562373095";
    // We can even do bitwise operations on integers and output hex.
-   bytes32 _bytes = $${hex(int((2**0.5) * 1e18) << 8)}; // -> bytes32 _bytes = 0x13a04bbdfdc9be8800;
+   bytes32 _bytes = $$(hex(int((2**0.5) * 1e18) << 8)); // -> bytes32 _bytes = 0x13a04bbdfdc9be8800;
    // Maybe we want to combine some strings.
-   string _fullName = $${quote(join(['Bob', 'Smith'], ' '))}; // -> string _fullName = "Bob Smith";
+   string _fullName = $$(quote(join(['Bob', 'Smith'], ' '))); // -> string _fullName = "Bob Smith";
    // Or do string interpolation.
-   // #def GREETING(first, last) quote(`Hello, ${first} ${last}!`)
-   string _fullName2 = $${GREETING('Bob', 'Smith')} // -> string _fullName2 = "Hello, Bob Smith!";
+   // #def GREETING(first, last) quote(`Hello, $(first} $(last}!`)
+   string _fullName2 = $$(GREETING('Bob', 'Smith')) // -> string _fullName2 = "Hello, Bob Smith!";
    // Convert a private key to an address? Sure!
    // #def PRIV_KEY 0x563b99585e0709e3a7ac78b8957aa0f53bc874a86f288884d7ccafe3b9e9b934
-   address _addr = $${key2addr(PRIV_KEY)}; // -> _addr = 0x86c0bfFbA7b505c82f1533aFe6C69A604c3e2870;
+   address _addr = $$(key2addr(PRIV_KEY)); // -> _addr = 0x86c0bfFbA7b505c82f1533aFe6C69A604c3e2870;
 
    function foo(uint256 x) pure returns (uint256) {
       // #if EXT_SYMBOL
@@ -108,7 +110,7 @@ contract MyContract {
 
    function bar(uint256 x) pure returns (uint256) {
      // Repeat code with a a for loop.
-     return x /* #for V in range(1,4) */+ $${V+1}/* #done */; // -> return x + 1 + 2 + 3;
+     return x /* #for V in range(1,4) */+ $$(V+1)/* #done */; // -> return x + 1 + 2 + 3;
    }
 }
 ```
@@ -279,7 +281,7 @@ directive on the next immediate line comment.
 
 // Block comment directives are great in tight #for loops or #if blocks.
 // This will render: uint256 fac5 = 1 * 2 * 3 * 4 * 5;
-uint256 fac5 = 1/* #for i in range(2, 6) */ * $${i}/* #done */;
+uint256 fac5 = 1/* #for i in range(2, 6) */ * $$(i)/* #done */;
 bool maybe = /* #if SOME_SYMBOL */true/* #else */false;/* #endif */
 ```
 
@@ -289,8 +291,8 @@ file, or from right within a source file with the `#def` directive.
 Symbols can take on arbitrary values: code snippets, expressions, strings,
 numbers (binary, hex, octal, decimals), booleans, and lists.
 
-Once defined, symbols (and macros) can be [expanded](#expansion) (`${...}`)
-or [evaluated](#evaluation) (`$${...}`) in your code. Symbols do not
+Once defined, symbols (and macros) can be [expanded](#expansion) (`$(...)`)
+or [evaluated](#evaluation) (`$$(...)`) in your code. Symbols do not
 have to hold valid expressions, but only those that do can be evaluated.
 
 If you no longer need a symbol, you can undefine it with the `#undef` directive.
@@ -300,9 +302,9 @@ If you no longer need a symbol, you can undefine it with the `#undef` directive.
 // Define a symbol
 // #def MY_EXPR 1 + 1
 // Expand it.
-uint256 x = ${MY_EXPR};
+uint256 x = $(MY_EXPR);
 // Now evaluate it.
-uint256 y = $${MY_EXPR};
+uint256 y = $$(MY_EXPR);
 
 // Remove this symbol.
 // #undef MY_EXPR
@@ -338,14 +340,14 @@ If you no longer need a macro, you can undefine it with the `#undef` directive.
 // Define a macro
 // #def MY_MACRO(x) (x / 2) + 1
 // Expand it.
-uint256 x = ${MY_MACRO(10)};
+uint256 x = $(MY_MACRO(10));
 // Evaluate it.
-uint256 y = $${MY_MACRO(10)};
+uint256 y = $$(MY_MACRO(10));
 
 // Define a new macro that calls the other macro.
 // #def OTHER_MACRO(x) MY_MACRO(x * 10)
 // Evaluate it.
-uint256 z = $${OTHER_MACRO(8)};
+uint256 z = $$(OTHER_MACRO(8));
 
 // Remove this macro.
 // #undef OTHER_MACRO
@@ -368,7 +370,7 @@ uint256 z = 41;
 
 ### Expansion
 
-Expansion occurs whenever a `${...}` block is encountered in regular code
+Expansion occurs whenever a `$(...)` block is encountered in regular code
 (i.e., not inside a comment or string literal). When expanding a symbol, the
 contents of that symbol are simply put in the place of the expansion block.
 
@@ -379,11 +381,11 @@ substituted throughout the macro's contents.
 ```js
 // Expanding a symbol.
 // #def SYM_1 foo / 2
-uint256 v = 1 + ${SYM_1};
+uint256 v = 1 + $(SYM_1);
 
 // Expanding a macro.
 // #def MACRO_1(x) x / 2
-uint256 v2 = 1 + ${MACRO_1(100)};
+uint256 v2 = 1 + $(MACRO_1(100));
 ```
 
 **Result**
@@ -397,7 +399,7 @@ uint256 v = 1 + 100 / 2;
 
 ### Evaluation
 
-Evaluation occurs whenever a `$${...}` block is encountered in regular code
+Evaluation occurs whenever a `$$(...)` block is encountered in regular code
 (i.e., not inside a comment or string literal). When evaluating a symbol, the
 contents of that symbol are parsed and evaluated as an expression, with the
 ultimate result put in the place of the evaluation block. Macros work the same
@@ -414,16 +416,16 @@ undefined, it will take on the value of `0`.
 ```js
 // Evaluating a symbol.
 // #def SYM_1 5 * 2
-uint256 v = 1 + $${SYM_1};
+uint256 v = 1 + $$(SYM_1);
 
 // Evaluating a macro.
 // #def MACRO_1(x) x * 2
-uint256 v2 = 1 + $${MACRO_1(2)};
+uint256 v2 = 1 + $$(MACRO_1(2));
 
 // Macro calling another macro and referencing a symbol.
 // #def SYM_2 2 ** 3
 // #def MACRO_2(x) MACRO_1(x) + SYM_2
-uint256 v3 = $${MACRO_2(4)};
+uint256 v3 = $$(MACRO_2(4));
 ```
 **Result**
 ```js
@@ -446,7 +448,7 @@ any valid expression inside of them as well.
 ```js
 // Compute the sqrt of 2 as parts per million.
 // Here we use the builtin function 'int' to make the result an integer.
-uint256 sqrt2 = $${int(2**0.5 * 1e6)};
+uint256 sqrt2 = $$(int(2**0.5 * 1e6));
 ```
 
 **Result**
@@ -522,7 +524,7 @@ want to iterate over the values in a list.
 // Calculate the summation of 0...4
 uint256 sum = 0;
 // #for ITEM in range(1, 5)
-sum += $${ITEM};
+sum += $$(ITEM);
 // #done
 ```
 
@@ -567,6 +569,8 @@ decimal component will result in an error.
 | `a & b` | 256-bit `a` bitwise AND `b` |
 | <code>a &#124; b</code> | 256-bit `a` bitwise OR `b` |
 | `a ^ b` | 256-bit `a` bitwise XOR `b` |
+| `a << b` | 256-bit bitwise shift `a` left by `b` bits |
+| `a >> b` | 256-bit bitwise shift `a` right by `b` bits |
 | `!a` | logical NOT `a` |
 | <code>a &#124;&#124; b</code> | logical `a` OR `b` |
 | `a && b` | logical `a` AND `b` |
@@ -589,7 +593,7 @@ precision.
 | `false` | `false` boolean |
 | `"foo"` | Double quoted string |
 | `'foo'` | Single quoted string |
-| <code>&#96;foo ${bar}&#96;</code> | Interpolated string (with `bar` evaluated in place) |
+| <code>&#96;foo $(bar}&#96;</code> | Interpolated string (with `bar` evaluated in place) |
 | `32` | Positive integer number |
 | `-32` | Negative integer number |
 | `32.55` | Decimal number |
@@ -646,7 +650,7 @@ and can be called during [evaluation](#evaluation).
 | `int256(x)` | Truncate `x` to a signed 256-bit integer |
 | `uint256(x)` | Truncate `x` to an positive 256-bit integer |
 | `hex(x)` | Encode `x` as a hexadecimal |
-| `hex(x, n)` | Encode `x` as a hexadecimal, padding or truncating to `n` bytes. The sign of `n` determines whether it will be left or right padded/truncated. |
+| `hex(x, n)` | Encode `x` as a hexadecimal, padding or truncating to `n` bytes. If `n` is negative, `n` will be right padded/truncated. |
 | `decimal(x)` | Encode `x` as a decimal |
 
 #### String Functions

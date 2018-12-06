@@ -60,8 +60,8 @@ SolParserVisitor.prototype.visitLineBreak = function(ctx) {
 };
 
 
-// Visit a parse tree produced by SolParser#pragmaVersion.
-SolParserVisitor.prototype.visitPragmaVersion = function(ctx) {
+// Visit a parse tree produced by SolParser#pragma.
+SolParserVisitor.prototype.visitPragma = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -78,14 +78,14 @@ SolParserVisitor.prototype.visitImportStatement = function(ctx) {
 };
 
 
-// Visit a parse tree produced by SolParser#macroExpansion.
-SolParserVisitor.prototype.visitMacroExpansion = function(ctx) {
+// Visit a parse tree produced by SolParser#macroExpression.
+SolParserVisitor.prototype.visitMacroExpression = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by SolParser#macroEvaluation.
-SolParserVisitor.prototype.visitMacroEvaluation = function(ctx) {
+// Visit a parse tree produced by SolParser#macroExpressionBody.
+SolParserVisitor.prototype.visitMacroExpressionBody = function(ctx) {
   return this.visitChildren(ctx);
 };
 

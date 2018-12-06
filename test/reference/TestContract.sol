@@ -1,4 +1,6 @@
-pragma solidity^0.4.24;
+pragma solidity 0.4.24;
+pragma someOtherFeature;
+pragma someFeature;
 
 // Import a remote dependency, which will in turn import its own dependencies.
 
@@ -326,10 +328,10 @@ contract OtherContract {
 	}
 }
 
-// This import does not exist. It will be ignored with the 'tolerant' option
-import './deps/NonExistant.sol';
-// This import should be ignored because it's not a naked import.
-import {Poop} from './PoopContract.sol';
+// This import does not exist. It will be ignored with the "tolerant" option
+import "./deps/NonExistant.sol";
+// This import should be ignored because it"s not a naked import.
+import {Poop} from "./PoopContract.sol";
 
 // Some contract.
 contract TestContract {
@@ -394,7 +396,7 @@ contract TestContract {
 	];
 
 	uint8 _u8a[] = [
-		// Expect: 1337,1337,1337
+	// Expect: 1337,1337,1337
 		1337,1337,1337
 	];
 
@@ -417,7 +419,7 @@ contract TestContract {
 
 	/* Another function */
 	function bar(uint256 x) internal {
-		_var4  = x *
+		_var4 = x *
 			// Expect: 1024 + (10**18 + 2) - 10 /
 			1024 * (10**18 + 2) - 10 /
 			// Expect: 10**3 + 10**this.foo(2) + 10 / 32 +
@@ -446,7 +448,7 @@ contract TestContract {
 		_var2 = STRS[0] + _var4;
 	}
 
-	function bar2() pure internal returns (bool) {
+	function bar2() internal pure returns (bool) {
 		// Expect: t = "no";
 		string s = "no";
 		// Expect: s3 = "yes";
@@ -468,7 +470,7 @@ contract TestContract {
 			// Expect: true || false || true ||
 			true || false || true ||
 			// Expect: false || true && false ||
-			false || true &&  false ||
+			false || true && false ||
 			// Expect: (1 != 2) || false && true &&
 			(1 != 2) || false && true &&
 			// Expect: true && true &&
@@ -476,5 +478,4 @@ contract TestContract {
 			// false && true && true;
 			false && true && true;
 	}
-
 }

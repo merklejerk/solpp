@@ -83,12 +83,12 @@ SolParserListener.prototype.exitLineBreak = function(ctx) {
 };
 
 
-// Enter a parse tree produced by SolParser#pragmaVersion.
-SolParserListener.prototype.enterPragmaVersion = function(ctx) {
+// Enter a parse tree produced by SolParser#pragma.
+SolParserListener.prototype.enterPragma = function(ctx) {
 };
 
-// Exit a parse tree produced by SolParser#pragmaVersion.
-SolParserListener.prototype.exitPragmaVersion = function(ctx) {
+// Exit a parse tree produced by SolParser#pragma.
+SolParserListener.prototype.exitPragma = function(ctx) {
 };
 
 
@@ -110,21 +110,21 @@ SolParserListener.prototype.exitImportStatement = function(ctx) {
 };
 
 
-// Enter a parse tree produced by SolParser#macroExpansion.
-SolParserListener.prototype.enterMacroExpansion = function(ctx) {
+// Enter a parse tree produced by SolParser#macroExpression.
+SolParserListener.prototype.enterMacroExpression = function(ctx) {
 };
 
-// Exit a parse tree produced by SolParser#macroExpansion.
-SolParserListener.prototype.exitMacroExpansion = function(ctx) {
+// Exit a parse tree produced by SolParser#macroExpression.
+SolParserListener.prototype.exitMacroExpression = function(ctx) {
 };
 
 
-// Enter a parse tree produced by SolParser#macroEvaluation.
-SolParserListener.prototype.enterMacroEvaluation = function(ctx) {
+// Enter a parse tree produced by SolParser#macroExpressionBody.
+SolParserListener.prototype.enterMacroExpressionBody = function(ctx) {
 };
 
-// Exit a parse tree produced by SolParser#macroEvaluation.
-SolParserListener.prototype.exitMacroEvaluation = function(ctx) {
+// Exit a parse tree produced by SolParser#macroExpressionBody.
+SolParserListener.prototype.exitMacroExpressionBody = function(ctx) {
 };
 
 

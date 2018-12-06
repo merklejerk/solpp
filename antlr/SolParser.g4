@@ -16,9 +16,8 @@ code
 	| lineComment
 	| nakedImportStatement
 	| importStatement
-	| pragmaVersion
-	| macroExpansion
-	| macroEvaluation
+	| pragma
+	| macroExpression
 	| literal
 	| IDENTIFIER
 	| WORD
@@ -43,8 +42,8 @@ whitespace
 lineBreak
 	: EOL ;
 
-pragmaVersion
-	: content=PRAGMA_VERSION ;
+pragma
+	: body=PRAGMA_BODY;
 
 nakedImportStatement
 	: IMPORT_KW WS path=STRING_LITERAL WS* SEMICOLON ;
@@ -52,11 +51,11 @@ nakedImportStatement
 importStatement
 	: IMPORT_KW (~SEMICOLON)+ SEMICOLON ;
 
-macroExpansion
-	: BEGIN_EXPAND_MACRO_EXPRESSION expr=EXPAND_MACRO_EXPRESSION ;
+macroExpression
+	: prefix=BEGIN_MACRO_EXPR body=macroExpressionBody END_MACRO_EXPR;
 
-macroEvaluation
-	: BEGIN_EVAL_MACRO_EXPRESSION expr=EVAL_MACRO_EXPRESSION ;
+macroExpressionBody
+	: first=MACRO_WORD (rest=macroExpressionBody)? ;
 
 directive
 	: defineMacroDirective

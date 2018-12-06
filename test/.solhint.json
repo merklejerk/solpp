@@ -1,0 +1,15 @@
+{
+  "extend": "default",
+  "rules": {
+    "compiler-fixed": false,
+    "indent": false,
+    "state-visibility": false,
+    "max-states-count": false,
+    "var-name-mixedcase": false,
+    "func-name-mixedcase": false,
+    "no-unused-vars": false,
+    "two-lines-top-level-separator": false,
+    "no-mix-tabs-and-spaces": false,
+    "max-line-length": false
+  }
+}
