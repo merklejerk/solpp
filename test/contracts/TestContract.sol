@@ -107,10 +107,8 @@ contract TestContract {
 		$$(join(LIST, concat(",\n", __indent)))
 	];
 
-	uint8 _u8a[] = [
-	// Expect: 1337,1337,1337
-		$$(filled(3, 1337))
-	];
+	// Expect: _u8a[] = [1337, 1337, 1337];
+	uint8 _u8a[] = $$(filled(3, 1337));
 
 	// Block comment directives.
 	uint256 _sum = 0/* #for I in range(3) */ + $$((I+1)*100)/* #done */;

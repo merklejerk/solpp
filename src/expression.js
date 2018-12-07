@@ -291,4 +291,5 @@ module.exports = {
 	expand: expandCode,
 	createExpression: createExpression,
 	toBool: ops.logical.bool,
+	toString: ops.string.toString
 };

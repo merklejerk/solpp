@@ -1,3 +1,8 @@
+## Version 0.8.0
+  - Evaluating an expression that results in an array will emit a
+  javascript-style array (e.g., `$$(range(3))` -> `[0, 1, 2]`). Previously, it
+  would only emit the comma-separated contents, without brackets or spaces.
+  
 ## Version 0.7.0
   - All macro expansions/evaluations now use parenthesis in the form
   `$(...)` and `$(...)`. This is a breaking change from previous versions that

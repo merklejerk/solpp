@@ -12,7 +12,7 @@ const {
 const {SolLexer} = require('./antlr/SolLexer');
 const {SolParser} = require('./antlr/SolParser');
 const Macro = require('./macro');
-const {createExpression, toBool} = require('./expression');
+const {createExpression, toBool, toString} = require('./expression');
 const semverMerge = require('./semver-merge');
 
 class Oven {
@@ -86,7 +86,7 @@ class Oven {
 				}
 			case 'ElifBlock':
 			case 'IfBlock': {
-					if (!this._evaluateNodeExpression(node.dir.condition, true)) {
+					if (!this._evaluateNodeExpression(node.dir.condition, 'bool')) {
 						if (node.elseAlt)
 							return await this._transformNode(node.elseAlt);
 						else if (node.elifAlt)
@@ -121,7 +121,7 @@ class Oven {
 			case 'MacroExpression': {
 					const prefix = getNodeText(node.prefix, true);
 					if (prefix.startsWith('$$')) {
-						return this._evaluateNodeExpression(node.body, false,
+						return this._evaluateNodeExpression(node.body, 'string',
 							getNodeIndentation(node));
 					} else {
 						return this._expandNodeExpression(node.body,
@@ -147,12 +147,14 @@ class Oven {
 			}});
 	}
 
-	_evaluateNodeExpression(node, asBool=false, indent='') {
+	_evaluateNodeExpression(node, type=null, indent='') {
 		let expr = this._createNodeExpression(node);
 		try {
 			const r = expr.evaluate(this._augmentContext(node, indent));
-			if (asBool)
+			if (type == 'bool')
 				return toBool(r);
+			else if (type == 'string')
+				return toString(r);
 			return r;
 		} catch (err) {
 			console.error(err);
@@ -224,20 +226,23 @@ class Oven {
 
 	_mergePragmas() {
 		const pragmas = _.map(this.pragmas, s => s.replace(/\s+/g, ''));
+		// Extract the feature pragmas.
+		const features = _.uniq(_.filter(pragmas, s => !/^solidity.+$/.test(s)));
 		// Extract the compiler semvers.
 		const compilerVersions = _.map(_.filter(
 			_.map(pragmas, s => /^solidity(.+)$/.exec(s)),
 				m => !!m), m => m[1]);
-		// Extract the feature pragmas.
-		const features = _.uniq(_.filter(pragmas, s => !/^solidity.+$/.test(s)));
-		if (compilerVersions.length == 0)
-			throw new Error('No compiler version defined in any source units!');
-		// Reconcile the compiler version.
-		const compilerVersion = semverMerge(compilerVersions);
-		// Stringify the result.
+		let compilerVersion = null;
+		if (compilerVersions.length == 1)
+			compilerVersion = compilerVersions[0];
+		else if (compilerVersions.length > 1) {
+			// Reconcile the compiler version.
+			compilerVersion = semverMerge(compilerVersions);
+		}
 		return [
-			`pragma solidity ${compilerVersion};`,
-			..._.map(features, s => `pragma ${s};`)].join('\n');
+			...(compilerVersion ? [`pragma solidity ${compilerVersion};`] : []),
+			..._.map(features, s => `pragma ${s};`)
+		].join('\n');
 	}
 }
 

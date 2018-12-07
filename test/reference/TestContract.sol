@@ -395,10 +395,8 @@ contract TestContract {
 		0xbe99dfa90a4789d025fe7d447db0eb4102dc82ed9c0e27b2782a050b9b8a6c56
 	];
 
-	uint8 _u8a[] = [
-	// Expect: 1337,1337,1337
-		1337,1337,1337
-	];
+	// Expect: _u8a[] = [1337, 1337, 1337];
+	uint8 _u8a[] = [1337, 1337, 1337];
 
 	// Block comment directives.
 	uint256 _sum = 0 + 100 + 200 + 300;
