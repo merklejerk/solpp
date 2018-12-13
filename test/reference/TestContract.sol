@@ -463,6 +463,8 @@ contract TestContract {
 		string s7 = "foofoofoo";
 		// Expect: s8 = "I SPAN MULTIPLE LINES";
 		string s8 = "I SPAN MULTIPLE LINES";
+		// Expect: s9 = "32, 2**5";
+		string s9 = "32, 2**5";
 		// Expect: return false || true ||
 		return false || true ||
 			// Expect: true || false || true ||

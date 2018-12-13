@@ -593,7 +593,8 @@ precision.
 | `false` | `false` boolean |
 | `"foo"` | Double quoted string |
 | `'foo'` | Single quoted string |
-| <code>&#96;foo $(bar}&#96;</code> | Interpolated string (with `bar` evaluated in place) |
+| <code>&#96;foo $(bar}&#96;</code> | Interpolated string (with `bar` *expanded* in place) |
+| <code>&#96;foo $$(bar}&#96;</code> | Interpolated string (with `bar` *evaluated* in place) |
 | `32` | Positive integer number |
 | `-32` | Negative integer number |
 | `32.55` | Decimal number |

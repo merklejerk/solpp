@@ -70,11 +70,13 @@ function toBuffer(x) {
 	return bn.toBuffer(x);
 }
 
-function interpolate(str, evaluate) {
-	const re = /\${([^}]*)}/gi;
+function interpolate(str, evaluate, expand) {
+	const re = /\$\$?\{[^}]*\}/gi;
 	return toString(str.replace(re, s => {
-		const expr = s.substr(2, s.length - 3);
-		return toString(evaluate(expr));
+		const m = /^(\$\$?)\{([^}]*)\}$/.exec(s);
+		const mode = m[1] == '$$' ? evaluate : expand;
+		const expr = m[2];
+		return toString(mode(expr));
 	}));
 }
 

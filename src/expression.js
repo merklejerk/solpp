@@ -199,7 +199,8 @@ function evaluate(node, ctx) {
 			if (kind == 'FstringLiteral') {
 				return _.assign(ops.string.interpolate(
 					ops.string.unquote(v),
-					expr => evaluateCode(expr, ctx)), {literal: true});
+					expr => evaluateCode(expr, ctx),
+					expr => expandCode(expr, ctx)), {literal: true});
 			}
 			return v;
 		}

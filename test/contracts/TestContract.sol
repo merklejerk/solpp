@@ -193,6 +193,9 @@ contract TestContract {
 		// MULTIPLE LINES
 		// Expect: s8 = "I SPAN MULTIPLE LINES";
 		string s8 = $$(quote(peek(MULTILINE_DEF)));
+		// #def TWO_TO_THE_FIFTH 2**5
+		// Expect: s9 = "32, 2**5";
+		string s9 = $$(quote(`$${TWO_TO_THE_FIFTH}, ${TWO_TO_THE_FIFTH}`));
 		// #def FOO "foo"
 		// #def FOO2 foo
 		// #def FUNC8(a, b) (a != b)
