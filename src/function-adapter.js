@@ -14,12 +14,11 @@ class FunctionAdapter {
 			this.maxArgs = fn.maxArgs;
 		else
 			this.maxArgs = fn.length || 0;
-		this.args = _.times(fn.length || 0, i => `${i}`);
 	}
 
 	_validateArgs(args) {
 		if (args.length > this.maxArgs || args.length < this.minArgs)
-			throw new Error(`Function requires ` +
+			throw new Error(`Function "${this.toString()}" requires ` +
 				`${this.minArgs}-${this.maxArgs} arguments`);
 	}
 
@@ -36,7 +35,7 @@ class FunctionAdapter {
 	}
 
 	toString() {
-		return '<Function>';
+		return this.fn.builtinName || this.fn.name || '<Function>';
 	}
 }
 

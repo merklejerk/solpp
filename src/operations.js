@@ -37,7 +37,7 @@ function toString(x) {
 	else if (_.isString(x))
 		r = x;
 	else if (_.isFunction(x))
-		r = `<Function>`;
+		r = x.builtinName || x.name || `<Function>`;
 	else if (isNode(x) || isTerminal(x))
 		r = getNodeText(x).trim();
 	else if (_.isNumber(x))

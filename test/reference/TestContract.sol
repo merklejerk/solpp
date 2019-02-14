@@ -465,6 +465,8 @@ contract TestContract {
 		string s8 = "I SPAN MULTIPLE LINES";
 		// Expect: s9 = "32, 2**5";
 		string s9 = "32, 2**5";
+		// Expect: uint256[3] a = [uint256(0), uint256(1), uint256(3)];
+		uint256[3] a = [uint256(0), uint256(1), uint256(2)];
 		// Expect: return false || true ||
 		return false || true ||
 			// Expect: true || false || true ||

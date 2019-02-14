@@ -102,6 +102,7 @@ function log(n, base) {
 	return bn.log(n, base);
 }
 log.minArgs = 1;
+log.maxArgs = 2;
 
 function exp(y) {
 	return bn.exp(y);
@@ -143,6 +144,7 @@ function sd(x, digits) {
 	return bn.sd(x);
 }
 sd.minArgs = 1;
+sd.maxArgs = 2;
 
 function dp(x, digits) {
 	if (digits)
@@ -150,6 +152,7 @@ function dp(x, digits) {
 	return bn.dp(x);
 }
 dp.minArgs = 1;
+dp.maxArgs = 2;
 
 function hex(x, bytes) {
 	x = x || 0;
@@ -188,7 +191,7 @@ function repeat(s, n) {
 	return toString(_.repeat(s, n));
 }
 
-function strHex(x, bytes=null, encoding='utf-8') {
+function strhex(x, bytes=null, encoding='utf-8') {
 	bytes = bn.toNumber(bn.int(bytes || 0));
 	const L = Math.abs(bytes);
 	let strbuf = Buffer.from(`${x}`, encoding || 'utf-8');
@@ -209,8 +212,8 @@ function strHex(x, bytes=null, encoding='utf-8') {
 	}
 	return '0x'+strbuf.toString('hex');
 }
-strHex.minArgs = 1;
-strHex.maxArgs = 3;
+strhex.minArgs = 1;
+strhex.maxArgs = 3;
 
 function uppercase(s) {
 	return toString(toString(s).toUpperCase());
@@ -236,7 +239,7 @@ function keccak(...args) {
 keccak.minArgs = 1;
 keccak.maxArgs = 1000;
 
-function keyToAddress(key) {
+function key2addr(key) {
 	if (!_.isBuffer(key))
 		key = bn.toBuffer(key, 32);
 	return ethjs.toChecksumAddress(
@@ -270,7 +273,7 @@ function range(end, start, step) {
 range.minArgs = 1;
 range.maxArgs = 3;
 
-function filled(len, value) {
+function filled(len, value=0) {
 	len = bn.toNumber(len || 0);
 	if (_.isNil(value))
 		value = 0;
@@ -373,12 +376,12 @@ module.exports = {
 	lowercase: lowercase,
 	camelcase: camelcase,
 	capitalize: capitalize,
-	strhex: strHex,
+	strhex: strhex,
 	concat: concat,
 	repeat: repeat,
 	keccak: keccak,
 	keccak256: keccak,
-	key2addr: keyToAddress,
+	key2addr: key2addr,
 	islist: ops.list.isList,
 	range: range,
 	filled: filled,
@@ -414,3 +417,17 @@ module.exports = {
 	MAX_INT256_VALUE: MAX_INT256_VALUE,
 	MIN_INT256_VALUE: MIN_INT256_VALUE
 };
+
+// Wrap builtin functions so their builtin names match their key.
+module.exports = _.mapValues(module.exports, (v, k) => {
+	if (_.isFunction(v)) {
+		const w = function(...args) { return v.apply(this, args); };
+		w.builtinName = k;
+		w.minArgs = v.minArgs || v.length || 0;
+		w.maxArgs = v.maxArgs;
+		if (_.isNil(w.maxArgs))
+			w.maxArgs = Math.max(v.length, w.minArgs);
+		return w;
+	}
+	return v;
+});

@@ -196,6 +196,9 @@ contract TestContract {
 		// #def TWO_TO_THE_FIFTH 2**5
 		// Expect: s9 = "32, 2**5";
 		string s9 = $$(quote(`$${TWO_TO_THE_FIFTH}, ${TWO_TO_THE_FIFTH}`));
+		// #def FILLED_ARRAY(type, count) map(range(count), (i) => `${type}(${i})`)
+		// Expect: uint256[3] a = [uint256(0), uint256(1), uint256(3)];
+		uint256[3] a = $$(FILLED_ARRAY(uint256, 3));
 		// #def FOO "foo"
 		// #def FOO2 foo
 		// #def FUNC8(a, b) (a != b)
