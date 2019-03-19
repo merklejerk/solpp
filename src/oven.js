@@ -225,12 +225,12 @@ class Oven {
 	}
 
 	_mergePragmas() {
-		const pragmas = _.map(this.pragmas, s => s.replace(/\s+/g, ''));
+		const pragmas = _.map(this.pragmas, s => s.replace(/\s+/g, ' '));
 		// Extract the feature pragmas.
 		const features = _.uniq(_.filter(pragmas, s => !/^solidity.+$/.test(s)));
 		// Extract the compiler semvers.
 		const compilerVersions = _.map(_.filter(
-			_.map(pragmas, s => /^solidity(.+)$/.exec(s)),
+			_.map(pragmas, s => /^solidity\s*(.+)$/.exec(s)),
 				m => !!m), m => m[1]);
 		let compilerVersion = null;
 		if (compilerVersions.length == 1)

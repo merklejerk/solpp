@@ -1,4 +1,5 @@
 pragma solidity 0.4.24;
+pragma experimental AbiEncoderV2;
 pragma someOtherFeature;
 pragma someFeature;
 

@@ -1,4 +1,5 @@
 pragma solidity <0.5;
+pragma experimental AbiEncoderV2;
 
 import "./deps/OtherContract.sol";
 // This import does not exist. It will be ignored with the "tolerant" option

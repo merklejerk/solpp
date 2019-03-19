@@ -1,3 +1,6 @@
+## Version 0.9.2
+  - Fix bug where `pragma` strings being rendered without whitespace.
+
 ## Version 0.9.1
   - Stringify a function (built-in or externally defined) will render the
   function's name instead of just '<Function'.
