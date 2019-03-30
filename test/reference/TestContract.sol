@@ -309,6 +309,30 @@ contract ERC20 is IERC20 {
   }
 }
 
+// Try importing a module path.
+
+/**
+ * @title Math
+ * @dev Assorted math operations
+ */
+library Math {
+  function max64(uint64 _a, uint64 _b) internal pure returns (uint64) {
+    return _a >= _b ? _a : _b;
+  }
+
+  function min64(uint64 _a, uint64 _b) internal pure returns (uint64) {
+    return _a < _b ? _a : _b;
+  }
+
+  function max256(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    return _a >= _b ? _a : _b;
+  }
+
+  function min256(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    return _a < _b ? _a : _b;
+  }
+}
+
 library DependencyLibrary {
 	function mul(x) internal pure returns (uint256) {
 		// Expect: return x * 100 + 255 +

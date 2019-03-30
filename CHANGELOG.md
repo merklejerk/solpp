@@ -1,3 +1,8 @@
+## Version 0.10.0
+  - Add resolving of imports from `node_modules` (e.g., `import "openzeppelin-solidity/contracts/math/Math.sol"`).
+  - Fix `tolerant`, `noFlatten`, and `noPreprocessor` options not being inherited
+  by imported dependencies.
+
 ## Version 0.9.3
   - Fix `--output` command line option failing. See https://github.com/merklejerk/solpp/pull/2.
 

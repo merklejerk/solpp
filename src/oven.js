@@ -196,10 +196,13 @@ class Oven {
 	}
 
 	async _includeImport(path, loc) {
-		const resolved = await this.resolver(path, this.cwd, this.name);
-		if (!resolved) {
-			throw new Error(`Cannot resolve import "${path}": ` +
-				this._createLocationString(loc));
+		let resolved;
+		try {
+			resolved = await this.resolver(path, this.cwd, this.name);
+		} catch (err) {
+			const msg = `Cannot resolve import "${path}" at ` +
+				this._createLocationString(loc) + `: ${err.message}`;
+			throw new Error(msg);
 		}
 		if (resolved.name in this.cache) // Already included.
 			return '';
@@ -219,7 +222,10 @@ class Oven {
 			ctx: this.ctx,
 			cache: this.cache,
 			depth: this.depth + 1,
-			pragmas: this.pragmas
+			pragmas: this.pragmas,
+			noFlatten: this.noFlatten,
+			noPreprocessor: this.noPreprocessor,
+			tolerant: this.tolerant
 		});
 		return oven.transform(code);
 	}

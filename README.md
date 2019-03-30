@@ -57,11 +57,14 @@ represent integers AND decimals.
 
 ## Example
 
-```js
+```solidity
 // solpp will inline this file and any of its dependencies.
 import './MyLibrary.sol';
+// If you have a file in node_modules, solpp can grab that too.
+import 'openzeppelin-solidity/contracts/math/Math.sol';
 // solpp can also do the same with URLs!
 import 'https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-solidity/v2.0.0/contracts/token/ERC20/ERC20.sol';
+
 
 contract MyContract {
    // Define and use a symbol.
@@ -271,7 +274,7 @@ unless the line ends in a `\` character, which allows you to continue the
 directive on the next immediate line comment.
 
 **Example**
-```js
+```solidity
 // Single line comment directive.
 // #def LDEF All this text is the value of LDEF.
 
@@ -298,7 +301,7 @@ have to hold valid expressions, but only those that do can be evaluated.
 If you no longer need a symbol, you can undefine it with the `#undef` directive.
 
 **Input**
-```js
+```solidity
 // Define a symbol
 // #def MY_EXPR 1 + 1
 // Expand it.
@@ -311,7 +314,7 @@ uint256 y = $$(MY_EXPR);
 ```
 
 **Result**
-```js
+```solidity
 // Define a symbol
 // Expand it.
 uint256 x = 1 + 1;
@@ -336,7 +339,7 @@ only those that do can be evaluated.
 If you no longer need a macro, you can undefine it with the `#undef` directive.
 
 **Input**
-```js
+```solidity
 // Define a macro
 // #def MY_MACRO(x) (x / 2) + 1
 // Expand it.
@@ -354,7 +357,7 @@ uint256 z = $$(OTHER_MACRO(8));
 ```
 
 **Result**
-```js
+```solidity
 // Define a macro
 // Expand it.
 uint256 x = (10/2) + 1;
@@ -378,7 +381,7 @@ A similar result occurs when expanding a macro, except arguments will be
 substituted throughout the macro's contents.
 
 **Input**
-```js
+```solidity
 // Expanding a symbol.
 // #def SYM_1 foo / 2
 uint256 v = 1 + $(SYM_1);
@@ -389,7 +392,7 @@ uint256 v2 = 1 + $(MACRO_1(100));
 ```
 
 **Result**
-```js
+```solidity
 // Expanding a symbol.
 uint256 v = 1 + foo / 2;
 
@@ -413,7 +416,7 @@ operation, an error will be raised. If a symbol is encountered that is
 undefined, it will take on the value of `0`.
 
 **Input**
-```js
+```solidity
 // Evaluating a symbol.
 // #def SYM_1 5 * 2
 uint256 v = 1 + $$(SYM_1);
@@ -428,7 +431,7 @@ uint256 v2 = 1 + $$(MACRO_1(2));
 uint256 v3 = $$(MACRO_2(4));
 ```
 **Result**
-```js
+```solidity
 // Evaluating a symbol.
 uint256 v = 1 + 10;
 
@@ -445,14 +448,14 @@ You don't have to use symbols or macros in your evaluation blocks. You can put
 any valid expression inside of them as well.
 
 **Input**
-```js
+```solidity
 // Compute the sqrt of 2 as parts per million.
 // Here we use the builtin function 'int' to make the result an integer.
 uint256 sqrt2 = $$(int(2**0.5 * 1e6));
 ```
 
 **Result**
-```js
+```solidity
 // Compute the sqrt of 2 as parts per million.
 // Here we use the builtin function 'int' to make the result an integer.
 uint256 sqrt2 = 1414213;
@@ -473,7 +476,7 @@ complex sequence of operations.
 Blocks may also be nested, with inner blocks depending on outer blocks.
 
 **Input**
-```js
+```solidity
 // #if true
 // This block will always render.
 uint256 x = 100;
@@ -498,7 +501,7 @@ uint256 foo = 3;
 ```
 
 **Result** (with `EXT_SYM_2='foobar'`)
-```js
+```solidity
 // This block will always render.
 uint256 x = 100;
 
@@ -520,7 +523,7 @@ iterates over values and indices, or simply `#for ITEM in LIST`, if you only
 want to iterate over the values in a list.
 
 **Input**
-```js
+```solidity
 // Calculate the summation of 0...4
 uint256 sum = 0;
 // #for ITEM in range(1, 5)
@@ -529,7 +532,7 @@ sum += $$(ITEM);
 ```
 
 **Result**
-```js
+```solidity
 // Calculate the summation of 0...4
 uint256 sum = 0;
 sum += 1;

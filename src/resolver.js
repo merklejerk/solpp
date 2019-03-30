@@ -2,15 +2,36 @@
 const _ = require('lodash');
 const fs = require('mz/fs');
 const axios = require('axios');
+const promisify = require('util').promisify;
 const {URL} = require('url');
-const {dirname, isAbsolute, resolve} = require('path');
+const {
+    dirname,
+    isAbsolute,
+    resolve:resolvePath,
+    sep:pathSeparator
+} = require('path');
+const resolveModuleFile = promisify(require('resolve'));
 
-const URL_TEST = /^https?:\/\//i;
+const URL_PATH_TEST = /^https?:\/\//i;
+const RELATIVE_PATH_TEST = createRelativePathTest();
 
-function isURL(path, cwd, from) {
-	if (URL_TEST.test(path) || URL_TEST.test(cwd))
+function createRelativePathTest() {
+    if (pathSeparator === '\\')
+        pathSeparator = '\\\\';
+    const regex = `^[.]+${pathSeparator}.+$`;
+    return new RegExp(regex, 'i');
+}
+
+function isURLPath(path, cwd, from) {
+	if (URL_PATH_TEST.test(path) || URL_PATH_TEST.test(cwd))
 		return true;
 	return false;
+}
+
+function isRelativePath(path, cwd, from) {
+    if (_.isNil(from))
+        return true;
+    return !URL_PATH_TEST.test(cwd) && RELATIVE_PATH_TEST.test(path);
 }
 
 function dirnameURL(url) {
@@ -21,9 +42,9 @@ function dirnameURL(url) {
 }
 
 function joinURLPath(cwd, path) {
-	if (URL_TEST.test(path))
+	if (URL_PATH_TEST.test(path))
 		return path;
-	if (!URL_TEST.test(cwd))
+	if (!URL_PATH_TEST.test(cwd))
 		throw new Error(`Cannot resolve URL segment "${path}" from "${cwd}"`);
 	let {origin, pathname} = new URL(cwd);
 	const pathParts = _.filter(
@@ -38,7 +59,7 @@ function joinURLPath(cwd, path) {
 	return new URL(outputPath.join('/'), origin).href;
 }
 
-async function URLResolver(path, cwd, from) {
+async function urlResolver(path, cwd, from) {
 	const url = joinURLPath(cwd, path);
 	const dir = dirnameURL(url);
 	try {
@@ -53,17 +74,32 @@ async function URLResolver(path, cwd, from) {
 	}
 }
 
-async function resolver(path, cwd, from) {
-	if (isURL(path, cwd, from))
-		return URLResolver(path, cwd, from);
-	if (!isAbsolute(path))
-		path = resolve(cwd, path);
-	const code = await fs.readFile(path, 'utf-8');
+async function relativeResolver(path, cwd, from) {
+	const resolved = resolvePath(cwd, path);
+	const code = await fs.readFile(resolved, 'utf-8');
 	return {
 		code: code,
-		name: path,
-		cwd: dirname(path)
+		name: resolved,
+		cwd: dirname(resolved)
 	};
+}
+
+async function moduleResolver(path, cwd, from) {
+    const resolved = await resolveModuleFile(path, {basedir: dirname(cwd)});
+	const code = await fs.readFile(resolved, 'utf-8');
+	return {
+		code: code,
+		name: resolved,
+		cwd: dirname(resolved)
+	};
+}
+
+async function resolver(path, cwd, from) {
+	if (isURLPath(path, cwd, from))
+		return urlResolver(path, cwd, from);
+    if (isRelativePath(path, cwd, from))
+        return relativeResolver(path, cwd, from);
+     return moduleResolver(path, cwd, from);
 }
 
 module.exports = resolver;
