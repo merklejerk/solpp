@@ -33,7 +33,7 @@ function loadDefs(file) {
 program
 	.version(VERSION, '-v --version')
 	.arguments('<source-file>')
-	.option('-o, --output <file>', 'write output to a file (instead of stdout)', path.resolve)
+	.option('-o, --output <file>', 'write output to a file (instead of stdout)')
 	.option('--no-flatten', 'do not flatten (include) naked imports')
 	.option('--no-pp', 'disable the preprocessor (just flatten)')
 	.option('-D, --define <name>[=value]', 'define a preprocessor symbol (can be repeated)',
@@ -51,7 +51,7 @@ program
 		};
 		const output = await lib.processFile(file, opts);
 		if (this.output)
-			await fs.writeFile(this.output, output, 'utf-8');
+			await fs.writeFile(path.resolve(this.output), output, 'utf-8');
 		else
 			console.log(output);
 	});
