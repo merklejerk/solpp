@@ -1,3 +1,6 @@
+## Version 0.9.3
+  - Fix `--output` command line option failing. See https://github.com/merklejerk/solpp/pull/2.
+
 ## Version 0.9.2
   - Fix bug where `pragma` strings being rendered without whitespace.
 
