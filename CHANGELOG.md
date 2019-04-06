@@ -1,3 +1,6 @@
+## Version 0.10.1
+  - Allow compatibility with with node v8.
+
 ## Version 0.10.0
   - Add resolving of imports from `node_modules` (e.g., `import "openzeppelin-solidity/contracts/math/Math.sol"`).
   - Fix `tolerant`, `noFlatten`, and `noPreprocessor` options not being inherited
