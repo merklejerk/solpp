@@ -6,11 +6,11 @@ const merge = require('../src/semver-merge');
 
 describe('semver-merge', function() {
 	it('Throws with incompatible semvers', async function() {
-		const MERGE_ERROR = {message: /^Cannot reconcile semvers/i};
-		assert.throws(() => merge(['0.5', '^0.4.24']), MERGE_ERROR);
-		assert.throws(() => merge(['^0.5', '^0.4.24']), MERGE_ERROR);
-		assert.throws(() => merge(['0.4.24', '<0.4.24']), MERGE_ERROR);
-		assert.throws(() => merge(['0.4.0', '0.4.24']), MERGE_ERROR);
+		const MERGE_ERROR = /^Cannot reconcile semvers/i;
+		assert.throws(() => merge(['0.5', '^0.4.24']), (err) => MERGE_ERROR.test(err.message));
+		assert.throws(() => merge(['^0.5', '^0.4.24']), (err) => MERGE_ERROR.test(err.message));
+		assert.throws(() => merge(['0.4.24', '<0.4.24']), (err) => MERGE_ERROR.test(err.message));
+		assert.throws(() => merge(['0.4.0', '0.4.24']), (err) => MERGE_ERROR.test(err.message));
 	});
 
 	it('Reconciles to highest semver', async function() {
