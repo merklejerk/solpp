@@ -3,7 +3,9 @@ const _ = require('lodash');
 const {
 	getNodeText,
 	getNodeLocation,
-	createLocationString} = require('./antlr-utils');
+	createLocationString,
+	NodeError
+} = require('./antlr-utils');
 const {createExpression} = require('./expression');
 
 function substitute(original, dict) {
@@ -13,8 +15,8 @@ function substitute(original, dict) {
 
 class Macro {
 	constructor(node, unit) {
+		this.node = node;
 		this.unit = unit;
-		this.loc = getNodeLocation(node);
 		const spec = node.spec;
 		this.body = getNodeText(node.body);
 		this.name = getNodeText(spec.name);
@@ -28,14 +30,11 @@ class Macro {
 
 	_validateArgs(args) {
 		if (args.length != this.args.length) {
-			throw new Error(
-				`Macro "${this.name}" expects ${this.args.length} arguments: ` +
-					this.getLocationString());
+			throw new NodeError(
+				this.node,
+				`Macro "${this.name}" expects ${this.args.length} arguments`
+			);
 		}
-	}
-
-	getLocationString() {
-		return createLocationString(this.loc, this.unit);
 	}
 
 	expand(args) {
@@ -48,8 +47,7 @@ class Macro {
 		try {
 			this.expr = this.expr || createExpression(this.body);
 		} catch (err) {
-			const loc = createLocationString(this.loc, this.unit);
-			throw new Error(err.message + ` in ` + loc, err);
+			throw new NodeError(this.node, err.message, err);
 		}
 		ctx.stack.push(_.zipObject(this.args, args));
 		const r = this.expr.evaluate(ctx);

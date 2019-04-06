@@ -1,3 +1,5 @@
+'use strict'
+require('colors');
 const _ = require('lodash');
 const process = require('process');
 const {dirname} = require('path');
@@ -7,10 +9,13 @@ const {
 	getNodeText,
 	getNodeIndentation,
 	getNodeLocation,
-	createLocationString
+	getNodeLineText,
+	createLocationString,
+	NodeError
 } = require('./antlr-utils');
 const {SolLexer} = require('./antlr/SolLexer');
 const {SolParser} = require('./antlr/SolParser');
+const {SourceMapGenerator} = require('source-map');
 const Macro = require('./macro');
 const {createExpression, toBool, toString} = require('./expression');
 const semverMerge = require('./semver-merge');
@@ -27,112 +32,132 @@ class Oven {
 		this.noPreprocessor = opts.noPreprocessor || false;
 		this.tolerant = opts.tolerant || false;
 		this.pragmas = opts.pragmas || [];
+		this.sourceMap = opts.sourceMap || new SourceMapGenerator();
 	}
 
 	async transform(code) {
-		const root = createParseTree(SolLexer, SolParser, 'sourceUnit', code,
-			this.noPreprocessor ? 'NO_PP' : null);
-		const _code = await this._transformNode(root);
-		// If we're the root source unit, prepend the merged pragmas.
-		const prefix = this.depth == 0 ? this._mergePragmas() + '\n\n' : '';
-		return prefix + _code;
+		const root = createParseTree(
+			SolLexer,
+			SolParser,
+			'sourceUnit',
+			code,
+			this.noPreprocessor ? 'NO_PP' : null
+		);
+		try {
+			const _code = await this._transformNode(root);
+			// If we're the root source unit, prepend the merged pragmas.
+			const prefix = this.depth == 0 ? this._mergePragmas() + '\n\n' : '';
+			return prefix + _code;
+		} catch (err) {
+			if (err instanceof NodeError) {
+				throw new Error(
+					this._createNodeErrorString(node, err.message),
+					err
+				);
+			}
+			throw err;
+		}
 	}
 
 	async _transformNode(node) {
 		const name = getNodeRuleName(node);
 		switch (name) {
 			case 'NakedImportStatement': {
-					if (this.noFlatten)
-						return getNodeText(node);
-					let path = getNodeText(node.path);
-					path = _.trim(path, path[0]);
-					try {
-						return await this._includeImport(path, getNodeLocation(node));
-					} catch (err) {
-						if (this.tolerant)
-							return getNodeText(node);
-						throw err;
-					}
-				}
-			case 'ImportStatement': {
+				if (this.noFlatten) {
 					return getNodeText(node);
 				}
+				let path = getNodeText(node.path);
+				path = _.trim(path, path[0]);
+				try {
+					return await this._includeImport(path, node);
+				} catch (err) {
+					if (this.tolerant)
+						return getNodeText(node);
+					throw err;
+				}
+			}
+			case 'ImportStatement': {
+				return getNodeText(node);
 				break;
+			}
 			case 'Pragma': {
-					// Aggregate pragmas and output a merged version later.
-					this.pragmas.push(getNodeText(node.body, true));
-					return '';
-				}
+				// Aggregate pragmas and output a merged version later.
+				this.pragmas.push(getNodeText(node.body, true));
+				return '';
+			}
 			case 'NakedDefineDirective': {
-					const key = getNodeText(node.name);
-					this.ctx.defs[key] = true;
-					return '';
-				}
+				const key = getNodeText(node.name);
+				this.ctx.defs[key] = true;
+				return '';
+			}
 			case 'DefineDirective': {
-					const key = getNodeText(node.name, true);
-					const value = getNodeText(node.body);
-					this.ctx.defs[key] = value;
-					return '';
-				}
+				const key = getNodeText(node.name, true);
+				const value = getNodeText(node.body);
+				this.ctx.defs[key] = value;
+				return '';
+			}
 			case 'UndefineDirective': {
-					const key = getNodeText(node.name, true);
-					delete this.ctx.defs[key];
-					return '';
-				}
+				const key = getNodeText(node.name, true);
+				delete this.ctx.defs[key];
+				return '';
+			}
 			case 'DefineMacroDirective': {
-					const def = new Macro(node, this.name);
-					this.ctx.defs[def.name] = def;
-					return '';
-				}
+				const def = new Macro(node, this.name);
+				this.ctx.defs[def.name] = def;
+				return '';
+			}
 			case 'ElifBlock':
 			case 'IfBlock': {
-					if (!this._evaluateNodeExpression(node.dir.condition, 'bool')) {
-						if (node.elseAlt)
-							return await this._transformNode(node.elseAlt);
-						else if (node.elifAlt)
-							return await this._transformNode(node.elifAlt);
-						return '';
+				if (!this._evaluateNodeExpression(node.dir.condition, 'bool')) {
+					if (node.elseAlt) {
+						return await this._transformNode(node.elseAlt);
 					}
-					return await this._transformNode(node.content);
+					else if (node.elifAlt) {
+						return await this._transformNode(node.elifAlt);
+					}
+					return '';
 				}
+				return await this._transformNode(node.content);
+			}
 			case 'ElseBlock': {
-					return this._transformNode(node.content);
-				}
+				return this._transformNode(node.content);
+			}
 			case 'ForBlock': {
-					const list = this._evaluateNodeExpression(node.dir.iterable);
-					if (!_.isArrayLike(list)) {
-						const loc = this._getNodeLocationString(node.dir.iterable);
-						throw new Error(`"${list}" is not iterable in $loc`);
-					}
-					const valId = getNodeText(node.dir.iterator, true);
-					const keyId = node.dir.key ? getNodeText(node.dir.key, true) : null;
-					let r = '';
-					for (let i = 0; i < list.length; i++) {
-						const frame = {};
-						frame[valId] = list[i];
-						if (keyId)
-							frame[keyId] = i;
-						this.ctx.stack.push(frame)
-						r += await this._transformNode(node.content);
-						this.ctx.stack.pop();
-					}
-					return r;
+				const list = this._evaluateNodeExpression(node.dir.iterable);
+				if (!_.isArrayLike(list)) {
+					console.error(node.dir.iterable, `"${list}" is not iterable`);
 				}
+				const valId = getNodeText(node.dir.iterator, true);
+				const keyId = node.dir.key ? getNodeText(node.dir.key, true) : null;
+				let r = '';
+				for (let i = 0; i < list.length; i++) {
+					const frame = {};
+					frame[valId] = list[i];
+					if (keyId) {
+						frame[keyId] = i;
+					}
+					this.ctx.stack.push(frame)
+					r += await this._transformNode(node.content);
+					this.ctx.stack.pop();
+				}
+				return r;
+			}
 			case 'MacroExpression': {
-					const prefix = getNodeText(node.prefix, true);
-					if (prefix.startsWith('$$')) {
-						return this._evaluateNodeExpression(node.body, 'string',
-							getNodeIndentation(node));
-					} else {
-						return this._expandNodeExpression(node.body,
-							getNodeIndentation(node));
-					}
+				const prefix = getNodeText(node.prefix, true);
+				if (prefix.startsWith('$$')) {
+					return this._evaluateNodeExpression(node.body, 'string',
+						getNodeIndentation(node));
+				} else {
+					return this._expandNodeExpression(node.body,
+						getNodeIndentation(node));
 				}
+			}
 		}
 		if (node.children) {
 			let r = '';
-			for (let ch of node.children)
+			for (let ch of node.children) {
 				r += await this._transformNode(ch);
+			}
 			return r;
 		}
 		return getNodeText(node);
@@ -143,35 +168,25 @@ class Oven {
 		return _.merge(this.ctx, {
 			defs: {
 				'__line': loc.line,
-				'__indent': JSON.stringify(indent)
-			}});
+				'__indent': JSON.stringify(indent),
+				'__filename': this.name
+		}});
 	}
 
 	_evaluateNodeExpression(node, type=null, indent='') {
 		let expr = this._createNodeExpression(node);
 		try {
 			const r = expr.evaluate(this._augmentContext(node, indent));
-			if (type == 'bool')
+			if (type == 'bool') {
 				return toBool(r);
-			else if (type == 'string')
+			}
+			else if (type == 'string') {
 				return toString(r);
+			}
 			return r;
 		} catch (err) {
-			console.error(err);
-			const loc = this._getNodeLocationString(node);
-			const content = getNodeText(node, true);
-			throw new Error(`Failed to evaluate expression: "${content}" in ` +
-				loc + `: ${err.message}`, err);
-		}
-	}
-
-	_createNodeExpression(node) {
-		const body = getNodeText(node);
-		try {
-			return createExpression(body);
-		} catch (err) {
-			const loc = this._getNodeLocationString(node);
-			throw new Error(err.message + ` in ` + loc, err);
+			const message = `Could not evaluate expression: ${err.message}`;
+			throw new NodeError(node, message, err);
 		}
 	}
 
@@ -180,37 +195,36 @@ class Oven {
 		try {
 			return expr.expand(this._augmentContext(node, indent));
 		} catch (err) {
-			const loc = this._getNodeLocationString(node);
-			const content = getNodeText(node, true);
-			throw new Error(`Failed to expand expression: "${content}" in ` +
-				loc + `: ${err.message}`, err);
+			const message = `Could not expand expression: ${err.message}`;
+			throw new NodeError(node, message, err);
 		}
 	}
 
-	_getNodeLocationString(node) {
-		return this._createLocationString(getNodeLocation(node));
+	_createNodeErrorString(node, message) {
+		const loc = getNodeLocation(node);
+		const line = getNodeLineText(node, true);
+		return `${message}\n${this.name.bold} (${loc.line}.bold): ${line}`;
 	}
 
-	_createLocationString(loc) {
-		return createLocationString(loc, this.name);
+	_createNodeExpression(node) {
+		const body = getNodeText(node);
+		return createExpression(body);
 	}
 
-	async _includeImport(path, loc) {
+	async _includeImport(path, node) {
 		let resolved;
 		try {
 			resolved = await this.resolver(path, this.cwd, this.name);
 		} catch (err) {
-			const msg = `Cannot resolve import "${path}" at ` +
-				this._createLocationString(loc) + `: ${err.message}`;
-			throw new Error(msg);
+			throw new NodeError(node, `Cannot resolve import "${path}"`, err);
 		}
 		if (resolved.name in this.cache) // Already included.
 			return '';
 		this.cache[resolved.name] = {
 			from: {
-				loc: loc,
+				loc: getNodeLocation(node),
 				name: this.name
-			}};
+		}};
 		return this._descend(resolved.code, resolved.name, resolved.cwd);
 	}
 
@@ -235,12 +249,16 @@ class Oven {
 		// Extract the feature pragmas.
 		const features = _.uniq(_.filter(pragmas, s => !/^solidity.+$/.test(s)));
 		// Extract the compiler semvers.
-		const compilerVersions = _.map(_.filter(
-			_.map(pragmas, s => /^solidity\s*(.+)$/.exec(s)),
-				m => !!m), m => m[1]);
+		const compilerVersions = _.map(
+			_.filter(
+				_.map(pragmas, s => /^solidity\s*(.+)$/.exec(s)),
+				m => !!m),
+			m => m[1]
+		);
 		let compilerVersion = null;
-		if (compilerVersions.length == 1)
+		if (compilerVersions.length == 1) {
 			compilerVersion = compilerVersions[0];
+		}
 		else if (compilerVersions.length > 1) {
 			// Reconcile the compiler version.
 			compilerVersion = semverMerge(compilerVersions);

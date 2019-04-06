@@ -27,6 +27,22 @@ function getNodeText(node, trim=false) {
 	return t;
 }
 
+function getNodeLineText(node, trim=false) {
+	const {line:lineNumber} = getNodeLocation(node);
+	const src = getNodeInputStream(node).strdata;
+	const lines = src.split(/\r?\n/);
+	const line = lines[lineNumber-1];
+	if (trim)
+		return line.trim();
+	return line;
+}
+
+function getNodeInputStream(node) {
+	if (_.isFunction(node.getInputStream))
+		return node.getInputStream();
+	return node.start.source[0]._input;
+}
+
 function getNodeLocation(node) {
 	return {
 		line: node.line || node.start.line,
@@ -36,21 +52,11 @@ function getNodeLocation(node) {
 }
 
 function getNodeIndentation(node) {
-	let indent = '';
-	let ch = '';
-	const stream = node.getInputStream ?
-		node.getInputStream() : node.start.getInputStream();
-	let o = _.get(node.start, 'start', node.start) - 1;
-	for (; o > 0; --o) {
-		ch = stream.getText(o, o)
-		if (/[\r\n]/.test(ch))
-			break;
-		if (/\s/.test(ch))
-			indent = ch + indent;
-		else
-			indent = ' ' + indent;
-	}
-	return indent;
+	const line = getNodeLineText(node);
+	const m = /^\s+/.exec(line);
+	if (!m)
+		return '';
+	return m[0];
 }
 
 function createLocationString(loc, unit) {
@@ -88,13 +94,24 @@ function createParseTree(LexerType, ParserType, startRule, text, mode=null) {
 	return parser[startRule]();
 }
 
+class NodeError extends Error {
+	constructor(node, message, inner) {
+		super(message, inner);
+		this.name = this.constructor.name;
+		this.node = node;
+		Object.setPrototypeOf(this, NodeError.prototype);
+	}
+}
+
 module.exports = {
-	getNodeText: getNodeText,
-	getNodeLocation: getNodeLocation,
-	getNodeIndentation: getNodeIndentation,
-	createLocationString: createLocationString,
-	getNodeRuleName: getNodeRuleName,
-	createParseTree: createParseTree,
-	isNode: isNode,
-	isTerminal: isTerminal
+	getNodeText,
+	getNodeLocation,
+	getNodeIndentation,
+	getNodeLineText,
+	createLocationString,
+	getNodeRuleName,
+	createParseTree,
+	isNode,
+	isTerminal,
+	NodeError
 };
