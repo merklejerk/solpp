@@ -1,6 +1,6 @@
 {
 	"name": "solpp",
-	"version": "0.10.0",
+	"version": "0.10.1",
 	"description": "A solidity preprocessor and flattener CLI and library",
 	"repository": "https://github.com/merklejerk/solpp",
 	"author": "Lawrence Forman <me@merklejerk.com>",
@@ -29,6 +29,9 @@
 	"devDependencies": {
 		"mocha": "^5.2.0",
 		"openzeppelin-solidity": "1.12.0"
+	},
+	"engines": {
+		"node": ">=8.15.1"
 	},
 	"keywords": [
 		"solidity",
