@@ -20,7 +20,7 @@ function collapseEmptyLines(code) {
 	}
 	if (r.length > 0 && !_.last(r))
 		r.splice(r.length-1, 1);
-	return r.join('\n').trimEnd();
+	return _.trimEnd(r.join('\n'));
 }
 
 async function processCode(code, opts={}) {
