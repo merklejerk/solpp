@@ -13,6 +13,6 @@ describe('solidity-oven', function() {
 	it('generates the reference output', async function() {
 		const ref = await fs.readFile(REFERENCE_FILE, 'utf-8');
 		const output = await lib.processFile(INPUT_FILE, OPTS);
-		assert.equal(output.trimEnd(), ref.trimEnd());
+		assert.equal(_.trimEnd(output), _.trimEnd(ref));
 	});
 });
