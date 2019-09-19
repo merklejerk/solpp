@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const _ = require('lodash');
 const process = require('process');
 const {dirname} = require('path');
@@ -204,13 +205,17 @@ class Oven {
 				this._createLocationString(loc) + `: ${err.message}`;
 			throw new Error(msg);
 		}
-		if (resolved.name in this.cache) // Already included.
+		const codeHash = crypto.createHash('sha256')
+			.update(resolved.name)
+			.digest('hex');
+		if (codeHash in this.cache) // Already included.
 			return '';
-		this.cache[resolved.name] = {
+		this.cache[codeHash] = {
 			from: {
 				loc: loc,
 				name: this.name
-			}};
+			}
+		};
 		return this._descend(resolved.code, resolved.name, resolved.cwd);
 	}
 
