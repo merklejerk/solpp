@@ -206,7 +206,7 @@ class Oven {
 			throw new Error(msg);
 		}
 		const codeHash = crypto.createHash('sha256')
-			.update(resolved.name)
+			.update(resolved.code)
 			.digest('hex');
 		if (codeHash in this.cache) // Already included.
 			return '';
