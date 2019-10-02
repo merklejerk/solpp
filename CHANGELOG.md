@@ -1,3 +1,6 @@
+## Version 0.11.1
+  - De-dupe files when flattening.
+
 ## Version 0.10.1
   - Allow compatibility with with node v8.
 
