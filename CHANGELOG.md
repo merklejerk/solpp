@@ -1,3 +1,6 @@
+## Version 0.11.3
+  - Pin `antlr4` dependency to `~4.8.0`.
+
 ## Version 0.11.1
   - De-dupe files when flattening.
 
