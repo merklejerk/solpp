@@ -7,9 +7,9 @@ const {URL} = require('url');
 const {
     dirname,
     isAbsolute,
-    resolve:resolvePath,
     sep:pathSeparator
 } = require('path');
+let {resolve:resolvePath} = require('path');
 const resolveModuleFile = promisify(require('resolve'));
 
 const URL_PATH_TEST = /^https?:\/\//i;
