@@ -16,9 +16,10 @@ const URL_PATH_TEST = /^https?:\/\//i;
 const RELATIVE_PATH_TEST = createRelativePathTest();
 
 function createRelativePathTest() {
-    if (pathSeparator === '\\')
-        pathSeparator = '\\\\';
-    const regex = `^[.]+${pathSeparator}.+$`;
+    let sep = pathSeparator;
+    if (sep === '\\')
+        sep = '\\\\';
+    const regex = `^[.]+${sep}.+$`;
     return new RegExp(regex, 'i');
 }
 
