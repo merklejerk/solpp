@@ -1,6 +1,6 @@
 {
 	"name": "solpp",
-	"version": "0.11.3",
+	"version": "0.11.5",
 	"description": "A solidity preprocessor and flattener CLI and library",
 	"repository": "https://github.com/merklejerk/solpp",
 	"author": "Lawrence Forman <me@merklejerk.com>",

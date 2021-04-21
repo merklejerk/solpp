@@ -1,7 +1,13 @@
+## Version 0.11.5
+  - Update dependencies.
+
+## Version 0.11.4
+  - Fix constant reassignment error.
+
 ## Version 0.11.3
   - Pin `antlr4` dependency to `~4.8.0`.
 
-## Version 0.11.1
+## Version 0.11.2
   - De-dupe files when flattening.
 
 ## Version 0.10.1
