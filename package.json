@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"antlr4": "~4.8.0",
-		"axios": "^0.18.0",
+		"axios": "^0.21.1",
 		"bn-str-256": "^1.9.1",
 		"commander": "^2.19.0",
 		"ethereumjs-util": "^6.0.0",
