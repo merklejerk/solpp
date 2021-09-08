@@ -22,5 +22,5 @@ module.exports = function(semvers) {
 	if (versions.length == 0)
 		throw new Error(`Cannot reconcile semvers: ${semvers.join(', ')}`);
 	// Return the maximum version left.
-	return versions.sort((a,b) => -sv.cmp(a, b))[0];
+	return versions.sort((a,b) => -sv.compare(a, b))[0];
 };
