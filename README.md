@@ -1,5 +1,8 @@
+---
 
-⚠️⚠️ This project is deprecated and no longer maintained 😢. It's here for historical purposes only. ⚠️⚠️
+⚠️ This project is deprecated, no longer maintained, and is here for historical purposes only 😢. Solidity has come a long way since this tool was developed and you can usually accomplish many of the same things with vanilla solidity from here on, so it's largely unecessary now. ⚠️
+
+---
 
 ![build status](https://travis-ci.org/merklejerk/solpp.svg?branch=master)
 [![npm package](https://badge.fury.io/js/solpp.svg)](https://www.npmjs.com/package/solpp)
