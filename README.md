@@ -1,3 +1,6 @@
+
+⚠️⚠️ This project is deprecated and no longer maintained 😢. It's here for historical purposes only. ⚠️⚠️
+
 ![build status](https://travis-ci.org/merklejerk/solpp.svg?branch=master)
 [![npm package](https://badge.fury.io/js/solpp.svg)](https://www.npmjs.com/package/solpp)
 
