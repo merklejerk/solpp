@@ -20,4 +20,8 @@ describe('semver-merge', function() {
 		assert.equal(merge(['0.4', '0.4.24']), '0.4.24');
 		assert.equal(merge(['^0.4', '0.4.24']), '0.4.24');
 	});
+
+	it('Handles multiple ranges with the same base version', async function() {
+		assert.equal(merge(['=0.4.24', '>=0.4.24']), '0.4.24');
+	});
 });
